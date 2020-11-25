@@ -6,3 +6,5 @@ db.sqlite3
 __pycache__
 
 build
+Pipfile
+Pipfile.lock

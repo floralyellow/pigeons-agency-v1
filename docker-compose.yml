@@ -4,7 +4,7 @@ services:
   backend:
     build: ./backend
     volumes:
-      - ./backend/:/backend # maps host diretory to internal container directory
+      - ./backend/ # maps host diretory to internal container directory
     working_dir: /backend/
     command: sh entrypoint.sh
   frontend:
