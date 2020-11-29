@@ -1,7 +1,6 @@
  FROM python:3
- RUN mkdir /backend
- WORKDIR /backend
- ADD requirements.txt /backend/
+ ADD requirements.txt .
  RUN pip install -r requirements.txt
- ADD . /backend/
+ RUN python manage.py makemigrations
+ RUN python manage.py migrate
  EXPOSE 8000
