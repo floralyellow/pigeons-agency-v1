@@ -4,9 +4,16 @@ services:
   backend:
     build: ./backend
     volumes:
-      - ./backend/ # maps host diretory to internal container directory
-    working_dir: /backend/
+      - ./backend/:/backend
+    working_dir: /backend
     command: sh entrypoint.sh
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_PASSWORD: root
   frontend:
     image: node:14.15.1
     command: sh entrypoint.sh
