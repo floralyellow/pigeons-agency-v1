@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 const headers = new Headers({
   Accept: "application/json",
