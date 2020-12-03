@@ -10,7 +10,7 @@ def index(request):
 
 def create_test_player(request):
     logging.debug("------"+str(request))
-    player = Player(username='test')
+    player = Player(username='test',feathers=0)
     logging.debug("------"+str(player))
     player.save()
     return JsonResponse({ "status": player.username })
@@ -18,4 +18,4 @@ def create_test_player(request):
 def get_test_players(request):
     logging.debug("------"+str(request))
     players = Player.objects.all()
-    return JsonResponse({ "status": players })
+    return JsonResponse({ "status": players[0].username })
