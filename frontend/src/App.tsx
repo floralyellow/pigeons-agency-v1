@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
+const headers = new Headers({
+  Accept: "application/json",
+  "Content-Type": "application/json"
+});
+
+class App extends Component {
+  componentWillMount() {
+    this.testBackend()
+  }
+
+  state = {
+    test: ''
+  }
+  testBackend = async () => {
+    const test = await fetch("http://localhost/api/test/", {
+      method: "GET",
+      headers: headers,
+      cache: "default"
+    });
+    const testJson = await test.json();
+    if(testJson && testJson.status)
+      this.setState({ test: testJson.status });
+  }
+  render(){
+    return (
+      <div className="App">
+        <p className="App-intro">
+          From backend: {this.state.test}
+        </p>
+      </div>
+    );
+  }
+}
 export default App;
