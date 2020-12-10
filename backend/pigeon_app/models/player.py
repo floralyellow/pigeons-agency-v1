@@ -4,7 +4,6 @@ from rest_framework import serializers
 
 
 class Player(models.Model):
-    username = models.CharField(max_length=30, default="test")
     lvl = models.IntegerField(default=1)
     seeds = models.IntegerField(default=0)
     droppings = models.IntegerField(default=0)
@@ -20,7 +19,7 @@ class Player(models.Model):
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ['feathers']
+        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
