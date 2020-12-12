@@ -83,8 +83,8 @@ DATABASES = {
         'NAME': 'pigeon',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        # 'HOST': '172.17.0.1',
-        'HOST': '127.0.0.1',
+        'HOST': '172.17.0.1',
+        #'HOST': '127.0.0.1',
         'PORT': '5435',
     }
 }
