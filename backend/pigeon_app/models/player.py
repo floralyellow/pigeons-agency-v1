@@ -24,7 +24,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     player = PlayerSerializer(many=False, read_only=True)
-    password = serializers.CharField(required=True,write_only=True)
+    password = serializers.CharField(required=True,write_only=True) #par défaut parole de gugu django il utilise les post du user sans mdp ce fdp
 
     class Meta:
         model = User
