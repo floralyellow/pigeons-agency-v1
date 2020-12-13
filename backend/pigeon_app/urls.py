@@ -18,9 +18,9 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
-    path(r'api/test/', index, name='index'),
+    path(r'api/test/', TestView.as_view(), name='test'),
+    path(r'api/pigeons/', PigeonView.as_view(), name='pigeon'),
 
-    path(r'api/create_test_player/', create_test_player, name='create_test_player'),
-    path(r'api/get_test_players/', get_test_players, name='get_test_players'),
+    #path(r'api/get_test_players/', get_test_players, name='get_test_players'),
 ]
 # urlpatterns += router.urls
