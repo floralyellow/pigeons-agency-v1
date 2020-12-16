@@ -14,7 +14,10 @@ from django.db.models.signals import post_save
 from ..models import TR_Pigeon
 from ..models import TR_Lvl_info
 from ..models import TR_Effect
+from ..models import TR_Expedition
+from datetime import datetime,timedelta
 import random
+from django.db import transaction
 
 class PigeonView(APIView):
     # Get all pigeons of user
@@ -26,20 +29,44 @@ class PigeonView(APIView):
 
     # create pigeon
     def post(self, request):
+        if 'exp_lvl' not in request.POST:
+            return JsonResponse({'message': 'Error: No expedition_lvl'})
+        expedition_lvl = request.POST.get('exp_lvl')
+        if not expedition_lvl.isdigit() or not int(expedition_lvl) in range(1,30):
+            return JsonResponse({'message': 'Error: invalid input'})
+
         user_id = request.user.id
-        lvl = 1 # Get this from POST body expedition lvl + check seeds
-        logging.debug("------"+str(lvl))
-        possible_pigeons = TR_Pigeon.objects.filter(lvl_expedition=lvl)
-        test_random = random.randint(0, len(possible_pigeons)-1)
-        logging.debug("------"+str(test_random))
-        logging.debug("------"+str(possible_pigeons[test_random]))
-        tr_pigeon = possible_pigeons[test_random]
+        with transaction.atomic():
+            player = Player.objects.select_for_update().filter(user_id=user_id)[0]
+            if player.lvl < int(expedition_lvl):
+                return JsonResponse({'message': 'Invalid lvl'})
 
+            expedition = TR_Expedition.objects.filter(lvl=expedition_lvl)[0]
 
+            if player.seeds < expedition.seeds: 
+                return JsonResponse({'message': 'Not enough seeds'})
+            player.seeds = player.seeds - expedition.seeds
+            player.save()
+            
+            possible_pigeons = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl)
+            weights = possible_pigeons.values_list('coef_chance_rate',flat=True)
+            p = random.choices(population = possible_pigeons, weights = weights, k=1)[0]
 
-        new_pigeon = Pigeon(player_id=user_id, name=tr_pigeon.name, attack=tr_pigeon.max_atk)
-        new_pigeon.save()
-        pigeons = Pigeon.objects.filter(player_id=user_id)     
-        #return JsonResponse(possible_pigeons[test_random], safe=False)
+            luck_value = random.randint(1,100)
+            element = random.randint(1,3)
+            atk = int(luck_value/100*(p.max_atk - p.min_atk))+p.min_atk
+            life = int(luck_value/100*(p.max_life - p.min_life))+p.min_life
+            shield = int(luck_value/100*(p.max_shield - p.min_shield))+p.min_shield
+            drop_min = int(luck_value/100*(p.max_drop_minutes - p.min_drop_minutes))+p.max_drop_minutes
+            feathers = int(luck_value/100*(p.max_feathers - p.min_feathers))+p.min_feathers
+            creation_time = datetime.now()
+            active_time = creation_time + timedelta(0,expedition.duration)
 
-        return JsonResponse(list(pigeons.values()), safe=False)
+            new_pigeon = Pigeon(player_id=user_id, pigeon_type=p.pigeon_type, 
+                name=p.name,pigeon_id=p.pigeon_id,luck=luck_value,
+                element=element, attack=atk,life=life,shield=shield,
+                speed=p.speed,droppings_minute=drop_min,feathers=feathers,
+                creation_time=creation_time,active_time=active_time)
+            new_pigeon.save()
+            pigeons = Pigeon.objects.filter(player_id=user_id)  
+            return JsonResponse(list(pigeons.values()), safe=False)
