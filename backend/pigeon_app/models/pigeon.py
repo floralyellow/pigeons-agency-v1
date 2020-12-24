@@ -23,6 +23,6 @@ class Pigeon(models.Model):
     is_open = models.BooleanField(default=False)
     is_sold = models.BooleanField(default=False)
     is_attacker = models.BooleanField(default=False)
-    is_defender = models.BooleanField(default=False)
+    defender_pos = models.IntegerField(null=True)
 
 

@@ -20,8 +20,8 @@ class FillTRView(APIView):
         TR_Lvl_info.objects.all().delete() 
 
         TR_Lvl_info.objects.bulk_create([
-            TR_Lvl_info(lvl=1,max_seeds=60,max_droppings=30,max_feathers=35),
-            TR_Lvl_info(lvl=2,max_seeds=90,max_droppings=60,max_feathers=70),
+            TR_Lvl_info(lvl=1,seeds_minute = 60,max_seeds=60,max_droppings=30,max_feathers=35),
+            TR_Lvl_info(lvl=2,seeds_minute = 90, max_seeds=90,max_droppings=60,max_feathers=70),
         ])
 
         TR_Pigeon.objects.all().delete() 

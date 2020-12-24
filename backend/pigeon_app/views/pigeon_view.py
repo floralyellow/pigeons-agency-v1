@@ -29,6 +29,8 @@ class PigeonView(APIView):
 
     # create pigeon
     def post(self, request):
+        logging.debug("------"+str(request))
+
         if 'exp_lvl' not in request.POST:
             return JsonResponse({'message': 'Error: No expedition_lvl'})
         expedition_lvl = request.POST.get('exp_lvl')

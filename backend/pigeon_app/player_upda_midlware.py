@@ -3,6 +3,9 @@ from datetime import datetime, timezone
 from django.dispatch import receiver    
 from .models import Player
 from .pigeon_logic import logic
+from .services import update_service
+from django.contrib.auth.models import User
+import logging
 
 class UpdatePlayerMiddleware:
     '''middleware qui intercepte toute les requêtes et met a jour player (seeds,droppings)'''
@@ -19,8 +22,11 @@ class UpdatePlayerMiddleware:
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
+        logging.debug("------2"+str(request))
+
         if request.user.is_authenticated:
-            logic.update_all_player_values(request.user)
+            logging.debug("------"+str(request.user))
+            update_service.update_user_values(request.user)
         response = self.get_response(request)
 
         # Code to be executed for each request/response after
