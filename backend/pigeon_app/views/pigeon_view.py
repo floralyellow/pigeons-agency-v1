@@ -72,3 +72,36 @@ class PigeonView(APIView):
             new_pigeon.save()
             pigeons = Pigeon.objects.filter(player_id=user_id)  
             return JsonResponse(list(pigeons.values()), safe=False)
+
+class PigeonAttackerView(APIView):
+
+    # set attacker
+    def post(self, request):
+        logging.debug("------"+str(request))
+
+        if 'p_id' not in request.POST:
+            return JsonResponse({'message': 'Error: No post info'})
+        pigeon_id = request.POST.get('p_id')
+        if not pigeon_id.isdigit() :
+            return JsonResponse({'message': 'Error: invalid input'})
+
+        user_id = request.user.id
+        with transaction.atomic():
+            pigeons = Pigeon.objects.filter(player_id=user_id, is_sold=False, is_open=True)
+            logging.debug("------"+str(pigeons))
+
+
+            if int(pigeon_id) not in pigeons.values_list('id',flat=True):
+                return JsonResponse({'message': 'Error: wrong id'})
+            
+            pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
+
+            pigeon_to_update.is_attacker = not pigeon_to_update.is_attacker
+
+            nb_attackers = pigeons.select_for_update().filter(is_attacker = True).count()
+
+            if nb_attackers > 5:
+                return JsonResponse({'message': 'Too many atk'})
+
+            pigeon_to_update.save()
+            return JsonResponse(list(pigeons.values()), safe=False)
