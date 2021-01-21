@@ -1,7 +1,7 @@
 from rest_framework import routers
 from .views.views import UserViewSet
 from .views.fill_tr_views import FillTRView
-from .views.pigeon_view import PigeonView, PigeonAttackerView
+from .views.pigeon_view import PigeonView, PigeonAttackerView, PigeonActivateView, PigeonSellView
 from django.contrib import admin
 from django.urls import include, path
 
@@ -23,6 +23,9 @@ urlpatterns = [
     path(r'api/pigeons/', PigeonView.as_view(), name='pigeon'),
 
     path(r'api/pigeons/attacker', PigeonAttackerView.as_view(), name='set_attacker'),
+    path(r'api/pigeons/activate', PigeonActivateView.as_view(), name='set_active'),
+    path(r'api/pigeons/sell', PigeonSellView.as_view(), name='sell'),
+
 
 
 
