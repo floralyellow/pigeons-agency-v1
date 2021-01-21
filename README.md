@@ -10,4 +10,8 @@ Make sure you have [docker](https://docs.docker.com/install/) and [docker-compos
 docker-compose up
 ```
 
+## Required
+
+Python 3.8 or higher
+
 [Code example for my blog post](http://felipelinsmachado.com/connecting-django-reactjs-via-nginx-using-docker-containers/)
