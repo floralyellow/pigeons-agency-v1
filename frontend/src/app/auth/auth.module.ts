@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RegisterComponent } from './register/register.component';
 import { AuthentificationComponent } from './authentification/authentification.component';
+import { CardComponent } from './ui/card/card.component';
 
 
 @NgModule({
   declarations: [
-    RegisterComponent,
-    AuthentificationComponent
+    AuthentificationComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -17,7 +17,6 @@ import { AuthentificationComponent } from './authentification/authentification.c
   bootstrap: [
   ],
   exports: [
-    RegisterComponent,
     AuthentificationComponent
   ],
 })
