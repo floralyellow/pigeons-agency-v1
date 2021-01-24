@@ -2,7 +2,6 @@ from django.db.models.signals import post_save, pre_save
 from datetime import datetime, timezone
 from django.dispatch import receiver    
 from .models import Player
-from .pigeon_logic import logic
 from .services import update_service
 from django.contrib.auth.models import User
 import logging

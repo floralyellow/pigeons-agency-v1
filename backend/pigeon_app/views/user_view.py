@@ -4,7 +4,6 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 from ..models import Player
 from ..models import Pigeon
-from ..pigeon_logic import logic
 import logging
 from django.core import serializers
 from rest_framework import viewsets
@@ -41,52 +40,3 @@ def create_user_profile(sender, instance, created, **kwargs):
     '''signal receiver that create a player to every assosciated created User'''
     if created:
         Player.objects.create(user=instance)
-
-
-
-class TestView(APIView):
-    def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return JsonResponse(content)
-
-    def post(self, request):
-        content = {'message': 'Haa!'}
-        return JsonResponse(content)
-
-
-class PigeonView(APIView):
-    # Get all pigeons of user
-    def get(self, request):
-        user_id = request.user.id
-        pigeons = Pigeon.objects.filter(player_id=user_id)
-        return JsonResponse(list(pigeons.values()), safe=False)
-
-
-    # create pigeon
-    def post(self, request):
-        user_id = request.user.id
-        pigeon = Pigeon(player_id=user_id, attack=int(random.randint(0, 400)))
-        pigeon.save()
-        pigeons = Pigeon.objects.filter(player_id=user_id)     
-        return JsonResponse(list(pigeons.values()), safe=False)
-
-# class UpdateValues(APIView):
-
-
-
-    # @csrf_exempt 
-    # def index(request):
-    #     logging.debug("------"+str(request))
-    #     return JsonResponse({"status": "I'm here"})
-
-    # @csrf_exempt #For POST requests
-    # def test(request):
-    #     logging.debug("------"+str(request))
-    #     logging.debug("------"+str(request.POST))
-    #     return JsonResponse({ "status": "e" })
-
-
-    # def get_test_players(request):
-    #     logging.debug("------"+str(request))
-    #     players = Player.objects.all()
-    #     return JsonResponse(list(players.values()), safe=False)
