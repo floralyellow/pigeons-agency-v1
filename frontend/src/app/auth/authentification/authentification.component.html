@@ -1,1 +1,44 @@
-<p>authentification works!</p>
+<div ngClass="container d-flex">
+    <div class="m-auto">
+        <div class="columns">
+            <app-card 
+                class="column" 
+                [header]="['card-header','has-background-primary','has-text-white-ter']"
+                [headerName]="'Register'"
+            >
+                <form>
+                    <div class="field">
+                        <input class="input" type="text" placeholder="Username">
+                    </div>
+                    <div class="field">
+                        <input class="input" type="password" placeholder="Password">
+                    </div>
+                    <button 
+                        class="button is-primary is-outlined"
+                        type="submit">
+                        Go !
+                    </button>
+                </form>
+            </app-card>
+            <app-card 
+                class="column" 
+                [header]="['card-header','has-background-info','has-text-white-ter']"
+                [headerName]="'Login'"
+            >
+                <form>
+                    <div class="field">
+                        <input class="input" type="text" placeholder="Username">
+                    </div>
+                    <div class="field">
+                        <input class="input" type="password" placeholder="Password">
+                    </div>
+                    <button 
+                        class="button is-info is-outlined"
+                        type="submit">
+                        Go !
+                    </button>
+                </form>
+            </app-card>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,8 @@
-<p>card works!</p>
+<div class="card p-to-m">
+    <div [ngClass]="header">
+        {{headerName}}
+    </div>
+    <div class="card-content">
+        <ng-content></ng-content>
+    </div>
+</div>

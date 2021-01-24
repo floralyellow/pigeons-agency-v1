@@ -6,7 +6,7 @@ import { DashboardComponent } from './pages';
 
 const routes: Routes = [
   {
-    path : "dashboard",
+    path : "",
     component : DashboardComponent,
     canActivate : [IsAuth]
   },

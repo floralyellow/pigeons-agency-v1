@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/grid/_all.sass";
+@import "../node_modules/bulma/sass/components/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/helpers/_all.sass";
+@import "../node_modules/bulma/sass/layout/_all.sass";
+@import "../node_modules/bulma/sass/elements/_all.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+*{
+    margin: 0;
+    padding: 0;
+}
+.d-flex{ display: flex !important; }
+.m-auto{ margin:auto !important; }
+.container{ min-height: 100vh; }
+.p-to-m{
+    padding: 0;
+    >*{
+        padding: 15px;
+    }
+}
