@@ -26,12 +26,13 @@ class PigeonView(APIView):
     def get(self, request):
         user_id = request.user.id
         pigeons = Pigeon.objects.filter(player_id=user_id)
+        logging.debug('yee2')
         return JsonResponse(list(pigeons.values()), safe=False)
 
 
     # create pigeon
     def post(self, request):
-
+        logging.debug('yee')
         if 'exp_lvl' not in request.POST:
             return JsonResponse({'message': 'Error: No expedition_lvl'})
         expedition_lvl = request.POST.get('exp_lvl')
@@ -39,7 +40,6 @@ class PigeonView(APIView):
             return JsonResponse({'message': 'Error: invalid input'})
 
         message = pigeon_service.create_pigeon(request.user.id, expedition_lvl)
-
         return JsonResponse({'message': message})
 
 
@@ -62,15 +62,15 @@ class PigeonActivateView(APIView):
 
     # activatePigeon
     def post(self, request):
-
+        logging.debug('yee')
         if 'p_id' not in request.POST:
             return JsonResponse({'message': 'Error: No post info'})
         pigeon_id = request.POST.get('p_id')
         if not pigeon_id.isdigit() :
             return JsonResponse({'message': 'Error: invalid input'})
 
-        message = pigeon_service.set_attacker(request.user.id, pigeon_id)
-
+        message = pigeon_service.activate_pigeon(request.user.id, pigeon_id)
+        logging.debug('yee1')
         return JsonResponse({'message': message})
 
 class PigeonSellView(APIView):
@@ -84,6 +84,6 @@ class PigeonSellView(APIView):
         if not pigeon_id.isdigit() :
             return JsonResponse({'message': 'Error: invalid input'})
 
-        message = pigeon_service.set_attacker(request.user.id, pigeon_id)
+        message = pigeon_service.sell_pigeon(request.user.id, pigeon_id)
 
         return JsonResponse({'message': message})

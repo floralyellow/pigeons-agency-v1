@@ -21,12 +21,11 @@ class UpdatePlayerMiddleware:
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
-        logging.debug("------2"+str(request))
+        response = self.get_response(request)
+        logging.debug(str(request.user))
 
         if request.user.is_authenticated:
-            logging.debug("------"+str(request.user))
             update_service.update_user_values(request.user)
-        response = self.get_response(request)
 
         # Code to be executed for each request/response after
         # the view is called.

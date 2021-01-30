@@ -1,5 +1,6 @@
 from pigeon_app.models.player import UserSerializer
 from pigeon_app.models.player import PlayerSerializer
+from pigeon_app.models.pigeon import PigeonSerializer
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from ..models import Player
@@ -91,13 +92,13 @@ def set_attacker(user_id, pigeon_id):
 
         pigeon_to_update.save()
 
-    return list(pigeon_to_update.values())
+    return PigeonSerializer(pigeon_to_update).data
 
 def activate_pigeon(user_id, pigeon_id):
     with transaction.atomic():
         pigeons = Pigeon.objects.filter(player_id=user_id, is_sold=False, is_open=False)
+        logging.debug("------"+str(user_id))
         logging.debug("------"+str(pigeons))
-
 
         if int(pigeon_id) not in pigeons.values_list('id',flat=True):
             return 'Error: wrong id'
@@ -110,9 +111,9 @@ def activate_pigeon(user_id, pigeon_id):
         pigeon_to_activate.is_open = True
 
         pigeon_to_activate.save()
-        return list(pigeon_to_activate.values())
+    return PigeonSerializer(pigeon_to_activate).data
 
-def sell_pigeon(user_id, pigon_id):
+def sell_pigeon(user_id, pigeon_id):
     with transaction.atomic():
         pigeons = Pigeon.objects.filter(player_id=user_id, is_sold=False, is_open=True)
 
@@ -128,4 +129,4 @@ def sell_pigeon(user_id, pigon_id):
 
         pigeon_to_sell.save()
         player.save()
-        return list(pigeons.values())
+    return PigeonSerializer(pigeon_to_sell).data
