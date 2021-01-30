@@ -7,7 +7,7 @@
 @import "../node_modules/bulma/sass/layout/_all.sass";
 @import "../node_modules/bulma/sass/elements/_all.sass";
 @import "../node_modules/bulma/sass/form/_all.sass";
-*{
+body{
     margin: 0;
     padding: 0;
 }
@@ -19,4 +19,8 @@
     >*{
         padding: 15px;
     }
+}
+h1{
+    font-size: x-large;
+    margin-bottom: 1rem;
 }
