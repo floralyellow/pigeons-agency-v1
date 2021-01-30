@@ -21,9 +21,9 @@ export class AuthService {
 
     login(APIParameter: LoginAPIParameter): Promise<LoginAPIReturn> {
         return new Promise((resolve, reject) => {
-            this.http.post(environment.apiBaseUrl + 'login', APIParameter)
+            this.http.post(environment.apiBaseUrl + '/token/', APIParameter)
                 .subscribe((res: LoginAPIReturn) => {
-                    this.updateToken(res.data.token);
+                    this.updateToken(res.access);
                     this.updateUser();
                     resolve(res);
                 }, err => {
@@ -34,7 +34,7 @@ export class AuthService {
 
     register(APIParameter: RegisterAPIParameter): Promise<RegisterAPIReturn> {
         return new Promise((resolve, reject) => {
-            this.http.post(environment.apiBaseUrl + 'register', APIParameter)
+            this.http.post(environment.apiBaseUrl + '/users/', APIParameter)
                 .subscribe((res: RegisterAPIReturn) => {
                     resolve(res);
                 }, err => {
@@ -90,10 +90,7 @@ export interface LoginAPIParameter {
 }
 
 export interface LoginAPIReturn {
-    message: string;
-    data: {
-        token: string
-    }
+    access:string
 }
 
 export interface RegisterAPIParameter {

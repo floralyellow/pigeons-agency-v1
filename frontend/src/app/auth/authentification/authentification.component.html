@@ -1,19 +1,35 @@
 <div ngClass="container d-flex">
     <div class="m-auto">
+        <h1>Pigeon agency</h1>
         <div class="columns">
             <app-card 
                 class="column" 
                 [header]="['card-header','has-background-primary','has-text-white-ter']"
                 [headerName]="'Register'"
             >
-                <form>
+                <form (ngSubmit)="submit('register')" #registerForm="ngForm">
                     <div class="field">
-                        <input class="input" type="text" placeholder="Username">
+                        <input 
+                            class="input form-control" 
+                            type="text" 
+                            placeholder="Username" 
+                            required
+                            name="username"
+                            #registerUsername="ngModel"
+                            [(ngModel)]="register.username">
                     </div>
                     <div class="field">
-                        <input class="input" type="password" placeholder="Password">
+                        <input  
+                            class="input form-control" 
+                            type="password" 
+                            placeholder="Password"
+                            required
+                            name="registerPassword"
+                            #registerPassword="ngModel"
+                            [(ngModel)]="register.password">
                     </div>
                     <button 
+                        [disabled]="!registerForm.form.valid"
                         class="button is-primary is-outlined"
                         type="submit">
                         Go !
@@ -25,14 +41,29 @@
                 [header]="['card-header','has-background-info','has-text-white-ter']"
                 [headerName]="'Login'"
             >
-                <form>
+                <form (ngSubmit)="submit('login')" #loginForm="ngForm">
                     <div class="field">
-                        <input class="input" type="text" placeholder="Username">
+                        <input 
+                            class="input form-control" 
+                            type="text" 
+                            placeholder="Username"
+                            name="loginUsername"
+                            required
+                            #loginUsername="ngModel"
+                            [(ngModel)]="login.username">
                     </div>
                     <div class="field">
-                        <input class="input" type="password" placeholder="Password">
+                        <input 
+                            class="input form-control" 
+                            type="password" 
+                            name="loginPassword"
+                            placeholder="Password"
+                            required
+                            #loginPassword="ngModel"
+                            [(ngModel)]="login.password">
                     </div>
                     <button 
+                        [disabled]="!loginForm.form.valid"
                         class="button is-info is-outlined"
                         type="submit">
                         Go !
