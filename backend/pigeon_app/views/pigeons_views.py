@@ -25,9 +25,9 @@ class PigeonView(APIView):
     # Get all pigeons of user
     def get(self, request):
         user_id = request.user.id
-        pigeons = Pigeon.objects.filter(player_id=user_id)
-        logging.debug('yee2')
-        return JsonResponse(list(pigeons.values()), safe=False)
+        pigeons = list(Pigeon.objects.filter(player_id=user_id, is_sold=False).values())
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'pigeons' : pigeons}})
+
 
 
     # create pigeon
@@ -39,8 +39,8 @@ class PigeonView(APIView):
         if not expedition_lvl.isdigit() or not int(expedition_lvl) in range(1,30):
             return JsonResponse({'message': 'Error: invalid input'})
 
-        message = pigeon_service.create_pigeon(request.user.id, expedition_lvl)
-        return JsonResponse({'message': message})
+        expeditions = pigeon_service.create_pigeon(request.user.id, expedition_lvl)
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'expeditions' : expeditions}})
 
 
 class PigeonAttackerView(APIView):

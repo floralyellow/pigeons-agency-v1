@@ -66,9 +66,9 @@ def create_pigeon(user_id, expedition_lvl):
             speed=p.speed,droppings_minute=drop_min,feathers=feathers,
             creation_time=creation_time,active_time=active_time)
         new_pigeon.save()
-        pigeons = Pigeon.objects.filter(player_id=user_id)  
+        expeditions = Pigeon.objects.filter(player_id=user_id, is_open=False)  
         
-    return list(pigeons.values())
+    return list(expeditions.values())
 
 
 def set_attacker(user_id, pigeon_id):
