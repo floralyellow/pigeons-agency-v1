@@ -1,5 +1,7 @@
 from django.db import models
 from .player import Player
+from rest_framework import serializers
+
 
 class Pigeon(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
@@ -26,3 +28,7 @@ class Pigeon(models.Model):
     defender_pos = models.IntegerField(null=True)
 
 
+class PigeonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pigeon
+        fields = '__all__'
