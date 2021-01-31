@@ -6,5 +6,6 @@ class TR_Lvl_info(models.Model):
     max_seeds = models.IntegerField(default=0)
     max_droppings = models.IntegerField(default=0)
     max_feathers = models.IntegerField(default=0)
+    max_pigeons = models.IntegerField(default=10)
 
     

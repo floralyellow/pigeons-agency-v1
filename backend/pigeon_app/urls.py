@@ -1,7 +1,8 @@
 from rest_framework import routers
-from .views.views import UserViewSet
+from .views.user_view import UserViewSet
 from .views.fill_tr_views import FillTRView
-from .views.pigeon_view import PigeonView, PigeonAttackerView
+from .views.player_views import PlayerLvlupView, PlayerUseBucketView
+from .views.pigeons_views import PigeonView, PigeonAttackerView, PigeonActivateView, PigeonSellView
 from django.contrib import admin
 from django.urls import include, path
 
@@ -19,17 +20,20 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
-    #path(r'api/test/', TestView.as_view(), name='test'),
     path(r'api/pigeons/', PigeonView.as_view(), name='pigeon'),
 
     path(r'api/pigeons/attacker', PigeonAttackerView.as_view(), name='set_attacker'),
+    path(r'api/pigeons/activate', PigeonActivateView.as_view(), name='set_active'),
+    path(r'api/pigeons/sell', PigeonSellView.as_view(), name='sell'),
+
+    path(r'api/player/lvlup', PlayerLvlupView.as_view(), name='lvl_up'),
+    path(r'api/player/usebucket', PlayerUseBucketView.as_view(), name='usebucket'),
+
 
 
 
     # ADMIN NO PROD
     path(r'api/tr/', FillTRView.as_view(), name='tr'),
 
-
-    #path(r'api/get_test_players/', get_test_players, name='get_test_players'),
 ]
 # urlpatterns += router.urls
