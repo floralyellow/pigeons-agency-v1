@@ -16,19 +16,19 @@ class PlayerView(APIView):
 
     # get user info
     def get(self, request):
-        user_id = request.user.id
-        player = Player.objects.filter(user_id=user_id)[0]
+        update_service.update_user_values(request.user)
 
         return JsonResponse({'message': UserSerializer(request.user).data})
 
 
 class PlayerLvlupView(APIView):
 
-    # slvl up
+    # lvl up
     def post(self, request):
-        user_id = request.user.id
+        update_service.update_user_values(request.user)
+
         with transaction.atomic():
-            player = Player.objects.select_for_update().filter(user_id=user_id)[0]
+            player = request.user.player
 
             feathers = player.feathers
             player_lvl = player.lvl
@@ -48,9 +48,10 @@ class PlayerUseBucketView(APIView):
 
     # use bucket
     def post(self, request):
-        user_id = request.user.id
+        update_service.update_user_values(request.user)
+
         with transaction.atomic():
-            player = Player.objects.select_for_update().filter(user_id=user_id)[0]
+            player = request.user.player
 
             droppings = player.droppings
             player_lvl = player.lvl
