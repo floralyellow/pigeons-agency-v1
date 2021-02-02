@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from ..models import Player
 from pigeon_app.models.player import UserSerializer
 from django.db import transaction
-#from ..services import player_service
+from ..services import update_service
 
 
 class PlayerView(APIView):
