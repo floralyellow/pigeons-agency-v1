@@ -14,13 +14,12 @@ class Player(models.Model):
     last_updated_at = models.DateTimeField(auto_now_add=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    feathers = models.IntegerField(default=0)
     
 
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = '__all__'
+        fields = ['lvl', 'seeds', 'droppings', 'feathers', 'military_score']
 
 
 class UserSerializer(serializers.ModelSerializer):

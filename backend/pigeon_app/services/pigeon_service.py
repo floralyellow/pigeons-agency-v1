@@ -21,31 +21,29 @@ from datetime import datetime,timedelta
 import random
 from django.db import transaction
 
-def create_pigeon(user_id, expedition_lvl):
+def create_pigeon(user, expedition_lvl):
     """
     create new pigeon
     """
 
     with transaction.atomic():
 
-        player = Player.objects.select_for_update().filter(user_id=user_id)[0]
+        player = user.player 
         if player.lvl < int(expedition_lvl):
             return 'Invalid lvl'
 
         expedition = TR_Expedition.objects.filter(lvl=expedition_lvl)[0]
 
         lvl_info = TR_Lvl_info.objects.filter(lvl=player.lvl)[0]
-        nb_pigeons = Pigeon.objects.filter(player_id=user_id, is_sold=False).count()
+        nb_pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False).count()
         
         if nb_pigeons >= lvl_info.max_pigeons: 
             return 'Error too many pigeons'
-
         if player.seeds < expedition.seeds: 
             return 'Not enough seeds'
         player.seeds = player.seeds - expedition.seeds
         player.save()
         
-        logging.debug("------"+str('yy'))
         possible_pigeons = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl)
         weights = possible_pigeons.values_list('coef_chance_rate',flat=True)
         p = random.choices(population = possible_pigeons, weights = weights, k=1)[0]
@@ -60,21 +58,21 @@ def create_pigeon(user_id, expedition_lvl):
         creation_time = timezone.now()
         active_time = creation_time + timedelta(0,expedition.duration)
 
-        new_pigeon = Pigeon(player_id=user_id, pigeon_type=p.pigeon_type, 
+        new_pigeon = Pigeon(player_id=user.id, pigeon_type=p.pigeon_type, 
             name=p.name,pigeon_id=p.pigeon_id,luck=luck_value,
             element=element, attack=atk,life=life,shield=shield,
             speed=p.speed,droppings_minute=drop_min,feathers=feathers,
             creation_time=creation_time,active_time=active_time)
         new_pigeon.save()
-        pigeons = Pigeon.objects.filter(player_id=user_id)  
+        expeditions = Pigeon.objects.filter(player_id=user.id, is_open=False)  
         
-    return list(pigeons.values())
+    return list(expeditions.values())
 
 
-def set_attacker(user_id, pigeon_id):
+def set_attacker(user, pigeon_id):
 
     with transaction.atomic():
-        pigeons = Pigeon.objects.filter(player_id=user_id, is_sold=False, is_open=True)
+        pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=True)
         logging.debug("------"+str(pigeons))
 
 
@@ -94,11 +92,9 @@ def set_attacker(user_id, pigeon_id):
 
     return PigeonSerializer(pigeon_to_update).data
 
-def activate_pigeon(user_id, pigeon_id):
+def activate_pigeon(user, pigeon_id):
     with transaction.atomic():
-        pigeons = Pigeon.objects.filter(player_id=user_id, is_sold=False, is_open=False)
-        logging.debug("------"+str(user_id))
-        logging.debug("------"+str(pigeons))
+        pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=False)
 
         if int(pigeon_id) not in pigeons.values_list('id',flat=True):
             return 'Error: wrong id'
@@ -113,16 +109,16 @@ def activate_pigeon(user_id, pigeon_id):
         pigeon_to_activate.save()
     return PigeonSerializer(pigeon_to_activate).data
 
-def sell_pigeon(user_id, pigeon_id):
+def sell_pigeon(user, pigeon_id):
     with transaction.atomic():
-        pigeons = Pigeon.objects.filter(player_id=user_id, is_sold=False, is_open=True)
+        pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=True)
 
         if int(pigeon_id) not in pigeons.values_list('id',flat=True):
             return 'Error: wrong id'
         
         pigeon_to_sell = pigeons.filter(id = pigeon_id)[0]
 
-        player = Player.objects.select_for_update().filter(user_id=user_id)[0]
+        player = user.player
         player.feathers += pigeon_to_sell.feathers
 
         pigeon_to_sell.is_sold = True

@@ -7,17 +7,28 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from ..models import Player
-from pigeon_app.models.player import PlayerSerializer
+from pigeon_app.models.player import UserSerializer
 from django.db import transaction
-#from ..services import player_service
+from ..services import update_service
+
+
+class PlayerView(APIView):
+
+    # get user info
+    def get(self, request):
+        update_service.update_user_values(request.user)
+
+        return JsonResponse({'message': UserSerializer(request.user).data})
+
 
 class PlayerLvlupView(APIView):
 
-    # slvl up
+    # lvl up
     def post(self, request):
-        user_id = request.user.id
+        update_service.update_user_values(request.user)
+
         with transaction.atomic():
-            player = Player.objects.select_for_update().filter(user_id=user_id)[0]
+            player = request.user.player
 
             feathers = player.feathers
             player_lvl = player.lvl
@@ -31,15 +42,16 @@ class PlayerLvlupView(APIView):
             player.lvl = player.lvl + 1
             player.save()
 
-        return JsonResponse({'message': PlayerSerializer(player).data})
+        return JsonResponse({'message': UserSerializer(request.user).data})
 
 class PlayerUseBucketView(APIView):
 
     # use bucket
     def post(self, request):
-        user_id = request.user.id
+        update_service.update_user_values(request.user)
+
         with transaction.atomic():
-            player = Player.objects.select_for_update().filter(user_id=user_id)[0]
+            player = request.user.player
 
             droppings = player.droppings
             player_lvl = player.lvl
@@ -53,4 +65,4 @@ class PlayerUseBucketView(APIView):
             player.seeds = lvl_info.max_seeds
             player.save()
 
-        return JsonResponse({'message': PlayerSerializer(player).data})
+        return JsonResponse({'message': UserSerializer(request.user).data})
