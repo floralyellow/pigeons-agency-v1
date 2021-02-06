@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { Router } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AuthModule} from './auth/auth.module';
 import {CoreModule} from './core/core.module';
-import {UiModule} from './ui/ui.module';
 
 @NgModule({
   declarations: [
@@ -16,9 +16,10 @@ import {UiModule} from './ui/ui.module';
     AppRoutingModule,
     AuthModule,
     CoreModule,
-    UiModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {}
+ }

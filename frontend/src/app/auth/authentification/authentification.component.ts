@@ -33,7 +33,7 @@ export class AuthentificationComponent implements OnInit {
         username : this.login.username,
         password : this.login.password
       }).then(()=>{
-        this.router.navigate(['/']);
+        this.router.navigate(['/index']);
       });
 
     }
