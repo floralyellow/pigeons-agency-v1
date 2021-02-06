@@ -1,5 +1,6 @@
 import { ImplicitReceiver } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import {PlayerService} from '../core/services/player.service'
 
 @Component({
   selector: 'app-pages',
@@ -8,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PagesComponent implements OnInit {
 
-  constructor() { }
+  constructor(playerService : PlayerService ) {
+    playerService
+   }
 
   ngOnInit(): void {
   }
-
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
     user: User;
     bus = new Subject<any>();
 
-    constructor(private http: HttpClient) { }
+    constructor(public router: Router,private http: HttpClient) { }
 
     // notify subscribers when some values changed
     emitChange() {
@@ -25,6 +26,7 @@ export class AuthService {
                 .subscribe((res: LoginAPIReturn) => {
                     this.updateToken(res.access);
                     this.updateUser();
+                    this.router.navigate(['/index']);
                     resolve(res);
                 }, err => {
                     reject(err); 
@@ -37,6 +39,7 @@ export class AuthService {
             this.http.post(environment.apiBaseUrl + '/users/', APIParameter)
                 .subscribe((res: RegisterAPIReturn) => {
                     resolve(res);
+                    this.login(APIParameter);
                 }, err => {
                     reject(err);
                 });

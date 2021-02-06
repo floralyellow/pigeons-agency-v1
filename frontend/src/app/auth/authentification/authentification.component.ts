@@ -16,7 +16,7 @@ export class AuthentificationComponent implements OnInit {
     username:"",
     password:""
   }
-  constructor(public router: Router,private authService : AuthService) { }
+  constructor(private authService : AuthService) { }
 
   ngOnInit(): void {
   }
@@ -32,9 +32,7 @@ export class AuthentificationComponent implements OnInit {
       ({
         username : this.login.username,
         password : this.login.password
-      }).then(()=>{
-        this.router.navigate(['/index']);
-      });
+      })
 
     }
   }
