@@ -2,24 +2,33 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthentificationComponent } from './auth';
 import { IsNotAuth,IsAuth } from './core/guards/';
-import { DashboardComponent } from './pages';
 
 const routes: Routes = [
-  {
-    path : "",
-    component : DashboardComponent,
-    canActivate : [IsAuth]
-  },
   {
     path : "authentification",
     component : AuthentificationComponent,
     canActivate : [IsNotAuth]
-  }
+  },
+  {
+    path : "",
+    canActivate : [IsAuth],
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
+  },
+  { 
+    path: '',
+    redirectTo: '/index',
+    pathMatch: 'full' 
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(
+      routes,
+      {
+        enableTracing: false
+      }
+    )
   ],
   exports: [RouterModule],
 })

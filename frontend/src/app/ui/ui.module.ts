@@ -1,14 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HeaderComponent } from './header/header.component';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
   declarations: [
+    HeaderComponent
   ],
   imports: [
-    BrowserModule
+    CommonModule
   ],
   providers: [],
-  bootstrap: []
+  bootstrap: [],
+  exports: [
+    HeaderComponent
+  ],
 })
 export class UiModule { }

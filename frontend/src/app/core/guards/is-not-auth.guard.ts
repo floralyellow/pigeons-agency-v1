@@ -13,7 +13,7 @@ export class IsNotAuth implements CanActivate {
         const isLoggedIn = this.auth.checkIfLoggedIn();
 
         if (isLoggedIn) {
-            this.router.navigate(['/']);
+            this.router.navigate(['/index']);
             return false;
         }
 
