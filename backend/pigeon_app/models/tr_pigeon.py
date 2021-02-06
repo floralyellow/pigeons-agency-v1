@@ -17,9 +17,11 @@ class TR_Pigeon(models.Model):
     min_shield = models.IntegerField(default=1)
     max_shield = models.IntegerField(default=1)
     speed = models.IntegerField(default=1)
-    effect_1_chance = models.IntegerField(default=1)
+    min_luck_1 = models.IntegerField(default=1)
+    effect_1_chance = ArrayField(models.IntegerField(null=True, blank=True), null=True, blank=True)
     effect_1 = ArrayField(models.IntegerField(null=True, blank=True), null=True, blank=True)
-    effect_2_chance = models.IntegerField(default=1)
+    min_luck_2 = models.IntegerField(default=1)
+    effect_2_chance = ArrayField(models.IntegerField(null=True, blank=True), null=True, blank=True)
     effect_2 = ArrayField(models.IntegerField(null=True, blank=True), null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
