@@ -55,6 +55,32 @@ def create_pigeon(user, expedition_lvl):
         shield = int(luck_value/100*(p.max_shield - p.min_shield))+p.min_shield
         drop_min = int(luck_value/100*(expedition.max_drop_minute - expedition.min_drop_minute))+expedition.min_drop_minute
         feathers = int(luck_value/100*(expedition.max_feathers - expedition.min_feathers))+expedition.min_feathers
+
+        if luck_value > p.min_luck_1:
+            luck_factor_1 = int((luck_value - p.min_luck_1) / (100 - p.min_luck_1) * 100 / 2)
+            logging.debug(str(luck_factor_1))
+            luck_effect_1 = random.randint(luck_factor_1,100)
+            logging.debug(str(luck_effect_1))
+
+
+            effect_1_id = random.choices(population = p.effect_1, weights = p.effect_1_chance, k=1)[0]
+            effect_1_obj = TR_Effect.objects.filter(effect_id=effect_1_id)[0]
+            effect_1_value = int(luck_effect_1/100*(effect_1_obj.max_value - effect_1_obj.min_value))+effect_1_obj.min_value
+        else:
+            effect_1_id = 0
+            effect_1_value = 0
+
+        if luck_value > p.min_luck_2:
+            luck_factor_2 = int((luck_value - p.min_luck_2) / (100 - p.min_luck_2) * 100 / 2)
+            luck_effect_2 = random.randint(luck_factor_2,100)
+
+            effect_2_id = random.choices(population = p.effect_2, weights = p.effect_2_chance, k=1)[0]
+            effect_2_obj = TR_Effect.objects.filter(effect_id=effect_2_id)[0]
+            effect_2_value = int(luck_effect_2/100*(effect_2_obj.max_value - effect_2_obj.min_value))+effect_2_obj.min_value
+        else:
+            effect_2_id = 0
+            effect_2_value = 0
+
         creation_time = timezone.now()
         active_time = creation_time + timedelta(0,expedition.duration)
 
@@ -62,6 +88,8 @@ def create_pigeon(user, expedition_lvl):
             name=p.name,pigeon_id=p.pigeon_id,luck=luck_value,
             element=element, attack=atk,life=life,shield=shield,
             speed=p.speed,droppings_minute=drop_min,feathers=feathers,
+            effect_1_id=effect_1_id, effect_1_value=effect_1_value,
+            effect_2_id=effect_2_id, effect_2_value=effect_2_value,
             creation_time=creation_time,active_time=active_time)
         new_pigeon.save()
         expeditions = Pigeon.objects.filter(player_id=user.id, is_open=False)  
