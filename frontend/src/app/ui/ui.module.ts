@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
     HeaderComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   providers: [],
   bootstrap: [],
