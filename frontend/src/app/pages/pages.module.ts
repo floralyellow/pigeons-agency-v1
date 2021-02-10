@@ -4,8 +4,9 @@ import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { CommonModule } from '@angular/common';
 import { UiModule } from '../ui/ui.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthInterceptor} from '../core/interceptors/auth-interceptor'
+import { PlayerService } from '../core/services/player.service';
 
 @NgModule({
   declarations: [
@@ -15,9 +16,11 @@ import {AuthInterceptor} from '../core/interceptors/auth-interceptor'
   imports: [
     CommonModule,
     PagesRoutingModule,
-    UiModule
+    UiModule,
+    HttpClientModule
   ],
   providers: [
+    PlayerService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: []
