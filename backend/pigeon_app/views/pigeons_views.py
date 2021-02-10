@@ -62,6 +62,22 @@ class PigeonAttackerView(APIView):
 
         return JsonResponse({'message': message})
 
+class PigeonDefenderView(APIView):
+
+    # set attacker
+    def post(self, request):
+        update_service.update_user_values(request.user)
+
+        if 'p_id' not in request.POST:
+            return JsonResponse({'message': 'Error: No post info'})
+        pigeon_id = request.POST.get('p_id')
+        if not pigeon_id.isdigit() :
+            return JsonResponse({'message': 'Error: invalid input'})
+        
+        message = pigeon_service.set_defender(request.user, pigeon_id)
+
+        return JsonResponse({'message': message})
+
 class PigeonActivateView(APIView):
 
     # activatePigeon
