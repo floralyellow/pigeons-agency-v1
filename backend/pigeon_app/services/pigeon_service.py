@@ -21,8 +21,11 @@ from datetime import datetime,timedelta
 import random
 from django.db import transaction
 
-#def get_global_pigeon_info(user):
-    #pigeon_info = Pigeons.object.filter(player_id = user.id, )
+def get_global_pigeon_info(user):
+    query = 'select 1 as id, coalesce(sum(droppings_minute),0) as droppings_minute ,count(*) as nb_pigeons from pigeon_app_pigeon pap where player_id = %s and is_open = true and is_sold = false;'
+    res = Pigeon.objects.raw(query, [user.id])[0]
+    return res.nb_pigeons, res.droppings_minute
+
 
 def create_pigeon(user, expedition_lvl):
     """
