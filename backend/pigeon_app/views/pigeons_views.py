@@ -64,7 +64,7 @@ class PigeonAttackerView(APIView):
 
 class PigeonDefenderView(APIView):
 
-    # set attacker
+    # set defender
     def post(self, request):
         update_service.update_user_values(request.user)
 
@@ -77,6 +77,34 @@ class PigeonDefenderView(APIView):
         message = pigeon_service.set_defender(request.user, pigeon_id)
 
         return JsonResponse({'message': message})
+
+
+# TODO validate json/array data
+class PigeonDefenderOrderView(APIView):
+    # organise defenders
+    def post(self, request):
+        update_service.update_user_values(request.user)
+
+        if 'p_ids' not in request.POST or 'p_pos' not in request.POST:
+            return JsonResponse({'message': 'Error: No post info'})
+        # pigeon_ids = list(request.POST.get('p_ids'))
+        # positions = list(request.POST.get('p_pos'))
+        # logging.debug(pigeon_ids)
+        # logging.debug(type(pigeon_ids))
+
+
+        if not isinstance(pigeon_ids, list) or not isinstance(positions, list) : 
+            return JsonResponse({'message': 'Error: invalid input1'})
+
+        if not len(pigeon_ids) == 5 or not len(positions) == 5 : 
+            return JsonResponse({'message': 'Error: invalid input2'})
+
+        if not all(isinstance(x, int) for x in pigeon_ids) or not all(isinstance(x, int) for x in positions) : 
+            return JsonResponse({'message': 'Error: invalid input3'})
+        
+        #message = pigeon_service.set_defender(request.user, pigeon_id)
+
+        return JsonResponse({'message': 'message'})
 
 class PigeonActivateView(APIView):
 
