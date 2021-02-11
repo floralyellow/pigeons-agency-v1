@@ -9,3 +9,4 @@ build
 Pipfile
 Pipfile.lock
 backend/manage.py
+frontend/src/assets/pigeons

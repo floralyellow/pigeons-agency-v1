@@ -10,7 +10,7 @@ import { Player } from 'src/app/core/models/player';
   styleUrls: ['./header.component.scss'] 
 })
 export class HeaderComponent implements OnInit {
-  @Input() player : Player;
+  //@Input() player : Player;
   darkMode = false; 
   faCrow = faCrow;
   faMapSigns = faMapSigns;

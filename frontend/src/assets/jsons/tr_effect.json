@@ -1,0 +1,56 @@
+[
+  {
+    "effect_name": "none",
+    "is_active_effect": "False",
+    "has_value": "False",
+    "desc": "No effect"
+  },
+  {
+    "effect_name": "Mountain Damage",
+    "is_active_effect": "True",
+    "has_value": "True",
+    "desc": "More damage against Mountain"
+  },
+  {
+    "effect_name": "Forest Damage",
+    "is_active_effect": "True",
+    "has_value": "True",
+    "desc": "More damage against Forest"
+  },
+  {
+    "effect_name": "Lake Damage",
+    "is_active_effect": "True",
+    "has_value": "True",
+    "desc": "More damage against Lake"
+  },
+  {
+    "effect_name": "Mountain Support",
+    "is_active_effect": "False",
+    "has_value": "True",
+    "desc": "Gives your Mountain allies more damage"
+  },
+  {
+    "effect_name": "Forest Support",
+    "is_active_effect": "False",
+    "has_value": "True",
+    "desc": "Gives your Forest allies more damage"
+  },
+  {
+    "effect_name": "Lake Support",
+    "is_active_effect": "False",
+    "has_value": "True",
+    "desc": "Gives your Lake allies more damage"
+  },
+  {
+    "effect_name": "Critical",
+    "is_active_effect": "True",
+    "has_value": "True",
+    "desc": "Chance of critical hits"
+  },
+  {
+    "effect_name": "Shield Breaker",
+    "is_active_effect": "True",
+    "has_value": "False",
+    "desc": "Ignores shield"
+  }
+]
