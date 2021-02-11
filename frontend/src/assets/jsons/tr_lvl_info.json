@@ -1,0 +1,212 @@
+[
+  {
+    "seeds_minute": 75,
+    "max_seeds": 25,
+    "max_droppings": 70,
+    "max_feathers": 15,
+    "max_pigeons": 10
+  },
+  {
+    "seeds_minute": 100,
+    "max_seeds": 50,
+    "max_droppings": 162,
+    "max_feathers": 60,
+    "max_pigeons": 12
+  },
+  {
+    "seeds_minute": 150,
+    "max_seeds": 110,
+    "max_droppings": 392,
+    "max_feathers": 240,
+    "max_pigeons": 14
+  },
+  {
+    "seeds_minute": 250,
+    "max_seeds": 220,
+    "max_droppings": 720,
+    "max_feathers": 720,
+    "max_pigeons": 16
+  },
+  {
+    "seeds_minute": 350,
+    "max_seeds": 420,
+    "max_droppings": 1035,
+    "max_feathers": 1440,
+    "max_pigeons": 18
+  },
+  {
+    "seeds_minute": 450,
+    "max_seeds": 950,
+    "max_droppings": 1600,
+    "max_feathers": 2610,
+    "max_pigeons": 20
+  },
+  {
+    "seeds_minute": 550,
+    "max_seeds": 1600,
+    "max_droppings": 2200,
+    "max_feathers": 4650,
+    "max_pigeons": 22
+  },
+  {
+    "seeds_minute": 650,
+    "max_seeds": 2600,
+    "max_droppings": 3120,
+    "max_feathers": 8250,
+    "max_pigeons": 24
+  },
+  {
+    "seeds_minute": 750,
+    "max_seeds": 4100,
+    "max_droppings": 4225,
+    "max_feathers": 14250,
+    "max_pigeons": 26
+  },
+  {
+    "seeds_minute": 850,
+    "max_seeds": 6100,
+    "max_droppings": 5530,
+    "max_feathers": 22500,
+    "max_pigeons": 28
+  },
+  {
+    "seeds_minute": 950,
+    "max_seeds": 8400,
+    "max_droppings": 6900,
+    "max_feathers": 33000,
+    "max_pigeons": 30
+  },
+  {
+    "seeds_minute": 1050,
+    "max_seeds": 12800,
+    "max_droppings": 8560,
+    "max_feathers": 46500,
+    "max_pigeons": 32
+  },
+  {
+    "seeds_minute": 1150,
+    "max_seeds": 15900,
+    "max_droppings": 10370,
+    "max_feathers": 63000,
+    "max_pigeons": 34
+  },
+  {
+    "seeds_minute": 1250,
+    "max_seeds": 19600,
+    "max_droppings": 12420,
+    "max_feathers": 84000,
+    "max_pigeons": 36
+  },
+  {
+    "seeds_minute": 1350,
+    "max_seeds": 23300,
+    "max_droppings": 15770,
+    "max_feathers": 111000,
+    "max_pigeons": 38
+  },
+  {
+    "seeds_minute": 1450,
+    "max_seeds": 28200,
+    "max_droppings": 19200,
+    "max_feathers": 145500,
+    "max_pigeons": 40
+  },
+  {
+    "seeds_minute": 1550,
+    "max_seeds": 32900,
+    "max_droppings": 22890,
+    "max_feathers": 187500,
+    "max_pigeons": 42
+  },
+  {
+    "seeds_minute": 1650,
+    "max_seeds": 38000,
+    "max_droppings": 26950,
+    "max_feathers": 240000,
+    "max_pigeons": 44
+  },
+  {
+    "seeds_minute": 1750,
+    "max_seeds": 42800,
+    "max_droppings": 31165,
+    "max_feathers": 315000,
+    "max_pigeons": 46
+  },
+  {
+    "seeds_minute": 1850,
+    "max_seeds": 48000,
+    "max_droppings": 37560,
+    "max_feathers": 405000,
+    "max_pigeons": 48
+  },
+  {
+    "seeds_minute": 1950,
+    "max_seeds": 66000,
+    "max_droppings": 44000,
+    "max_feathers": 495000,
+    "max_pigeons": 50
+  },
+  {
+    "seeds_minute": 2050,
+    "max_seeds": 78000,
+    "max_droppings": 50700,
+    "max_feathers": 585000,
+    "max_pigeons": 52
+  },
+  {
+    "seeds_minute": 2150,
+    "max_seeds": 90000,
+    "max_droppings": 57915,
+    "max_feathers": 675000,
+    "max_pigeons": 54
+  },
+  {
+    "seeds_minute": 2250,
+    "max_seeds": 102000,
+    "max_droppings": 65520,
+    "max_feathers": 765000,
+    "max_pigeons": 56
+  },
+  {
+    "seeds_minute": 2350,
+    "max_seeds": 114000,
+    "max_droppings": 73370,
+    "max_feathers": 855000,
+    "max_pigeons": 58
+  },
+  {
+    "seeds_minute": 2450,
+    "max_seeds": 138000,
+    "max_droppings": 81750,
+    "max_feathers": 1035000,
+    "max_pigeons": 60
+  },
+  {
+    "seeds_minute": 2550,
+    "max_seeds": 162000,
+    "max_droppings": 90520,
+    "max_feathers": 1215000,
+    "max_pigeons": 62
+  },
+  {
+    "seeds_minute": 2650,
+    "max_seeds": 186000,
+    "max_droppings": 99680,
+    "max_feathers": 1410000,
+    "max_pigeons": 64
+  },
+  {
+    "seeds_minute": 2750,
+    "max_seeds": 210000,
+    "max_droppings": 109065,
+    "max_feathers": 1650000,
+    "max_pigeons": 66
+  },
+  {
+    "seeds_minute": 2850,
+    "max_seeds": 230000,
+    "max_droppings": 123930,
+    "max_feathers": 1950000,
+    "max_pigeons": 68
+  }
+]
