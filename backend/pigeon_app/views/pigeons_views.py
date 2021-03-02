@@ -12,6 +12,7 @@ from django.core.signals import request_finished
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.utils import timezone
+import json
 from ..models import TR_Pigeon
 from ..models import TR_Lvl_info
 from ..models import TR_Effect
@@ -45,6 +46,15 @@ class PigeonView(APIView):
 
         return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'expeditions' : expeditions}})
 
+class ExpeditionView(APIView):
+
+    # get expeditions
+    def get(self, request):
+        update_service.update_user_values(request.user)
+        user_id = request.user.id
+        expeditions = list(Pigeon.objects.filter(player_id=user_id, is_open=False).values())
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'expeditions' : expeditions}})
+
 
 class PigeonAttackerView(APIView):
 
@@ -59,6 +69,48 @@ class PigeonAttackerView(APIView):
             return JsonResponse({'message': 'Error: invalid input'})
         
         message = pigeon_service.set_attacker(request.user, pigeon_id)
+
+        return JsonResponse({'message': message})
+
+class PigeonDefenderView(APIView):
+
+    # set defender
+    def post(self, request):
+        update_service.update_user_values(request.user)
+
+        if 'p_id' not in request.POST:
+            return JsonResponse({'message': 'Error: No post info'})
+        pigeon_id = request.POST.get('p_id')
+        if not pigeon_id.isdigit() :
+            return JsonResponse({'message': 'Error: invalid input'})
+        
+        message = pigeon_service.set_defender(request.user, pigeon_id)
+
+        return JsonResponse({'message': message})
+
+class PigeonDefenderOrderView(APIView):
+    # organise defenders
+    def post(self, request):
+        update_service.update_user_values(request.user)
+
+        try:
+            input = json.loads(request.body)
+            logging.debug(input)
+            pigeon_ids = input["pigeon_ids"]
+
+        except (ValueError, KeyError) as e:  
+            return JsonResponse({'message': 'Error: wrong input1'})
+        
+        if not isinstance(pigeon_ids, list):
+            return JsonResponse({'message': 'Error: wrong input2'})
+
+        if not len(pigeon_ids) == 5:
+            return JsonResponse({'message': 'Error: wrong input3'})
+
+        if not all(isinstance(x, int) for x in pigeon_ids): 
+            return JsonResponse({'message': 'Error: invalid input4'})
+
+        message = pigeon_service.organise_defenders(request.user, pigeon_ids)
 
         return JsonResponse({'message': message})
 
