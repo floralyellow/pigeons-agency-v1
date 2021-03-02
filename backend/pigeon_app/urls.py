@@ -2,7 +2,7 @@ from rest_framework import routers
 from .views.user_view import UserViewSet
 from .views.fill_tr_views import FillTRView
 from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
-from .views.pigeons_views import PigeonView, PigeonAttackerView, PigeonDefenderView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView
+from .views.pigeons_views import PigeonView, PigeonAttackerView, PigeonDefenderView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
 from django.contrib import admin
 from django.urls import include, path
 
@@ -19,7 +19,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),    
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
+
+    path(r'api/expeditions/', ExpeditionView.as_view(), name='expeditions'),
     path(r'api/pigeons/', PigeonView.as_view(), name='pigeon'),
 
     path(r'api/pigeons/attacker', PigeonAttackerView.as_view(), name='set_attacker'),
