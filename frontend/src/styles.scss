@@ -34,8 +34,8 @@ body{
     min-height: 100vh;
     transition: background-color 0.3s ease-in-out;
 }
-.d-flex{ display: flex !; }
-.m-auto{ margin: auto !; }
+.d-flex{ display: flex !important; }
+.m-auto{ margin: auto !important; }
 .mv-auto{ margin: auto 0 !important; }
 .container{ min-height: calc(100vh - 52px); }
 .auth.container{ min-height: 100vh; }

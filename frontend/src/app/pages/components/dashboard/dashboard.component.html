@@ -4,25 +4,44 @@
         <div>
         <p class="heading">Pigeon</p>
         <p class="title">0/{{level.max_pigeons | shortNumber}}</p>
-        <progress class="progress is-primary" value="1" [max]="level.max_pigeons"></progress>
+        <progress 
+            class="progress is-primary" 
+            value="0" 
+            [max]="level.max_pigeons">
+        </progress>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
         <p class="heading">Seeds</p>
         <p class="title">{{player.player.seeds}}/{{level.max_seeds | shortNumber}}</p>
+        <progress 
+            class="progress is-primary" 
+            [value]="player.player.seeds" 
+            [max]="level.max_seeds">
+        </progress>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
         <p class="heading">Feathers</p>
         <p class="title">{{player.player.feathers}}/{{level.max_feathers | shortNumber}}</p>
+        <progress 
+            class="progress is-primary" 
+            [value]="player.player.feathers" 
+            [max]="level.max_feathers">
+        </progress>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
         <p class="heading">Dropping</p>
         <p class="title">{{player.player.droppings}}/{{level.max_droppings | shortNumber}}</p>
+        <progress 
+            class="progress is-primary" 
+            [value]="player.player.droppings" 
+            [max]="level.max_droppings">
+        </progress>
         </div>
     </div>
     </nav>

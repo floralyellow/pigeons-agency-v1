@@ -1,0 +1,1 @@
+export {ExpeditionCardComponent} from './expedition-card.component'

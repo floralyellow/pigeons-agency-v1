@@ -1,6 +1,6 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand d-flex">
-    <a class="navbar-item">
+    <a class="navbar-item" [routerLink]="['index']">
       <img src="assets/pigeons/furegeon.png">
       <span> Pigeon Agency</span>
     </a>
@@ -20,7 +20,7 @@
       <a class="navbar-item">
         <span><fa-icon [icon]="faCrow"></fa-icon> Aviary</span>
       </a>
-      <a class="navbar-item">
+      <a [routerLink]="['expeditions']" class="navbar-item">
         <span><fa-icon [icon]="faMapSigns"></fa-icon> Expeditions</span>
       </a>
       <a class="navbar-item">
