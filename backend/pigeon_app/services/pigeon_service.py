@@ -21,6 +21,12 @@ from datetime import datetime,timedelta
 import random
 from django.db import transaction
 
+def get_global_pigeon_info(user):
+    query = 'select 1 as id, coalesce(sum(droppings_minute),0) as droppings_minute ,count(*) as nb_pigeons from pigeon_app_pigeon pap where player_id = %s and is_open = true and is_sold = false;'
+    res = Pigeon.objects.raw(query, [user.id])[0]
+    return res.nb_pigeons, res.droppings_minute
+
+
 def create_pigeon(user, expedition_lvl):
     """
     create new pigeon
@@ -100,7 +106,7 @@ def create_pigeon(user, expedition_lvl):
 def set_attacker(user, pigeon_id):
 
     with transaction.atomic():
-        pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=True)
+        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
         logging.debug("------"+str(pigeons))
 
 
@@ -111,18 +117,60 @@ def set_attacker(user, pigeon_id):
 
         pigeon_to_update.is_attacker = not pigeon_to_update.is_attacker
 
-        nb_attackers = pigeons.select_for_update().filter(is_attacker = True).count()
+        nb_attackers = pigeons.filter(is_attacker = True).count()
 
         if nb_attackers > 5:
-            return 'Too many atk'
+            return 'Error : Too many attackers'
 
         pigeon_to_update.save()
 
     return PigeonSerializer(pigeon_to_update).data
 
+
+def set_defender(user, pigeon_id):
+
+    with transaction.atomic():
+        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
+
+        if int(pigeon_id) not in pigeons.values_list('id',flat=True):
+            return 'Error: wrong id'
+        
+        pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
+
+        if pigeon_to_update.defender_pos is not None :
+            pigeon_to_update.defender_pos = None
+        else:
+            defenders = pigeons.exclude(defender_pos__isnull=True).values_list('defender_pos', flat=True)
+            free_space = [i for i in range(1,6) if i not in defenders]
+            if not free_space:
+                return 'Error : Too many defenders'
+            pigeon_to_update.defender_pos = min(free_space)
+
+        pigeon_to_update.save()
+
+    return PigeonSerializer(pigeon_to_update).data
+
+def organise_defenders(user, pigeon_ids):
+
+    with transaction.atomic():
+        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
+
+        if not all(int(p) in pigeons.values_list('id',flat=True) for p in pigeon_ids): 
+            return 'Error: wrong id'
+        
+        previous_defenders = pigeons.exclude(defender_pos__isnull=True)
+        previous_defenders.update(defender_pos=None)
+
+        def_pos = 1
+        for p in pigeon_ids:
+            pigeons.filter(id=int(p)).update(defender_pos=def_pos)
+            def_pos = def_pos + 1
+
+        return list(pigeons.values())
+
 def activate_pigeon(user, pigeon_id):
     with transaction.atomic():
-        pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=False)
+        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=False)
 
         if int(pigeon_id) not in pigeons.values_list('id',flat=True):
             return 'Error: wrong id'
@@ -139,7 +187,7 @@ def activate_pigeon(user, pigeon_id):
 
 def sell_pigeon(user, pigeon_id):
     with transaction.atomic():
-        pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=True)
+        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
 
         if int(pigeon_id) not in pigeons.values_list('id',flat=True):
             return 'Error: wrong id'

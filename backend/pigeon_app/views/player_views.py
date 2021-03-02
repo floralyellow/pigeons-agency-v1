@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 from ..models import Player
 from pigeon_app.models.player import UserSerializer
 from django.db import transaction
-from ..services import update_service
-
+from ..services import update_service, pigeon_service
+import logging
 
 class PlayerView(APIView):
 
@@ -18,7 +18,9 @@ class PlayerView(APIView):
     def get(self, request):
         update_service.update_user_values(request.user)
 
-        return JsonResponse({'message': UserSerializer(request.user).data})
+        nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
+
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute}})
 
 
 class PlayerLvlupView(APIView):
@@ -53,12 +55,9 @@ class PlayerUseBucketView(APIView):
         with transaction.atomic():
             player = request.user.player
 
-            droppings = player.droppings
-            player_lvl = player.lvl
+            lvl_info = TR_Lvl_info.objects.filter(lvl=player.lvl)[0]
 
-            lvl_info = TR_Lvl_info.objects.filter(lvl=player_lvl)[0]
-
-            if lvl_info.max_droppings > droppings:
+            if lvl_info.max_droppings > player.droppings:
                 return JsonResponse({'message': 'Error: Not enough droppings'})
 
             player.droppings = 0
