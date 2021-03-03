@@ -1,0 +1,1 @@
+export {ShortNumberPipe} from './short-number.pipe'

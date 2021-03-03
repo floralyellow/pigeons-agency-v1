@@ -1,12 +1,26 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
+  <div class="navbar-brand d-flex">
+    <a class="navbar-item" [routerLink]="['index']">
+      <img src="assets/pigeons/furegeon.png">
+      <span> Pigeon Agency</span>
+    </a>
+    <a role="button"
+    class="navbar-burger" 
+    data-target="navMenu" 
+    aria-label="menu" 
+    aria-expanded="false"
+    (click)="toggle()">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
   </div>
-  <div class="navbar-menu d-flex">
+  <div class="navbar-menu" id="navMenu">
     <div class="navbar-start">
       <a class="navbar-item">
         <span><fa-icon [icon]="faCrow"></fa-icon> Aviary</span>
       </a>
-      <a class="navbar-item">
+      <a [routerLink]="['expeditions']" class="navbar-item">
         <span><fa-icon [icon]="faMapSigns"></fa-icon> Expeditions</span>
       </a>
       <a class="navbar-item">

@@ -1,5 +1,8 @@
 /* The switch - the box around the slider */
 @import "../../../../node_modules/bulma/bulma.sass";
+nav{  
+  height: 3.25rem;
+}
 .switch {
   position: relative;
   display: inline-block;
@@ -50,4 +53,15 @@
 input:checked + .slider:focus + .slider {
   box-shadow: 0 0 1px $grey-darker;
 }
-
+.navbar-menu {
+  display: flex;
+}
+@media (max-width: 1250px) {
+  .navbar-menu {
+    display: none;
+  }
+  .navbar-menu.is-active {
+    display: inline-block;
+    width: 100%;
+  }
+}

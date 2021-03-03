@@ -1,0 +1,1 @@
+export {ExpeditionsComponent} from './expeditions.component'

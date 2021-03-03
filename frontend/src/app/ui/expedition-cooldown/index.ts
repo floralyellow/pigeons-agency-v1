@@ -1,0 +1,1 @@
+export {ExpeditionCooldownComponent} from './expedition-cooldown.component'

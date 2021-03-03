@@ -7,11 +7,15 @@ import { UiModule } from '../ui/ui.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthInterceptor} from '../core/interceptors/auth-interceptor'
 import { PlayerService } from '../core/services/player.service';
+import { ShortNumberPipe } from './pipes/short-number.pipe';
+import { ExpeditionsComponent } from './components/expeditions/';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     PagesComponent,
+    ShortNumberPipe,
+    ExpeditionsComponent,
   ],
   imports: [
     CommonModule,
