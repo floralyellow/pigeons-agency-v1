@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   constructor(playerService : PlayerService ) {
     playerService.getPlayerInfo().then((value : Player) => {
       this.player = value;
-      this.level = this.levelList[this.player.player.lvl - 1]
+      this.level = this.levelList[this.player.user.player.lvl - 1]
     })
   }
 

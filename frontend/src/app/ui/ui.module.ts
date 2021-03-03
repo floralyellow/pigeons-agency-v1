@@ -3,15 +3,19 @@ import { HeaderComponent } from './header/header.component';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
-import { ExpeditionCooldownComponent } from './expedition-cooldown/expedition-cooldown.component';
-import { ExpeditionCardComponent } from './expedition-card/expedition-card.component';
+import { ExpeditionCooldownComponent } from './expedition-cooldown/';
+import { ExpeditionCardComponent } from './expedition-card/';
+import { DashboardCardComponent } from './dashboard-card/';
+import { SecondToMinPipe } from './pipes';
 
 
 @NgModule({
   declarations: [
+    SecondToMinPipe,
     HeaderComponent,
     ExpeditionCooldownComponent,
-    ExpeditionCardComponent
+    ExpeditionCardComponent,
+    DashboardCardComponent
   ],
   imports: [
     RouterModule,
@@ -21,7 +25,10 @@ import { ExpeditionCardComponent } from './expedition-card/expedition-card.compo
   providers: [],
   bootstrap: [],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    ExpeditionCooldownComponent,
+    ExpeditionCardComponent,
+    DashboardCardComponent
   ],
 })
 export class UiModule { }
