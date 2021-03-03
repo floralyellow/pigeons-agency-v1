@@ -25,6 +25,8 @@ from ..services import pigeon_service, update_service
 class PigeonView(APIView):
     # Get all pigeons of user
     def get(self, request):
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
         user_id = request.user.id
         pigeons = list(Pigeon.objects.filter(player_id=user_id, is_sold=False).values())
@@ -35,6 +37,8 @@ class PigeonView(APIView):
     # create pigeon
     def post(self, request):
 
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
         if 'exp_lvl' not in request.POST:
             return JsonResponse({'message': 'Error: No expedition_lvl'})
@@ -50,6 +54,8 @@ class ExpeditionView(APIView):
 
     # get expeditions
     def get(self, request):
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
         user_id = request.user.id
         expeditions = list(Pigeon.objects.filter(player_id=user_id, is_open=False).values())
@@ -60,6 +66,9 @@ class PigeonAttackerView(APIView):
 
     # set attacker
     def post(self, request):
+
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
 
         if 'p_id' not in request.POST:
@@ -76,6 +85,9 @@ class PigeonDefenderView(APIView):
 
     # set defender
     def post(self, request):
+
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
 
         if 'p_id' not in request.POST:
@@ -91,6 +103,9 @@ class PigeonDefenderView(APIView):
 class PigeonDefenderOrderView(APIView):
     # organise defenders
     def post(self, request):
+
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
 
         try:
@@ -118,6 +133,9 @@ class PigeonActivateView(APIView):
 
     # activatePigeon
     def post(self, request):
+
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
         if 'p_id' not in request.POST:
             return JsonResponse({'message': 'Error: No post info'})
@@ -133,6 +151,9 @@ class PigeonSellView(APIView):
 
     # sellPigeon
     def post(self, request):
+
+        if request.user.player.attacking_id is not None:
+            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
         if 'p_id' not in request.POST:
             return JsonResponse({'message': 'Error: No post info'})

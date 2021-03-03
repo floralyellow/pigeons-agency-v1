@@ -10,6 +10,8 @@ class Player(models.Model):
     droppings = models.IntegerField(default=0)
     feathers = models.IntegerField(default=0)
     military_score = models.IntegerField(default=0)
+    attacking_id = models.IntegerField(null=True)
+    last_attacked = models.IntegerField(default=-1)
     last_connected_at = models.DateTimeField(auto_now_add=True, null=True)
     last_updated_at = models.DateTimeField(auto_now_add=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
