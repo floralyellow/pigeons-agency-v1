@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     if (!req.headers.has('Content-Type')) {
-      req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
+      req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
     }
 
     req = req.clone({ headers: req.headers.set('Accept', 'application/json') });

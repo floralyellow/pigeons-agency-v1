@@ -8,7 +8,6 @@ import { ExpeditionCardComponent } from './expedition-card/';
 import { DashboardCardComponent } from './dashboard-card/';
 import { SecondToMinPipe } from './pipes';
 
-
 @NgModule({
   declarations: [
     SecondToMinPipe,
@@ -18,8 +17,8 @@ import { SecondToMinPipe } from './pipes';
     DashboardCardComponent
   ],
   imports: [
-    RouterModule,
     CommonModule,
+    RouterModule,
     FontAwesomeModule
   ],
   providers: [],

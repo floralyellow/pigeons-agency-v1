@@ -1,11 +1,16 @@
-<div class="box my-2">
-    <p>
-        Name<br>
-        Time left : XX/XX
-    </p>
-    <progress 
-        class="progress is-primary" 
-        [value]="0" 
-        [max]="1">
-    </progress>
+<div class="box my-2" [class]="{'notification is-primary': timeLeft <== 0}">
+    <div *ngIf="timeLeft > 0;else completed">
+        <p>
+            Name<br>
+            Time left : {{timeLeft}}/{{duration}}
+        </p>
+        <progress 
+            class="progress is-primary" 
+            [value]="timeLeft" 
+            [max]="duration">
+        </progress>
+    </div>
+    <ng-template #completed>
+        Completed !
+    </ng-template>
 </div>

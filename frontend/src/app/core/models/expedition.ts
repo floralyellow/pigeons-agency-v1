@@ -1,6 +1,9 @@
+import { Pigeon } from "./pigeon";
+import { User } from "./user";
+
 export class Expedition {
-  lvl: number
-  seeds: number
-  duration: number
-  name: string
+  user :User
+  droppings_minute?: number
+  nb_pigeons?: number
+  expeditions: Pigeon[]
 }

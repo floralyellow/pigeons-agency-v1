@@ -1,30 +1,39 @@
-<div class="container">
+<div class="container" *ngIf="player && info">
     <div class="columns">
         <div class="column">
             <app-expedition-card 
-                *ngFor="let expedition of expeditionList" 
+                *ngFor="let expedition of expeditionList; let index = index" 
                 [info]="expedition">
+                <button 
+                    (click)="buyPigeon(index + 1)" 
+                    class="column is-one-fifth m-auto button is-primary"
+                    [disabled]="player.lvl < (index + 1) || player.seeds < expedition.seeds">
+                    Launch {{expedition.seeds}}
+                </button>
             </app-expedition-card>
         </div>
         <div class="column is-one-third">
             <div class="box my-2">
                 <article>
-                    <p>Seeds : XX/XX</p>
+                    <p>Seeds : {{player.seeds}}/{{level.max_seeds}}</p>
                     <progress 
                         class="progress is-primary" 
-                        [value]="0" 
-                        [max]="1">
+                        [value]="player.seeds" 
+                        [max]="level.max_seeds">
                     </progress>
-                    <p>Pigeons : XX/XX</p>
+                    <p>Pigeons : {{info.nb_pigeons}}/{{level.max_pigeons}}</p>
                     <progress 
                         class="progress is-primary" 
-                        [value]="0" 
-                        [max]="1">
+                        [value]="info.nb_pigeons" 
+                        [max]="level.max_pigeons">
                     </progress>
                 </article>
             </div>
             <p>Current Expedition(s) :</p>
-            <app-expedition-cooldown></app-expedition-cooldown>
+            <app-expedition-cooldown 
+                *ngFor="let pigeon of expeditions" 
+                [pigeon]="pigeon">
+            </app-expedition-cooldown>
         </div>
     </div>
 </div>
