@@ -127,6 +127,9 @@ class PigeonDefenderOrderView(APIView):
 
         if not all(isinstance(x, int) for x in pigeon_ids): 
             return JsonResponse({'message': 'Error: invalid input4'})
+            
+        if not len(pigeon_ids) == len(set(pigeon_ids)): 
+            return JsonResponse({'message': 'Error: invalid input5'})
 
         message = pigeon_service.organise_defenders(request.user, pigeon_ids)
 
