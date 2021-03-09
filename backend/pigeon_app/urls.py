@@ -3,6 +3,7 @@ from .views.user_view import UserViewSet
 from .views.fill_tr_views import FillTRView
 from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
 from .views.pigeons_views import PigeonView, PigeonAttackerView, PigeonDefenderView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
+from .views.attack_views import AttackInitView
 from django.contrib import admin
 from django.urls import include, path
 
@@ -28,6 +29,8 @@ urlpatterns = [
     path(r'api/pigeons/sell', PigeonSellView.as_view(), name='sell'),
     path(r'api/pigeons/defender', PigeonDefenderView.as_view(), name='set_defender'),
     
+    path(r'api/attack/init', AttackInitView.as_view(), name='init_attack'),
+
     # TODO validate json/array data
     path(r'api/pigeons/organisedefenders', PigeonDefenderOrderView.as_view(), name='organise_defenders'),
 
