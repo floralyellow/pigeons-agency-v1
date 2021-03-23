@@ -1,0 +1,49 @@
+.element{
+    border: 2px solid darkgray;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+}
+.elem-n-rarety fa-icon{
+    font-size: small;
+}
+.card-header{
+    display: block;
+}
+.mx-1{
+    margin-left: 0.2rem !important;
+    margin-right: 0.2rem !important;
+}
+.pigeon-name{
+    font-size: small;
+}
+.absolute{    
+    font-size: small;
+    position: absolute;    
+    right: 0;
+    top: 0;
+}
+.dashed{
+    border: 1.35px dashed gray;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: small;
+}
+footer{
+    margin-top: 10px;
+}
+.card-footer-item{
+    font-size: initial;
+    line-height: 0;
+    padding: 0.75rem !important;
+}
+span.card-footer-item{
+    font-size: small;
+}
+.columns.is-mobile > .column.is-one-quarter {
+    height: 100%;
+    margin-bottom: 0;
+    font-size: small;
+    padding: 3px 0px;
+    text-align: center;
+}

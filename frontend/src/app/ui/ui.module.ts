@@ -7,6 +7,7 @@ import { ExpeditionCooldownComponent } from './expedition-cooldown/';
 import { ExpeditionCardComponent } from './expedition-card/';
 import { DashboardCardComponent } from './dashboard-card/';
 import { SecondToMinPipe } from './pipes';
+import { PigeonCardComponent } from './pigeon-card/pigeon-card.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { SecondToMinPipe } from './pipes';
     HeaderComponent,
     ExpeditionCooldownComponent,
     ExpeditionCardComponent,
-    DashboardCardComponent
+    DashboardCardComponent,
+    PigeonCardComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { SecondToMinPipe } from './pipes';
     HeaderComponent,
     ExpeditionCooldownComponent,
     ExpeditionCardComponent,
-    DashboardCardComponent
+    DashboardCardComponent,
+    PigeonCardComponent
   ],
 })
 export class UiModule { }

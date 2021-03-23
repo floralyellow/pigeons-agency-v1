@@ -1,0 +1,1 @@
+export {AviaryComponent} from './aviary.component'

@@ -1,4 +1,4 @@
-<div class="box my-2" [class]="{'notification is-primary': timeLeft <== 0}">
+<div  *ngIf="timeLeft !== undefined" class="box my-2" [ngClass]="{'is-primary is-light notification': timeLeft <= 0}">
     <div *ngIf="timeLeft > 0;else completed">
         <p>
             Name<br>

@@ -12,8 +12,25 @@ export class ExpeditionCooldownComponent implements OnInit {
   duration : number;
   timeLeft : number;
   ngOnInit(): void {
-     this.duration = (new Date(this.pigeon.active_time).getTime() - new Date(this.pigeon.creation_time).getTime()) / 1000;
-     this.timeLeft = (new Date(this.pigeon.active_time).getTime() - new Date(Date.now()).getTime())/1000;
+    const activeTime = new Date(this.pigeon.active_time).getTime();
+    const creationTime = new Date(this.pigeon.creation_time).getTime();
+    const now = new Date(Date.now()).getTime();
+    this.duration = (
+      activeTime - creationTime
+    ) / 1000;
+    this.getTimeLeft()
   }
-
+  getTimeLeft(){
+    if(new Date(this.pigeon.active_time).getTime() > new Date(Date.now()).getTime()){
+      setTimeout(()=>{
+        this.timeLeft = Math.round(
+          ((new Date(this.pigeon.active_time).getTime() - new Date(Date.now()).getTime()
+      )/1000) - 1);
+      this.getTimeLeft();
+      }, 1000);
+    }
+    else{
+      this.timeLeft = 0;
+    }
+  }
 }

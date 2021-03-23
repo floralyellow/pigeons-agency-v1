@@ -10,6 +10,7 @@ import { PlayerService } from '../core/services/player.service';
 import { ShortNumberPipe } from './pipes/short-number.pipe';
 import { ExpeditionsComponent } from './components/expeditions/';
 import { ExpeditionsService } from '../core/services';
+import { AviaryComponent } from './components/aviary/aviary.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ExpeditionsService } from '../core/services';
     PagesComponent,
     ShortNumberPipe,
     ExpeditionsComponent,
+    AviaryComponent,
   ],
   imports: [
     CommonModule,
