@@ -1,6 +1,9 @@
 <div class="container">
-    <div class="columns">
-        <app-pigeon-card class="column is-one-quarter">
+    <div class="columns is-multiline">
+        <app-pigeon-card 
+            *ngFor="let pigeon of pigeons"
+            [pigeon]="pigeon"
+            class="column is-one-quarter">
         </app-pigeon-card>
     </div>
 </div>

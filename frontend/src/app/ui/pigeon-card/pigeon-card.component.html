@@ -8,10 +8,12 @@
         <fa-icon class="mv-auto" [icon]="faStar"></fa-icon>
       </div>
     </div>
-    <button class="absolute button is-danger p-1">Sell 1200  <fa-icon [icon]="faFeatherAlt"></fa-icon></button>
+    <button class="absolute button is-danger p-1">
+      Sell {{pigeon.feathers}}  <fa-icon [icon]="faFeatherAlt">
+    </fa-icon></button>
   </div>
     <div class="pigeon-name">
-      Pigeon
+      {{pigeon.name}}
     </div>
     <hr>
   <div class="card-image">
@@ -22,16 +24,16 @@
   <div class="card-content py-0">
     <div class="columns is-mobile">
      <div class="box column is-one-quarter has-background-primary has-text-white">
-      <span>1200 <fa-icon [icon]="faHeart"></fa-icon></span>
+      <span>{{pigeon.life}} <fa-icon [icon]="faHeart"></fa-icon></span>
      </div>
      <div class="box is-one-quarter column has-background-danger has-text-white">
-      <span>1200 <fa-icon [icon]="faFistRaised"></fa-icon></span>
+      <span>{{pigeon.attack}} <fa-icon [icon]="faFistRaised"></fa-icon></span>
      </div>
      <div class="box is-one-quarter column has-background-warning">
-      <span>1200 <fa-icon [icon]="faRunning"></fa-icon></span>
+      <span>{{pigeon.speed}} <fa-icon [icon]="faRunning"></fa-icon></span>
      </div>
      <div class="box is-one-quarter column has-background-info has-text-white">
-      <span>1200 <fa-icon [icon]="faShieldAlt"></fa-icon></span>
+      <span>{{pigeon.shield}} <fa-icon [icon]="faShieldAlt"></fa-icon></span>
      </div>
     </div>
     <div class="dashed">
@@ -45,7 +47,7 @@
     <button href="#" class="card-footer-item button is-info">
       <span>Set <fa-icon [icon]="faShieldAlt"></fa-icon></span>
     </button>
-    <span class="card-footer-item">1200&nbsp;<fa-icon [icon]="faPoop"></fa-icon>/m</span>
+    <span class="card-footer-item">{{pigeon.droppings_minute}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>/m</span>
     <button href="#" class="card-footer-item button is-danger">
       <span>Set <fa-icon [icon]="faFistRaised"></fa-icon></span>
     </button>
