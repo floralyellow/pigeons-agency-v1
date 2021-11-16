@@ -7,6 +7,8 @@ services:
       - ./backend/:/backend
     working_dir: /backend
     command: sh entrypoint.sh
+    depends_on:
+      - db
   db:
     image: postgres
     restart: always
