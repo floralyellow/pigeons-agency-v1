@@ -29,3 +29,19 @@ def init_attack(user, target_id):
         user.player.save()
 
     return list(attacking_pigeons.values()), list(defending_pigeons.values())
+
+def attack_player(user, pigeon_ids):
+
+    with transaction.atomic():
+        atk_pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=True, is_attacker=True)
+        logging.info(atk_pigeons.values_list('id',flat=True))
+
+        if not all(int(p) in atk_pigeons.values_list('id',flat=True) for p in pigeon_ids): 
+            return 'Error: wrong id'
+
+        def_pigeons = Pigeon.objects.filter(player_id=user.player.attacking_id, is_sold=False, is_open=True, defender_pos__isnull=False)
+        logging.info(def_pigeons)
+
+
+    return 'wip'
+
