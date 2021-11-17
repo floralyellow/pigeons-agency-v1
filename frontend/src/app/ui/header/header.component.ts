@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { faCrow } from '@fortawesome/free-solid-svg-icons';
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
 import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
-import { Player } from 'src/app/core/models/player';
 
 @Component({
   selector: 'app-header',

@@ -1,0 +1,1 @@
+export {PigeonCardComponent} from './pigeon-card.component'

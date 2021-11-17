@@ -1,1 +1,14 @@
-<p>expedition-card works!</p>
+<div class="box my-2">
+  <article class="media d-flex">
+    <div class="media-content m-auto">
+      <div class="content columns d-flex">
+        <p class="column m-auto">
+          <strong>{{info.name}}</strong>
+          <br>
+          Duration: {{info.duration | secondToMin}}
+        </p>
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </article>
+</div>

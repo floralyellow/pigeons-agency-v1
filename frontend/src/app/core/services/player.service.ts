@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Player } from '../models/player';
+import { GlobalInfo } from '../models/global-info';
 
 @Injectable()
 export class PlayerService {
@@ -11,7 +11,7 @@ export class PlayerService {
   getPlayerInfo(): Promise<any> {
       return new Promise((resolve, reject) => {
           this.http.get(environment.apiBaseUrl + '/player/')
-              .subscribe((res: {'message' :Player}) => {
+              .subscribe((res: {'message' :GlobalInfo}) => {
                 resolve(res.message)
               }, err => {
                   reject(err); 

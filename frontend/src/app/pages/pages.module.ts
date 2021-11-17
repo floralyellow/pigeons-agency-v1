@@ -9,6 +9,8 @@ import {AuthInterceptor} from '../core/interceptors/auth-interceptor'
 import { PlayerService } from '../core/services/player.service';
 import { ShortNumberPipe } from './pipes/short-number.pipe';
 import { ExpeditionsComponent } from './components/expeditions/';
+import { ExpeditionsService } from '../core/services';
+import { AviaryComponent } from './components/aviary/aviary.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { ExpeditionsComponent } from './components/expeditions/';
     PagesComponent,
     ShortNumberPipe,
     ExpeditionsComponent,
+    AviaryComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +28,7 @@ import { ExpeditionsComponent } from './components/expeditions/';
   ],
   providers: [
     PlayerService,
+    ExpeditionsService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: []
