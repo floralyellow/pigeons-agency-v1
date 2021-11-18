@@ -32,9 +32,11 @@ def create_pigeon(user, expedition_lvl, expedition_type):
     """
 
     with transaction.atomic():
+        expedition_lvl = int(expedition_lvl)
+        expedition_type = int(expedition_type)
 
         player = user.player 
-        if player.lvl < int(expedition_lvl):
+        if player.lvl < expedition_lvl:
             return 'Invalid lvl'
         
         pigeon_type = random.randint(1,3)
@@ -56,7 +58,9 @@ def create_pigeon(user, expedition_lvl, expedition_type):
         player.seeds = player.seeds - expedition.seeds
         player.save()
         
-        p = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl, pigeon_type=pigeon_type)
+        p = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl, pigeon_type=pigeon_type)[0]
+        logging.debug(str(p))
+
 
         luck_value = random.randint(1,100)
         phys_atk = int(luck_value/100*(p.max_phys_atk - p.min_phys_atk))+p.min_phys_atk
@@ -81,7 +85,7 @@ def create_pigeon(user, expedition_lvl, expedition_type):
     return list(expeditions.values())
 
 
-def set_attacker(user, pigeon_id):
+def set_in_team(user, pigeon_id):
 
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
@@ -93,7 +97,7 @@ def set_attacker(user, pigeon_id):
         
         pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
 
-        pigeon_to_update.is_attacker = not pigeon_to_update.is_attacker
+        pigeon_to_update.is_in_team = not pigeon_to_update.is_in_team
 
         nb_attackers = pigeons.filter(is_attacker = True).count()
 
@@ -104,29 +108,6 @@ def set_attacker(user, pigeon_id):
 
     return PigeonSerializer(pigeon_to_update).data
 
-
-def set_defender(user, pigeon_id):
-
-    with transaction.atomic():
-        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
-
-        if int(pigeon_id) not in pigeons.values_list('id',flat=True):
-            return 'Error: wrong id'
-        
-        pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
-
-        if pigeon_to_update.defender_pos is not None :
-            pigeon_to_update.defender_pos = None
-        else:
-            defenders = pigeons.exclude(defender_pos__isnull=True).values_list('defender_pos', flat=True)
-            free_space = [i for i in range(1,6) if i not in defenders]
-            if not free_space:
-                return 'Error : Too many defenders'
-            pigeon_to_update.defender_pos = min(free_space)
-
-        pigeon_to_update.save()
-
-    return PigeonSerializer(pigeon_to_update).data
 
 def organise_defenders(user, pigeon_ids):
 

@@ -15,7 +15,6 @@ from django.utils import timezone
 import json
 from ..models import TR_Pigeon
 from ..models import TR_Lvl_info
-from ..models import TR_Effect
 from ..models import TR_Expedition
 from datetime import datetime,timedelta
 import random
@@ -66,7 +65,7 @@ class ExpeditionView(APIView):
 
 
 
-class PigeonAttackerView(APIView):
+class PigeonTeamView(APIView):
 
     # set attacker
     def post(self, request):
@@ -79,26 +78,10 @@ class PigeonAttackerView(APIView):
         if not pigeon_id.isdigit() :
             return JsonResponse({'message': 'Error: invalid input'})
         
-        message = pigeon_service.set_attacker(request.user, pigeon_id)
+        message = pigeon_service.set_in_team(request.user, pigeon_id)
 
         return JsonResponse({'message': message})
 
-class PigeonDefenderView(APIView):
-
-    # set defender
-    def post(self, request):
-
-        update_service.update_user_values(request.user)
-
-        if 'p_id' not in request.POST:
-            return JsonResponse({'message': 'Error: No post info'})
-        pigeon_id = request.POST.get('p_id')
-        if not pigeon_id.isdigit() :
-            return JsonResponse({'message': 'Error: invalid input'})
-        
-        message = pigeon_service.set_defender(request.user, pigeon_id)
-
-        return JsonResponse({'message': message})
 
 class PigeonDefenderOrderView(APIView):
     # organise defenders

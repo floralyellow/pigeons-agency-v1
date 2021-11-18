@@ -2,7 +2,7 @@ from rest_framework import routers
 from .views.user_view import UserViewSet
 from .views.fill_tr_views import FillTRView
 from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
-from .views.pigeons_views import PigeonView, PigeonAttackerView, PigeonDefenderView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
+from .views.pigeons_views import PigeonView, PigeonTeamView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
 from .views.attack_views import AttackInitView, AttackView
 from django.contrib import admin
 from django.urls import include, path
@@ -24,10 +24,9 @@ urlpatterns = [
     path(r'api/expeditions/', ExpeditionView.as_view(), name='expeditions'),
     path(r'api/pigeons/', PigeonView.as_view(), name='pigeon'),
 
-    path(r'api/pigeons/attacker', PigeonAttackerView.as_view(), name='set_attacker'),
     path(r'api/pigeons/activate', PigeonActivateView.as_view(), name='set_active'),
     path(r'api/pigeons/sell', PigeonSellView.as_view(), name='sell'),
-    path(r'api/pigeons/defender', PigeonDefenderView.as_view(), name='set_defender'),
+    path(r'api/pigeons/team', PigeonTeamView.as_view(), name='set_in_team'),
     
     path(r'api/attack/init', AttackInitView.as_view(), name='init_attack'),
     path(r'api/attack', AttackView.as_view(), name='attack'),

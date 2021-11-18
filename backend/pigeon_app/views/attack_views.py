@@ -1,6 +1,5 @@
 
 from ..models import TR_Lvl_info
-from ..models import TR_Effect
 from ..models import TR_Expedition
 from django.http import JsonResponse
 from rest_framework.views import APIView
