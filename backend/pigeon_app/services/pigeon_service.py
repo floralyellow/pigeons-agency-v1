@@ -15,7 +15,6 @@ from django.db.models.signals import post_save
 from django.utils import timezone
 from ..models import TR_Pigeon
 from ..models import TR_Lvl_info
-from ..models import TR_Effect
 from ..models import TR_Expedition
 from datetime import datetime,timedelta
 import random
@@ -27,7 +26,7 @@ def get_global_pigeon_info(user):
     return res.nb_pigeons, res.droppings_minute
 
 
-def create_pigeon(user, expedition_lvl):
+def create_pigeon(user, expedition_lvl, expedition_type):
     """
     create new pigeon
     """
@@ -37,6 +36,13 @@ def create_pigeon(user, expedition_lvl):
         player = user.player 
         if player.lvl < int(expedition_lvl):
             return 'Invalid lvl'
+        
+        pigeon_type = random.randint(1,3)
+        # expedition type input gives slighlty more chances to get wanted pigeon if we did not get it (1/3 to 1/2)
+        if expedition_type < 4 and pigeon_type != expedition_type: 
+            chance_to_change_type = random.randint(1,4)
+            if chance_to_change_type == 4: # 1 chance / 4
+                pigeon_type = expedition_type
 
         expedition = TR_Expedition.objects.filter(lvl=expedition_lvl)[0]
 
@@ -50,52 +56,24 @@ def create_pigeon(user, expedition_lvl):
         player.seeds = player.seeds - expedition.seeds
         player.save()
         
-        possible_pigeons = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl)
-        weights = possible_pigeons.values_list('coef_chance_rate',flat=True)
-        p = random.choices(population = possible_pigeons, weights = weights, k=1)[0]
+        p = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl, pigeon_type=pigeon_type)
 
         luck_value = random.randint(1,100)
-        element = random.randint(1,3)
-        atk = int(luck_value/100*(p.max_atk - p.min_atk))+p.min_atk
-        life = int(luck_value/100*(p.max_life - p.min_life))+p.min_life
+        phys_atk = int(luck_value/100*(p.max_phys_atk - p.min_phys_atk))+p.min_phys_atk
+        magic_atk = int(luck_value/100*(p.max_magic_atk - p.min_magic_atk))+p.min_magic_atk
         shield = int(luck_value/100*(p.max_shield - p.min_shield))+p.min_shield
         drop_min = int(luck_value/100*(expedition.max_drop_minute - expedition.min_drop_minute))+expedition.min_drop_minute
         feathers = int(luck_value/100*(expedition.max_feathers - expedition.min_feathers))+expedition.min_feathers
 
-        if luck_value > p.min_luck_1:
-            luck_factor_1 = int((luck_value - p.min_luck_1) / (100 - p.min_luck_1) * 100 / 2)
-            logging.debug(str(luck_factor_1))
-            luck_effect_1 = random.randint(luck_factor_1,100)
-            logging.debug(str(luck_effect_1))
-
-
-            effect_1_id = random.choices(population = p.effect_1, weights = p.effect_1_chance, k=1)[0]
-            effect_1_obj = TR_Effect.objects.filter(effect_id=effect_1_id)[0]
-            effect_1_value = int(luck_effect_1/100*(effect_1_obj.max_value - effect_1_obj.min_value))+effect_1_obj.min_value
-        else:
-            effect_1_id = 0
-            effect_1_value = 0
-
-        if luck_value > p.min_luck_2:
-            luck_factor_2 = int((luck_value - p.min_luck_2) / (100 - p.min_luck_2) * 100 / 2)
-            luck_effect_2 = random.randint(luck_factor_2,100)
-
-            effect_2_id = random.choices(population = p.effect_2, weights = p.effect_2_chance, k=1)[0]
-            effect_2_obj = TR_Effect.objects.filter(effect_id=effect_2_id)[0]
-            effect_2_value = int(luck_effect_2/100*(effect_2_obj.max_value - effect_2_obj.min_value))+effect_2_obj.min_value
-        else:
-            effect_2_id = 0
-            effect_2_value = 0
+        random_src = random.randint(0,len(p.src) - 1)
 
         creation_time = timezone.now()
         active_time = creation_time + timedelta(0,expedition.duration)
 
         new_pigeon = Pigeon(player_id=user.id, pigeon_type=p.pigeon_type, 
-            name=p.name,pigeon_id=p.pigeon_id,luck=luck_value,
-            element=element, attack=atk,life=life,shield=shield,
-            speed=p.speed,droppings_minute=drop_min,feathers=feathers,
-            effect_1_id=effect_1_id, effect_1_value=effect_1_value,
-            effect_2_id=effect_2_id, effect_2_value=effect_2_value,
+            name=p.name[random_src],src=p.src[random_src],pigeon_id=p.pigeon_id,luck=luck_value,
+            lvl=expedition_lvl, phys_atk=phys_atk,magic_atk=magic_atk,shield=shield,
+            droppings_minute=drop_min,feathers=feathers,
             creation_time=creation_time,active_time=active_time)
         new_pigeon.save()
         expeditions = Pigeon.objects.filter(player_id=user.id, is_open=False)  
