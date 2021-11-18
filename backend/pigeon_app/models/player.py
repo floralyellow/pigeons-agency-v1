@@ -21,7 +21,7 @@ class Player(models.Model):
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ['lvl', 'seeds', 'droppings', 'feathers', 'military_score']
+        fields = ['lvl', 'seeds', 'droppings', 'feathers', 'military_score', 'last_attacked', 'time_last_attack']
 
 
 class UserSerializer(serializers.ModelSerializer):
