@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faTree } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faMagic } from '@fortawesome/free-solid-svg-icons';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 import { faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +18,7 @@ export class PigeonCardComponent implements OnInit {
   @Input() pigeon : Pigeon;
   faTree = faTree;
   faStar = faStar;
-  faHeart = faHeart;
+  faMagic = faMagic;
   faFeatherAlt = faFeatherAlt;
   faShieldAlt = faShieldAlt;
   faFistRaised = faFistRaised;

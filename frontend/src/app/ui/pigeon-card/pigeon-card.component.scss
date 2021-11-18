@@ -22,12 +22,13 @@
     position: absolute;    
     right: 0;
     top: 0;
+    padding: 17px 10px!important;
 }
 .dashed{
-    border: 1.35px dashed gray;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: small;
+    font-size: large;
+    text-align: center;
 }
 footer{
     margin-top: 10px;
@@ -40,10 +41,19 @@ footer{
 span.card-footer-item{
     font-size: small;
 }
-.columns.is-mobile > .column.is-one-quarter {
+.columns.is-mobile > .column.is-one-third {
     height: 100%;
     margin-bottom: 0;
     font-size: small;
     padding: 3px 0px;
     text-align: center;
+}
+h1{
+    text-align: center;
+    span{
+        font-size: small;
+    }
+}
+footer{
+    margin-top: 20px;
 }

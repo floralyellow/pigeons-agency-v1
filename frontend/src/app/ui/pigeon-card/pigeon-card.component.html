@@ -1,55 +1,36 @@
 <div class="card">
   <div class="card-header px-3 py-2">
     <div class="elem-n-rarety d-flex">
-      <span class="element d-flex">
-        <fa-icon class="m-auto" [icon]="faTree"></fa-icon>
-      </span>
       <div class="mv-auto d-flex mx-1">
         <fa-icon class="mv-auto" [icon]="faStar"></fa-icon>
       </div>
     </div>
-    <button class="absolute button is-danger p-1">
-      Sell {{pigeon.feathers}}  <fa-icon [icon]="faFeatherAlt">
-    </fa-icon></button>
+    <button class="absolute button is-danger p-2">
+      Sell {{pigeon.feathers}}  <fa-icon [icon]="faFeatherAlt"></fa-icon>
+    </button>
   </div>
-    <div class="pigeon-name">
-      {{pigeon.name}}
-    </div>
-    <hr>
   <div class="card-image">
     <figure class="image is-square">
       <img src="assets/pigeons/bombird_green.png" alt="Placeholder image">
     </figure>
   </div>
   <div class="card-content py-0">
+  <h1><span>{{pigeon.name}} ({{pigeon.droppings_minute}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>/m)</span></h1>
     <div class="columns is-mobile">
-     <div class="box column is-one-quarter has-background-primary has-text-white">
-      <span>{{pigeon.life}} <fa-icon [icon]="faHeart"></fa-icon></span>
+     <div class="box column is-one-third has-background-primary has-text-white">
+      <span>{{pigeon.life}} <fa-icon [icon]="faMagic"></fa-icon></span>
      </div>
-     <div class="box is-one-quarter column has-background-danger has-text-white">
+     <div class="box column is-one-third has-background-danger has-text-white">
       <span>{{pigeon.attack}} <fa-icon [icon]="faFistRaised"></fa-icon></span>
      </div>
-     <div class="box is-one-quarter column has-background-warning">
-      <span>{{pigeon.speed}} <fa-icon [icon]="faRunning"></fa-icon></span>
-     </div>
-     <div class="box is-one-quarter column has-background-info has-text-white">
+     <div class="box column is-one-third has-background-info has-text-white">
       <span>{{pigeon.shield}} <fa-icon [icon]="faShieldAlt"></fa-icon></span>
      </div>
     </div>
-    <div class="dashed">
-      +10% on first attack
-    </div>
-    <div class="dashed">
-      +10% on first attack
-    </div>
   </div>
   <footer class="card-footer">
-    <button href="#" class="card-footer-item button is-info">
-      <span>Set <fa-icon [icon]="faShieldAlt"></fa-icon></span>
-    </button>
-    <span class="card-footer-item">{{pigeon.droppings_minute}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>/m</span>
     <button href="#" class="card-footer-item button is-danger">
-      <span>Set <fa-icon [icon]="faFistRaised"></fa-icon></span>
+      <span>Add to team</span>
     </button>
   </footer>
 </div>
