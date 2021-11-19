@@ -1,6 +1,5 @@
 from rest_framework import routers
 from .views.user_view import UserViewSet
-from .views.fill_tr_views import FillTRView
 from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
 from .views.pigeons_views import PigeonView, PigeonTeamView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
 from .views.attack_views import AttackInitView, AttackView
@@ -38,9 +37,6 @@ urlpatterns = [
     path(r'api/player/', PlayerView.as_view(), name='player'),
     path(r'api/player/lvlup', PlayerLvlupView.as_view(), name='lvl_up'),
     path(r'api/player/usebucket', PlayerUseBucketView.as_view(), name='usebucket'),
-
-    # ADMIN NO PROD
-    path(r'api/tr/', FillTRView.as_view(), name='tr'),
 
 ]
 # urlpatterns += router.urls
