@@ -1,6 +1,5 @@
 
 from ..models import TR_Lvl_info
-from ..models import TR_Effect
 from ..models import TR_Expedition
 from django.http import JsonResponse
 from rest_framework.views import APIView
@@ -17,8 +16,7 @@ class AttackInitView(APIView):
     # init attack
     def post(self, request):
         update_service.update_user_values(request.user)
-        if request.user.player.attacking_id is not None:
-            return JsonResponse({'message': 'Error: In attack !'})
+
         if 'u_id' not in request.POST:
             return JsonResponse({'message': 'Error: No post info'})
         target_id = request.POST.get('u_id')
@@ -52,10 +50,6 @@ class AttackView(APIView):
 
         if not len(pigeon_ids) == len(set(pigeon_ids)): 
             return JsonResponse({'message': 'Error: invalid input5'})
-
-        # only route where NEEDS to be in attack
-        if request.user.player.attacking_id is None:
-            return JsonResponse({'message': 'Error: Not in attack !'})
 
         o = attack_service.attack_player(request.user, pigeon_ids)
  

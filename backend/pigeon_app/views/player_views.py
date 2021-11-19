@@ -1,7 +1,6 @@
 
 from ..models import TR_Pigeon
 from ..models import TR_Lvl_info
-from ..models import TR_Effect
 from ..models import TR_Expedition
 from django.http import JsonResponse
 from rest_framework.views import APIView
@@ -17,8 +16,6 @@ class PlayerView(APIView):
     # get user info
     def get(self, request):
 
-        if request.user.player.attacking_id is not None:
-            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
 
         nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
@@ -31,8 +28,6 @@ class PlayerLvlupView(APIView):
     # lvl up
     def post(self, request):
 
-        if request.user.player.attacking_id is not None:
-            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
 
         with transaction.atomic():
@@ -57,8 +52,6 @@ class PlayerUseBucketView(APIView):
     # use bucket
     def post(self, request):
 
-        if request.user.player.attacking_id is not None:
-            return JsonResponse({'message': 'Error: In attack !'})
         update_service.update_user_values(request.user)
 
         with transaction.atomic():

@@ -1,5 +1,4 @@
 from ..models import TR_Lvl_info
-from ..models import TR_Effect
 from ..models import TR_Expedition
 from django.contrib.auth.models import User
 from ..models import Player, Pigeon
