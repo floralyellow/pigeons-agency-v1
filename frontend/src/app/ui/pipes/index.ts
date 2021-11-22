@@ -1,1 +1,0 @@
-export {SecondToMinPipe} from './second-to-min.pipe'

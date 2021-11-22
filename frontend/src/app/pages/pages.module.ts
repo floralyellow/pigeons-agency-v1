@@ -7,16 +7,16 @@ import { UiModule } from '../ui/ui.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthInterceptor} from '../core/interceptors/auth-interceptor'
 import { PlayerService } from '../core/services/player.service';
-import { ShortNumberPipe } from './pipes/short-number.pipe';
 import { ExpeditionsComponent } from './components/expeditions/';
 import { ExpeditionsService } from '../core/services';
 import { AviaryComponent } from './components/aviary/aviary.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     PagesComponent,
-    ShortNumberPipe,
     ExpeditionsComponent,
     AviaryComponent,
   ],
@@ -24,7 +24,9 @@ import { AviaryComponent } from './components/aviary/aviary.component';
     CommonModule,
     PagesRoutingModule,
     UiModule,
-    HttpClientModule
+    HttpClientModule,
+    PipesModule,
+    FontAwesomeModule,
   ],
   providers: [
     PlayerService,

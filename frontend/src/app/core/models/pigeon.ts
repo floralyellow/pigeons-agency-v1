@@ -3,23 +3,18 @@ export class Pigeon {
     player_id: number
     pigeon_type: number
     name: string
+    src: string
     pigeon_id: number
+    lvl: number
     luck: number
-    element: number
-    attack: number
-    life: number
+    phys_atk: number
+    magic_atk: number
     shield: number
-    speed: number
     droppings_minute: number
     feathers: number
     creation_time: Date
     active_time: Date
-    effect_1_id: number
-    effect_2_id: number
-    effect_1_value: number
-    effect_2_value: number
     is_open: boolean
     is_sold: boolean
-    is_attacker: boolean
-    defender_pos: number
+    is_in_team: boolean
 }
