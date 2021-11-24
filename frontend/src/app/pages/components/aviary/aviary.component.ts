@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Expedition, Player } from 'src/app/core/models';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {  Player } from 'src/app/core/models';
+import { Aviary } from 'src/app/core/models/aviary';
 import { Pigeon } from 'src/app/core/models/pigeon';
 import { ExpeditionsService } from 'src/app/core/services';
 
@@ -10,19 +11,48 @@ import { ExpeditionsService } from 'src/app/core/services';
 })
 export class AviaryComponent implements OnInit {
   pigeons: Pigeon[];
-  info: Expedition;
   player: Player;
-  seeds:number;
+  nbInTeam = 0;
   constructor(private pigeonService: ExpeditionsService) {
-    pigeonService.getExpeditionInfo().then((value : Expedition) => {
-      this.pigeons = value.expeditions;
-      this.info = value;
+    pigeonService.getAviary().then((value : Aviary) => {
+      this.pigeons = value.pigeons.sort((a,b)=>b.id - a.id);
       this.player = value.user.player;
-      this.seeds = this.player.seeds;
+      this.nbInTeam = this.pigeons.filter((pigeonInTab)=>pigeonInTab.is_in_team === true).length;
     })
    }
 
   ngOnInit(): void {
   }
 
+  sellPigeon(pigeon : Pigeon){
+    this.pigeonService.postSellPigeon(pigeon.id).then((value : Pigeon) => {
+      const index = this.pigeons.indexOf(pigeon);
+      this.pigeons.splice(index,1)
+    })
+  }
+
+  openCard(pigeon : Pigeon){
+    this.pigeonService.postOpenCard(pigeon.id).then((value : Pigeon) => {
+      const index = this.pigeons.indexOf(pigeon);
+      this.pigeons[index] = value
+    })
+  }
+
+  toggleTeam(pigeon : Pigeon){
+    const index = this.pigeons.indexOf(pigeon);
+    if (
+      this.nbInTeam >= 5 &&
+      this.pigeons[index].is_in_team === false
+    ){
+      return false;
+    }
+    this.pigeonService.toggleTeam(pigeon.id).then((value : Pigeon) => {
+      this.pigeons[index] = value;
+      if(value.is_in_team){
+        this.nbInTeam ++;
+      } else {
+        this.nbInTeam --;
+      }
+    })
+  }
 }

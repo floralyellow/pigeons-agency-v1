@@ -4,5 +4,7 @@ export class Player {
     droppings: number
     feathers: number
     military_score: number
+    last_attacked: number
+    time_last_attack: Date
 }
 

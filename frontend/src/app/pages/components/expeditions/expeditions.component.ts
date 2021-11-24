@@ -5,6 +5,10 @@ import { Pigeon } from 'src/app/core/models/pigeon';
 import { ExpeditionsService } from 'src/app/core/services';
 import * as expeditionInfo from 'src/assets/jsons/tr_expedition.json';
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
+import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faShieldAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFistRaised } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-expeditions',
@@ -12,6 +16,10 @@ import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
   styleUrls: ['./expeditions.component.scss']
 })
 export class ExpeditionsComponent implements OnInit, OnDestroy {
+  faHatWizard = faHatWizard;
+  faShieldAlt = faShieldAlt;
+  faFistRaised = faFistRaised;
+  faQuestion = faQuestion;
   expeditionList:Expedition[] = (expeditionInfo as any).default;
   levelList: Level[] = (lvlInfo as any).default;
   expeditions: Pigeon[];
@@ -20,6 +28,7 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
   level:Level;
   seeds:number;
   timeout;
+  pigeonType = [faFistRaised,faHatWizard,faShieldAlt,faQuestion]
   constructor(private expeditionService : ExpeditionsService) {
     expeditionService.getExpeditionInfo().then((value : Expedition) => {
       this.expeditions = value.expeditions;
@@ -36,14 +45,16 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void { 
   }
 
-  buyPigeon(level : number){
-    this.expeditionService.postBuyPigeon(level).then((value : Expedition) => {
-      this.expeditions = value.expeditions;
-      this.player = value.user.player;
-      this.level = this.levelList[this.player.lvl - 1];
-      this.seeds = this.player.seeds;
-      this.getCurrentSeeds();
+  buyPigeon(level : number, type: number){
+    this.expeditionService.postBuyPigeon(level, type).then((value : Expedition) => {
+      if (typeof(value.expeditions) !== 'string') {
+        this.expeditions.push(value.expeditions[value.expeditions.length - 1]);
+        this.player = value.user.player;
+        this.level = this.levelList[this.player.lvl - 1];
+        this.seeds = this.player.seeds;
+      }
     })
+    this.getCurrentSeeds();
   }
   getCurrentSeeds(){
     (this.timeout !== undefined)?clearTimeout(this.timeout):null;

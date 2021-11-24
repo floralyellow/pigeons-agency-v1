@@ -3,7 +3,20 @@
         <app-pigeon-card 
             *ngFor="let pigeon of pigeons"
             [pigeon]="pigeon"
+            (sellPigeonEvent)="sellPigeon($event)"
+            (openCardEvent)="openCard($event)"
             class="column is-one-quarter">
+            <button 
+            (click)="toggleTeam(pigeon)" *ngIf="pigeon.is_in_team === false"
+            class="card-footer-item button is-primary" 
+            [disabled]="this.nbInTeam >= 5">
+            <span>Add to team</span>
+            </button>
+            <button 
+            (click)="toggleTeam(pigeon)" *ngIf="pigeon.is_in_team" 
+            class="card-footer-item button is-danger" >
+            <span>Remove from team</span>
+            </button>
         </app-pigeon-card>
     </div>
 </div>

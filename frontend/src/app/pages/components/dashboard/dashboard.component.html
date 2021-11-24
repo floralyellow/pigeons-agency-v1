@@ -3,10 +3,10 @@
     <div class="level-item has-text-centered">
         <div>
         <p class="heading">Pigeon</p>
-        <p class="title">{{player.nb_pigeons}}/{{level.max_pigeons | shortNumber}}</p>
+        <p class="title">{{player.nb_pigeons | shortNumber}}/{{level.max_pigeons | shortNumber}}</p>
         <progress 
             class="progress is-primary" 
-            value="0" 
+            [value]="player.nb_pigeons" 
             [max]="level.max_pigeons">
         </progress>
         </div>
@@ -14,7 +14,7 @@
     <div class="level-item has-text-centered">
         <div>
         <p class="heading">Seeds</p>
-        <p class="title">{{player.user.player.seeds}}/{{level.max_seeds | shortNumber}}</p>
+        <p class="title">{{player.user.player.seeds | shortNumber}}/{{level.max_seeds | shortNumber}}</p>
         <progress 
             class="progress is-primary" 
             [value]="player.user.player.seeds" 
@@ -25,7 +25,7 @@
     <div class="level-item has-text-centered">
         <div>
         <p class="heading">Feathers</p>
-        <p class="title">{{player.user.player.feathers}}/{{level.max_feathers | shortNumber}}</p>
+        <p class="title">{{player.user.player.feathers | shortNumber}}/{{level.max_feathers | shortNumber}}</p>
         <progress 
             class="progress is-primary" 
             [value]="player.user.player.feathers" 
@@ -36,7 +36,7 @@
     <div class="level-item has-text-centered">
         <div>
         <p class="heading">Dropping</p>
-        <p class="title">{{player.user.player.droppings}}/{{level.max_droppings | shortNumber}}</p>
+        <p class="title">{{player.user.player.droppings | shortNumber}}/{{level.max_droppings | shortNumber}}</p>
         <progress 
             class="progress is-primary" 
             [value]="player.user.player.droppings" 

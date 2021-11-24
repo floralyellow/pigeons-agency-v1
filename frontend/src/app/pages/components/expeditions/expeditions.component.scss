@@ -1,0 +1,10 @@
+:host{
+    ::ng-deep{
+        .columns:last-child {
+            margin-bottom: 0!important;
+        }
+    }
+}
+.columns .is-three-quarters-mobile {
+    margin-bottom: 5px!important;
+}

@@ -6,12 +6,11 @@ import { RouterModule } from '@angular/router';
 import { ExpeditionCooldownComponent } from './expedition-cooldown/';
 import { ExpeditionCardComponent } from './expedition-card/';
 import { DashboardCardComponent } from './dashboard-card/';
-import { SecondToMinPipe } from './pipes';
+import { PipesModule } from '../pipes/pipes.module';
 import { PigeonCardComponent } from './pigeon-card/pigeon-card.component';
 
 @NgModule({
   declarations: [
-    SecondToMinPipe,
     HeaderComponent,
     ExpeditionCooldownComponent,
     ExpeditionCardComponent,
@@ -21,7 +20,8 @@ import { PigeonCardComponent } from './pigeon-card/pigeon-card.component';
   imports: [
     CommonModule,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PipesModule
   ],
   providers: [],
   bootstrap: [],

@@ -1,3 +1,14 @@
+$beige: #feffdb;
+$light-orange: #ffc60b;
+$orange: #ff8b00;
+$grey: #444444;
+$blue: #209cee;
+$green: #23ce78;
+$red: #f14438;
+$purple: #900edb;
+$solidgold:#F9A602;
+$lightgreen:#23ce7938;
+
 .element{
     border: 2px solid darkgray;
     border-radius: 50%;
@@ -6,6 +17,9 @@
 }
 .elem-n-rarety fa-icon{
     font-size: small;
+}
+.elem-n-rarety .icon-pigeon-type{
+    font-size: medium;
 }
 .card-header{
     display: block;
@@ -22,15 +36,16 @@
     position: absolute;    
     right: 0;
     top: 0;
+    padding: 17px 10px!important;
 }
 .dashed{
-    border: 1.35px dashed gray;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: small;
+    font-size: large;
+    text-align: center;
 }
 footer{
-    margin-top: 10px;
+    margin-top: 20px;
 }
 .card-footer-item{
     font-size: initial;
@@ -40,10 +55,59 @@ footer{
 span.card-footer-item{
     font-size: small;
 }
-.columns.is-mobile > .column.is-one-quarter {
+.columns.is-mobile > .column.is-one-third {
     height: 100%;
     margin-bottom: 0;
     font-size: small;
     padding: 3px 0px;
     text-align: center;
+}
+h1{
+    text-align: center;
+    span{
+        font-size: small;
+    }
+}
+.flip-card-front{
+    height: 100%;
+    color: lightgrey;
+    .image{
+        padding-top: 50%;
+        padding-bottom: 50%;
+        text-align: center;
+        .big-icon{
+            font-size: 5em;
+        }
+    }
+}
+.flip-card-front.clickable{
+    cursor: pointer;
+    color: #4a4a4a;
+}
+.flip-card-front.clickable:hover{
+    box-shadow: 0 0.5em 1em -0.125em grey, 0 0px 0 1px grey !important;
+}
+.legendary{
+    box-shadow: 0 0.5em 1em -0.125em $light-orange, 0 0px 0 1px $light-orange !important;
+    .stars {
+        color :$light-orange;
+    }
+}
+.epic{
+    box-shadow: 0 0.5em 1em -0.125em $purple, 0 0px 0 1px $purple !important;
+    .stars {
+        color :$purple;
+    }
+}
+.rare{
+    box-shadow: 0 0.5em 1em -0.125em $blue, 0 0px 0 1px $blue !important;
+    .stars {
+        color :$blue;
+    }
+}
+.uncommon{
+    box-shadow: 0 0.5em 1em -0.125em $green, 0 0px 0 1px $green !important;
+    .stars {
+        color :$green;
+    }
 }
