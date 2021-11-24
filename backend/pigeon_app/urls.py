@@ -2,7 +2,7 @@ from rest_framework import routers
 from .views.user_views import UserViewSet
 from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
 from .views.pigeons_views import PigeonView, PigeonTeamView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
-from .views.attack_views import AttackInitView, AttackView
+from .views.attack_views import AttackView
 from .views.all_players_views import AllPlayersView, AllPlayersForAttackView
 from django.contrib import admin
 from django.urls import include, path
@@ -28,7 +28,6 @@ urlpatterns = [
     path(r'api/pigeons/sell', PigeonSellView.as_view(), name='sell'),
     path(r'api/pigeons/team', PigeonTeamView.as_view(), name='set_in_team'),
     
-    path(r'api/attack/init', AttackInitView.as_view(), name='init_attack'),
     path(r'api/attack', AttackView.as_view(), name='attack'),
 
 

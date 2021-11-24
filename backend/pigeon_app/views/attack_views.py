@@ -11,7 +11,7 @@ from ..services import update_service, attack_service
 import json
 import logging
 
-class AttackInitView(APIView):
+class AttackView(APIView):
 
     # init attack
     def post(self, request):
@@ -23,34 +23,36 @@ class AttackInitView(APIView):
         if not target_id.isdigit() :
             return JsonResponse({'message': 'Error: invalid input'})
 
-        attacking_pigeons, defending_pigeons = attack_service.init_attack(request.user, target_id)
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'attacking_pigeons' : attacking_pigeons, 'defending_pigeons' : defending_pigeons}})
+        message = attack_service.attack_player(request.user, target_id)
 
-class AttackView(APIView):
+        return 'o'
+        #JsonResponse({'message': {'user': UserSerializer(request.user).data, 'attacking_pigeons' : attacking_pigeons, 'defending_pigeons' : defending_pigeons}})
 
-    # attack player
-    def post(self, request):
-        update_service.update_user_values(request.user)
-        try:
-            input = json.loads(request.body)
-            logging.debug(input)
-            pigeon_ids = input["pigeon_ids"]
-        except (ValueError, KeyError) as e:  
-            return JsonResponse({'message': 'Error: wrong input1'})
+# class AttackView(APIView):
+
+#     # attack player
+#     def post(self, request):
+#         update_service.update_user_values(request.user)
+#         try:
+#             input = json.loads(request.body)
+#             logging.debug(input)
+#             pigeon_ids = input["pigeon_ids"]
+#         except (ValueError, KeyError) as e:  
+#             return JsonResponse({'message': 'Error: wrong input1'})
         
-        if not isinstance(pigeon_ids, list):
-            return JsonResponse({'message': 'Error: wrong input2'})
+#         if not isinstance(pigeon_ids, list):
+#             return JsonResponse({'message': 'Error: wrong input2'})
 
-        if not len(pigeon_ids) == 5:
-            return JsonResponse({'message': 'Error: wrong input3'})
+#         if not len(pigeon_ids) == 5:
+#             return JsonResponse({'message': 'Error: wrong input3'})
 
-        if not all(isinstance(x, int) for x in pigeon_ids): 
-            return JsonResponse({'message': 'Error: invalid input4'})
+#         if not all(isinstance(x, int) for x in pigeon_ids): 
+#             return JsonResponse({'message': 'Error: invalid input4'})
 
-        if not len(pigeon_ids) == len(set(pigeon_ids)): 
-            return JsonResponse({'message': 'Error: invalid input5'})
+#         if not len(pigeon_ids) == len(set(pigeon_ids)): 
+#             return JsonResponse({'message': 'Error: invalid input5'})
 
-        o = attack_service.attack_player(request.user, pigeon_ids)
+#         o = attack_service.attack_player(request.user, pigeon_ids)
  
-        return JsonResponse({'message': o})
+#         return JsonResponse({'message': o})
