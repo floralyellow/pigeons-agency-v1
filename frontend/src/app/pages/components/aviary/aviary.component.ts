@@ -15,7 +15,7 @@ export class AviaryComponent implements OnInit {
   nbInTeam = 0;
   constructor(private pigeonService: ExpeditionsService) {
     pigeonService.getAviary().then((value : Aviary) => {
-      this.pigeons = value.pigeons;
+      this.pigeons = value.pigeons.sort((a,b)=>b.id - a.id);
       this.player = value.user.player;
       this.nbInTeam = this.pigeons.filter((pigeonInTab)=>pigeonInTab.is_in_team === true).length;
     })

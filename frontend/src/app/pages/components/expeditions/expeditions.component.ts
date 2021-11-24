@@ -5,7 +5,7 @@ import { Pigeon } from 'src/app/core/models/pigeon';
 import { ExpeditionsService } from 'src/app/core/services';
 import * as expeditionInfo from 'src/assets/jsons/tr_expedition.json';
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
-import { faMagic } from '@fortawesome/free-solid-svg-icons';
+import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +16,7 @@ import { faFistRaised } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./expeditions.component.scss']
 })
 export class ExpeditionsComponent implements OnInit, OnDestroy {
-  faMagic = faMagic;
+  faHatWizard = faHatWizard;
   faShieldAlt = faShieldAlt;
   faFistRaised = faFistRaised;
   faQuestion = faQuestion;
@@ -28,7 +28,7 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
   level:Level;
   seeds:number;
   timeout;
-  pigeonType = [faFistRaised,faMagic,faShieldAlt,faQuestion]
+  pigeonType = [faFistRaised,faHatWizard,faShieldAlt,faQuestion]
   constructor(private expeditionService : ExpeditionsService) {
     expeditionService.getExpeditionInfo().then((value : Expedition) => {
       this.expeditions = value.expeditions;
@@ -47,10 +47,12 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
 
   buyPigeon(level : number, type: number){
     this.expeditionService.postBuyPigeon(level, type).then((value : Expedition) => {
-      this.expeditions = value.expeditions;
-      this.player = value.user.player;
-      this.level = this.levelList[this.player.lvl - 1];
-      this.seeds = this.player.seeds;
+      if (typeof(value.expeditions) !== 'string') {
+        this.expeditions.push(value.expeditions[value.expeditions.length - 1]);
+        this.player = value.user.player;
+        this.level = this.levelList[this.player.lvl - 1];
+        this.seeds = this.player.seeds;
+      }
     })
     this.getCurrentSeeds();
   }

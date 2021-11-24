@@ -9,10 +9,10 @@
                         [value]="seeds" 
                         [max]="level.max_seeds">
                     </progress>
-                    <p>Pigeons : {{(info.nb_pigeons)}}/{{level.max_pigeons}}</p>
+                    <p>Aviary : ({{(info.nb_pigeons)}} + {{expeditions.length}})/{{level.max_pigeons}}</p>
                     <progress 
                         class="progress is-primary" 
-                        [value]="info.nb_pigeons" 
+                        [value]="(info.nb_pigeons + expeditions.length)" 
                         [max]="level.max_pigeons">
                     </progress>
                 </article>
@@ -31,16 +31,17 @@
                     <div class="columns">
                         <button 
                             *ngFor="let type of pigeonType; let indexType = index"
-                            (click)="buyPigeon(index + 1, indexType)" 
+                            (click)="buyPigeon(index + 1, indexType + 1)" 
                             class="column 
                                 is-three-quarters-mobile 
                                 is-two-thirds-tablet
                                 is-one-fifth 
-                                m-auto button *
-                                is-primary"
+                                m-auto button "
+                            [class.is-primary]="player.lvl >= (index + 1)"
+                            [class.is-danger]="player.lvl < (index + 1)"
                             [disabled]="player.lvl < (index + 1) ||
                                 seeds < expedition.seeds ||
-                                (expeditions.length) === level.max_pigeons">
+                                (expeditions.length + info.nb_pigeons) === level.max_pigeons">
                             Launch <fa-icon [icon]="type"></fa-icon><br>{{expedition.seeds}}
                         </button>
                     </div>
