@@ -99,10 +99,10 @@ def set_in_team(user, pigeon_id):
 
         pigeon_to_update.is_in_team = not pigeon_to_update.is_in_team
 
-        nb_attackers = pigeons.filter(is_attacker = True).count()
+        nb_in_team = pigeons.filter(is_in_team = True).count()
 
-        if nb_attackers > 5:
-            return 'Error : Too many attackers'
+        if nb_in_team > 5:
+            return 'Error : Too many in team'
 
         pigeon_to_update.save()
 
@@ -150,14 +150,17 @@ def sell_pigeon(user, pigeon_id):
 
         if int(pigeon_id) not in pigeons.values_list('id',flat=True):
             return 'Error: wrong id'
+    
+        max_feathers = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_feathers
         
         pigeon_to_sell = pigeons.filter(id = pigeon_id)[0]
 
-        player = user.player
-        player.feathers += pigeon_to_sell.feathers
+        feathers_to_apply = user.player.feathers + pigeon_to_sell.feathers
+
+        user.player.feathers = min(feathers_to_apply, max_feathers)
 
         pigeon_to_sell.is_sold = True
 
         pigeon_to_sell.save()
-        player.save()
+        user.player.save()
     return PigeonSerializer(pigeon_to_sell).data

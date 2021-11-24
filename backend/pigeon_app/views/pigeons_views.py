@@ -67,7 +67,7 @@ class ExpeditionView(APIView):
 
 class PigeonTeamView(APIView):
 
-    # set attacker
+    # set/unset in team
     def post(self, request):
 
         update_service.update_user_values(request.user)
