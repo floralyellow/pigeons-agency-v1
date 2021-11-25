@@ -10,7 +10,7 @@ class Command(BaseCommand):
         TR_Lvl_info.objects.all().delete() 
         TR_Lvl_info.objects.bulk_create([
 
-        TR_Lvl_info(lvl=1,seeds_minute=75,max_seeds=25,max_droppings=70,max_feathers=15,max_pigeons=10),
+        TR_Lvl_info(lvl=1,seeds_minute=75,max_seeds=27,max_droppings=70,max_feathers=15,max_pigeons=10),
         TR_Lvl_info(lvl=2,seeds_minute=100,max_seeds=50,max_droppings=162,max_feathers=60,max_pigeons=12),
         TR_Lvl_info(lvl=3,seeds_minute=150,max_seeds=110,max_droppings=392,max_feathers=240,max_pigeons=14),
         TR_Lvl_info(lvl=4,seeds_minute=250,max_seeds=220,max_droppings=720,max_feathers=720,max_pigeons=16),
