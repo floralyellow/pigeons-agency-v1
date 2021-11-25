@@ -17,18 +17,17 @@ def update_user_values(user):
             delta_time = datetime.now(timezone.utc) - user.player.last_updated_at
             delta_minutes = delta_time.total_seconds() / 60
 
-            droppings_in_delta_time = math.ceil(delta_minutes * drop_min)
+            droppings_in_delta_time = round(delta_minutes * drop_min)
             lvl_info = TR_Lvl_info.objects.get(lvl=user.player.lvl)
-            seeds_in_delta_time = math.ceil(delta_minutes * lvl_info.seeds_minute)
-            logging.debug('mins'+str(delta_minutes))
+            seeds_in_delta_time = round(delta_minutes * lvl_info.seeds_minute)
 
             # droppings
-            if user.player.droppings < lvl_info.max_droppings:
+            if user.player.droppings != lvl_info.max_droppings:
                 droppings_to_apply = user.player.droppings +  droppings_in_delta_time
                 user.player.droppings = min(droppings_to_apply, lvl_info.max_droppings)
 
             #seeds
-            if user.player.seeds < lvl_info.max_seeds:
+            if user.player.seeds != lvl_info.max_seeds:
                 seeds_to_apply = user.player.seeds + seeds_in_delta_time
                 user.player.seeds = min(seeds_to_apply,lvl_info.max_seeds)
 

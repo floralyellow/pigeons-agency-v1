@@ -26,8 +26,9 @@ class AttackView(APIView):
 
         message = attack_service.attack_player(request.user, target_id)
 
-        return 'o'
-        #JsonResponse({'message': {'user': UserSerializer(request.user).data, 'attacking_pigeons' : attacking_pigeons, 'defending_pigeons' : defending_pigeons}})
+        #TODO response
+        
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data}})
 
 # class AttackView(APIView):
 

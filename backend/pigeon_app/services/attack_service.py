@@ -1,10 +1,13 @@
+from ..models import attack
 from ..models import TR_Lvl_info
 from ..models import TR_Expedition
+from ..models import Attack
+from ..models import AttackPigeon
 from django.contrib.auth.models import User
 from ..models import Player, Pigeon
 from pigeon_app.models.player import UserSerializer
 from django.db import transaction
-from datetime import datetime,timezone
+from datetime import datetime,timezone,timedelta
 import random
 import logging
 
@@ -12,9 +15,9 @@ def attack_player(user, target_id):
     SECONDS_NEXT_ATTACK = 2 * 60 # 2 minutes
 
     with transaction.atomic():
-        res = Player.objects.filter(id=target_id)
+        target = Player.objects.filter(id=target_id)
 
-        if len(res) != 1 or target_id == user.id:
+        if len(target) != 1 or target_id == user.id:
             return 'Error: Invalid id'
 
         if target_id == user.player.last_attacked:
@@ -23,9 +26,8 @@ def attack_player(user, target_id):
         logging.debug(str(user.player.time_last_attack))
         logging.debug(str(SECONDS_NEXT_ATTACK))
         logging.debug(str(datetime.now(timezone.utc)))
-        logging.debug(str(user.player.time_last_attack + SECONDS_NEXT_ATTACK))
 
-        if user.player.time_last_attack + SECONDS_NEXT_ATTACK > datetime.now(timezone.utc):
+        if user.player.time_last_attack + timedelta(seconds=SECONDS_NEXT_ATTACK) > datetime.now(timezone.utc):
             return 'Error: Cant attack yet !'
 
 
@@ -40,63 +42,66 @@ def attack_player(user, target_id):
         total_magic_def = 0
         total_shield_atk = 0
         total_shield_def = 0
+        # sum shields needed before loop
+        sum_shield_value_atk = sum([i.shield for i in attacking_pigeons]) 
+        sum_shield_value_def = sum([i.shield for i in attacking_pigeons])
+
+        current_attack = Attack(attacker=user.player, defender=target[0])
+        current_attack.save()
 
         for p in attacking_pigeons:
             bonus_phys_atk = round(random.randint(-15,15) * p.phys_atk / 100)
             bonus_magic_atk = round(random.randint(-15,15) * p.magic_atk / 100)
-            total_phys_atk = total_phys_atk + p.phys_atk + bonus_phys_atk
-            total_magic_atk = total_magic_atk + p.magic_atk + bonus_magic_atk
-            total_shield_atk = total_shield_atk + p.shield
 
+            if p.phys_atk > 0:
+                total_phys_atk += p.phys_atk + bonus_phys_atk
+                total_shield_def += sum_shield_value_def
 
+            total_magic_atk += p.magic_atk + bonus_magic_atk
 
+            attack_pigeon = AttackPigeon(attack=current_attack,pigeon=p,is_attacker=True,phys_atk_bonus=bonus_phys_atk,magic_atk_bonus=bonus_magic_atk)
+            attack_pigeon.save()
 
-        shield_attackers = sum([i.shield for i in attacking_pigeons])
-        shield_defenders = sum([i.shield for i in defending_pigeons])
+        for p in defending_pigeons:
+            bonus_phys_atk = round(random.randint(-15,15) * p.phys_atk / 100)
+            bonus_magic_atk = round(random.randint(-15,15) * p.magic_atk / 100)
 
-        print(shield_attackers)
+            if p.phys_atk > 0:
+                total_phys_def += p.phys_atk + bonus_phys_atk
+                total_shield_atk += sum_shield_value_atk
 
-        phys_atk_attackers=sum([max(i.phys_atk - shield_defenders,0) for i in attacking_pigeons])
-        phys_atk_defenders=sum([max(i.phys_atk - shield_attackers,0) for i in defending_pigeons])
+            total_magic_def += + p.magic_atk + bonus_magic_atk
 
-        # print('atk1 : '+str(atk1))
-        # print('atk2 : '+str(atk2))
+            attack_pigeon = AttackPigeon(attack=current_attack,pigeon=p,is_attacker=False,phys_atk_bonus=bonus_phys_atk,magic_atk_bonus=bonus_magic_atk)
+            attack_pigeon.save()
 
-        magic_atk_attackers=sum([i.magic_atk  for i in attacking_pigeons])
-        magic_atk_defenders=sum([i.magic_atk  for i in defending_pigeons])
+        total_attacker = total_phys_atk + total_magic_atk - total_shield_def
+        total_defender = total_phys_def + total_magic_def - total_shield_atk
+        
+        winner_id = user.id if total_attacker > total_defender else target_id
 
-        tot1 = atk1+mgc1
-        tot2 = atk2+mgc2
-        # print('mgc1 : '+str(mgc1))
-        # print('mgc2 : '+str(mgc2))
+        # TODO stolen droppings
 
-        #print('tot : '+str(atk1+mgc1) +  ' -- '+str(atk2+mgc2))
+        # TODO militaryscore
 
-        return tot1 > tot2, tot1 == tot2, tot1 < tot2, round(((tot1 - tot2) * 2.0 / (tot1+tot2)),2)
+        # TODO timetonextattack & last attack id
 
+        # TODO protecteduntil (with model)
 
-
-
-
-
-        user.player.last_attacked = target_id
-        user.player.time_last_attack = datetime.now(timezone.utc)
-        user.player.save()
+        current_attack.winner_id=winner_id
+        current_attack.atk_tot_score=total_attacker
+        current_attack.atk_tot_phys=total_phys_atk
+        current_attack.atk_tot_magic=total_magic_atk
+        current_attack.atk_tot_shield=total_shield_atk
+        current_attack.def_tot_score=total_defender
+        current_attack.def_tot_phys=total_phys_def
+        current_attack.def_tot_magic=total_magic_def
+        current_attack.def_tot_shield=total_shield_def
+        current_attack.stolen_droppings=0
+        current_attack.atk_old_military_score=0
+        current_attack.atk_new_military_score=0
+        current_attack.def_old_military_score=0
+        current_attack.def_new_military_score=0
+        current_attack.save()
 
     return list(attacking_pigeons.values()), list(defending_pigeons.values())
-
-# def attack_player(user, pigeon_ids):
-
-#     with transaction.atomic():
-#         atk_pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=True, is_attacker=True)
-#         logging.info(atk_pigeons.values_list('id',flat=True))
-
-#         if not all(int(p) in atk_pigeons.values_list('id',flat=True) for p in pigeon_ids): 
-#             return 'Error: wrong id'
-
-#         def_pigeons = Pigeon.objects.filter(player_id=user.player.attacking_id, is_sold=False, is_open=True, defender_pos__isnull=False)
-#         logging.info(def_pigeons)
-
-
-#     return 'wip'
-
