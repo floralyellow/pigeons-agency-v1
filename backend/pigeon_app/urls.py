@@ -1,8 +1,9 @@
 from rest_framework import routers
-from .views.user_view import UserViewSet
+from .views.user_views import UserViewSet
 from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
 from .views.pigeons_views import PigeonView, PigeonTeamView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
 from .views.attack_views import AttackInitView, AttackView
+from .views.all_players_views import AllPlayersView, AllPlayersForAttackView
 from django.contrib import admin
 from django.urls import include, path
 
@@ -37,6 +38,11 @@ urlpatterns = [
     path(r'api/player/', PlayerView.as_view(), name='player'),
     path(r'api/player/lvlup', PlayerLvlupView.as_view(), name='lvl_up'),
     path(r'api/player/usebucket', PlayerUseBucketView.as_view(), name='usebucket'),
+
+    path(r'api/leaderboard', AllPlayersView.as_view(), name='leaderboard'),
+    path(r'api/attacklist', AllPlayersForAttackView.as_view(), name='attacklist'),
+
+
 
 ]
 # urlpatterns += router.urls

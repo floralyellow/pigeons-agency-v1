@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password
 
 class Player(models.Model):
     lvl = models.IntegerField(default=1)
-    seeds = models.IntegerField(default=0)
+    seeds = models.IntegerField(default=15)
     droppings = models.IntegerField(default=0)
     feathers = models.IntegerField(default=0)
     military_score = models.IntegerField(default=0)

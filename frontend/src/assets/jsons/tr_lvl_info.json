@@ -1,7 +1,7 @@
 [
   {
     "seeds_minute": 75,
-    "max_seeds": 25,
+    "max_seeds": 27,
     "max_droppings": 70,
     "max_feathers": 15,
     "max_pigeons": 10
