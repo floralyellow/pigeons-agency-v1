@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ExpeditionsComponent } from './components';
 import { AviaryComponent } from './components/aviary/aviary.component';
 import { DashboardComponent } from './components/dashboard';
+import { LeaderboardComponent } from './components/leaderboard';
+import { UpgradeComponent } from './components/upgrade/upgrade.component';
 import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
@@ -24,6 +26,14 @@ const routes: Routes = [
             {
               path: 'aviary',
               component: AviaryComponent,
+            },
+            {
+              path: 'leaderboard',
+              component: LeaderboardComponent,
+            },
+            {
+              path: 'upgrade',
+              component: UpgradeComponent,
             },
             { 
               path: '',

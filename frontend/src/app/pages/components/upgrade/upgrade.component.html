@@ -1,0 +1,59 @@
+<div class="container" *ngIf="playerInfo">
+    <div class="d-flex">
+        <h1 class="m-auto">
+            Level : {{playerInfo.user.player.lvl}}
+        </h1>
+    </div>
+    <div class="columns percent80">
+        <div class="column">
+            Seeds : {{seeds|number: '1.0-0'}}/{{level.max_seeds}}<br>
+            <progress 
+                class="progress is-primary" 
+                [value]="seeds" 
+                [max]="level.max_seeds">
+            </progress>
+        </div>
+        <div class="column">
+            Droppings : {{droppings|number: '1.0-0'}}/{{level.max_droppings}}<br>
+            <progress 
+                class="progress is-primary" 
+                [value]="droppings" 
+                [max]="level.max_droppings">
+            </progress>
+        </div>
+        <div class="column">
+            Feathers : {{playerInfo.user.player.feathers}}/{{level.max_feathers}}<br>
+            <progress 
+                class="progress is-primary" 
+                [value]="playerInfo.user.player.feathers" 
+                [max]="level.max_feathers">
+            </progress>
+        </div>
+    </div>
+    <div class="columns is-multilines percent70">
+        <div class="column d-flex">
+            <div class="m-auto text-center">
+                Re-fill seeds with droppings :<br>
+                <button 
+                    (click)="exchangeDroppingsWithSeeds()"
+                    class="button is-primary" 
+                    [disabled]="playerInfo.user.player.droppings < level.max_droppings">
+                    Exchange<br>
+                    {{level.max_droppings}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>
+                </button>
+            </div>
+        </div>
+        <div class="column d-flex">
+            <div class="m-auto text-center">
+                <p>Upgrade to level {{playerInfo.user.player.lvl + 1}} :</p>
+                <button 
+                    (click)="levelUp()"
+                    class="button is-primary m-auto" 
+                    [disabled]="playerInfo.user.player.feathers < level.max_feathers">
+                    Exchange<br>
+                    {{level.max_feathers}}&nbsp;<fa-icon [icon]="faFeatherAlt"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

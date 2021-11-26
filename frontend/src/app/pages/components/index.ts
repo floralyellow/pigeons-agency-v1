@@ -1,3 +1,5 @@
 export * from './dashboard'
 export * from './expeditions'
 export * from './aviary'
+export * from './upgrade'
+export * from './leaderboard'

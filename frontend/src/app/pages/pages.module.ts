@@ -8,10 +8,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthInterceptor} from '../core/interceptors/auth-interceptor'
 import { PlayerService } from '../core/services/player.service';
 import { ExpeditionsComponent } from './components/expeditions/';
-import { ExpeditionsService } from '../core/services';
+import { ExpeditionsService, LeaderboardService, UpgradeService } from '../core/services';
 import { AviaryComponent } from './components/aviary/aviary.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LeaderboardComponent } from './components/leaderboard/';
+import { UpgradeComponent } from './components/upgrade/';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PagesComponent,
     ExpeditionsComponent,
     AviaryComponent,
+    LeaderboardComponent,
+    UpgradeComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +35,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   providers: [
     PlayerService,
     ExpeditionsService,
+    UpgradeService,
+    LeaderboardService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: []

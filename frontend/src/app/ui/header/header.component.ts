@@ -1,7 +1,17 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { faCrow } from '@fortawesome/free-solid-svg-icons';
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
 import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import { faRoute } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faScroll } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +19,19 @@ import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./header.component.scss'] 
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  //@Input() player : Player;
   darkMode = false; 
   faCrow = faCrow;
+  faSignOutAlt = faSignOutAlt;
+  faTrophy = faTrophy;
+  faScroll = faScroll;
+  faRoute = faRoute;
+  faCalendarDay = faCalendarDay;
   faMapSigns = faMapSigns;
   faSkullCrossbones = faSkullCrossbones;
-  constructor() { }
+  faArrowAltCircleUp = faArrowAltCircleUp;
+  faEllipsisH = faEllipsisH;
+  faUserAlt = faUserAlt;
+  constructor(private authService : AuthService, public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -30,10 +47,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       value.classList.toggle('is-active');
     });
     document.getElementById('navMenu').classList.toggle('is-active')
-      /*burgerButton.map((value : Element)=>{
-        value.toggleClass("is-active");
-      })
-      $(".navbar-menu").toggleClass("is-active");*/
+  }
 
+  logOut() {
+    this.authService.logout();
+    this.router.navigate(['./authentification']);
   }
 }
