@@ -45,7 +45,9 @@ class PlayerLvlupView(APIView):
             player.lvl = player.lvl + 1
             player.save()
 
-        return JsonResponse({'message': UserSerializer(request.user).data})
+            nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
+
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute}})
 
 class PlayerUseBucketView(APIView):
 
@@ -66,4 +68,6 @@ class PlayerUseBucketView(APIView):
             player.seeds = lvl_info.max_seeds
             player.save()
 
-        return JsonResponse({'message': UserSerializer(request.user).data})
+            nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
+
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute}})
