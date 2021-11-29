@@ -5,7 +5,6 @@ import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 import { faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons';
-import { faRunning } from '@fortawesome/free-solid-svg-icons';
 import { faPoop } from '@fortawesome/free-solid-svg-icons';
 import { faEgg } from '@fortawesome/free-solid-svg-icons';
 import { faHandPointer } from '@fortawesome/free-solid-svg-icons';
@@ -53,8 +52,8 @@ export class PigeonCardComponent implements OnInit {
     const now = new Date().getTime();
     const creationTime = new Date(this.pigeon.creation_time).getTime();
     if(activationDate > now){
-      this.secondLeft = Math.trunc((activationDate - now)/1000);
-      this.maxSecondLeft = Math.trunc((activationDate - creationTime)/1000);
+      this.secondLeft = Math.ceil((activationDate - now)/1000);
+      this.maxSecondLeft = Math.ceil((activationDate - creationTime)/1000);
       this.getTimeLeftBeforeActivation();
     }
   }

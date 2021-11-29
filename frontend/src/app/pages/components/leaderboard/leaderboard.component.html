@@ -1,0 +1,20 @@
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Rank</td>
+                <td>Username</td>
+                <td>Level</td>
+                <td>Military score</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userList; let index = index">
+                <td>{{ index + 1}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.player.lvl}}</td>
+                <td>{{user.player.military_score}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -26,11 +26,25 @@
       <a class="navbar-item">
         <span><fa-icon [icon]="faSkullCrossbones"></fa-icon> Attacks</span>
       </a>
-      <a class="navbar-item">
-        <span><fa-icon [icon]="faCrow"></fa-icon> Upgrade</span>
+      <a [routerLink]="['upgrade']" class="navbar-item">
+        <span><fa-icon [icon]="faArrowAltCircleUp"></fa-icon> Upgrade</span>
       </a>
-      <a class="navbar-item">
-        <span>others <fa-icon [icon]="faCrow"></fa-icon></span>
+      <a class="navbar-item has-dropdown is-hoverable">
+        <span class="navbar-link">others</span>
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            Event&nbsp;<fa-icon [icon]="faCalendarDay"></fa-icon>
+          </a>
+          <a class="navbar-item">
+            Adventure&nbsp;<fa-icon [icon]="faRoute"></fa-icon>
+          </a>
+          <a class="navbar-item" [routerLink]="['leaderboard']">
+            Leaderboard&nbsp;<fa-icon [icon]="faTrophy"></fa-icon>
+          </a>
+          <a class="navbar-item">
+            History&nbsp;<fa-icon [icon]="faScroll"></fa-icon>
+          </a>
+        </div>
       </a>
     </div>
     <div class="navbar-end">
@@ -41,8 +55,13 @@
           </span>
         </label>
       </div>
-      <a class="navbar-item">
-        <span>Me <fa-icon [icon]="faCrow"></fa-icon></span>
+      <a class="navbar-item has-dropdown is-hoverable">
+        <span class="navbar-link">Me&nbsp;<fa-icon [icon]="faUserAlt"></fa-icon></span>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" (click)="logOut()">
+            Log out&nbsp;<fa-icon [icon]="faSignOutAlt"></fa-icon>
+          </a>
+        </div>
       </a>
     </div>
   </div>

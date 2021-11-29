@@ -1,48 +1,48 @@
 <div class="container d-flex" *ngIf="level && player">
-    <nav class="level m-auto">
-    <div class="level-item has-text-centered">
-        <div>
-        <p class="heading">Pigeon</p>
-        <p class="title">{{player.nb_pigeons | shortNumber}}/{{level.max_pigeons | shortNumber}}</p>
-        <progress 
-            class="progress is-primary" 
-            [value]="player.nb_pigeons" 
-            [max]="level.max_pigeons">
-        </progress>
+    <nav class="columns m-auto percent90">
+        <div class="column has-text-centered">
+            <div class="percent90">
+                <p class="heading">Pigeon</p>
+                <p class="title">{{player.nb_pigeons | shortNumber}}/{{level.max_pigeons | shortNumber}}</p>
+                <progress 
+                    class="progress is-primary" 
+                    [value]="player.nb_pigeons" 
+                    [max]="level.max_pigeons">
+                </progress>
+            </div>
         </div>
-    </div>
-    <div class="level-item has-text-centered">
-        <div>
-        <p class="heading">Seeds</p>
-        <p class="title">{{player.user.player.seeds | shortNumber}}/{{level.max_seeds | shortNumber}}</p>
-        <progress 
-            class="progress is-primary" 
-            [value]="player.user.player.seeds" 
-            [max]="level.max_seeds">
-        </progress>
+        <div class="column has-text-centered">
+            <div class="percent90">
+                <p class="heading">Seeds</p>
+                <p class="title">{{seeds | shortNumber}}/{{level.max_seeds | shortNumber}}</p>
+                <progress 
+                    class="progress is-primary" 
+                    [value]="seeds" 
+                    [max]="level.max_seeds">
+                </progress>
+            </div>
         </div>
-    </div>
-    <div class="level-item has-text-centered">
-        <div>
-        <p class="heading">Feathers</p>
-        <p class="title">{{player.user.player.feathers | shortNumber}}/{{level.max_feathers | shortNumber}}</p>
-        <progress 
-            class="progress is-primary" 
-            [value]="player.user.player.feathers" 
-            [max]="level.max_feathers">
-        </progress>
+        <div class="column has-text-centered">
+            <div class="percent90">
+                <p class="heading">Feathers</p>
+                <p class="title">{{player.user.player.feathers | shortNumber}}/{{level.max_feathers | shortNumber}}</p>
+                <progress 
+                    class="progress is-primary" 
+                    [value]="player.user.player.feathers" 
+                    [max]="level.max_feathers">
+                </progress>
+            </div>
         </div>
-    </div>
-    <div class="level-item has-text-centered">
-        <div>
-        <p class="heading">Dropping</p>
-        <p class="title">{{player.user.player.droppings | shortNumber}}/{{level.max_droppings | shortNumber}}</p>
-        <progress 
-            class="progress is-primary" 
-            [value]="player.user.player.droppings" 
-            [max]="level.max_droppings">
-        </progress>
+        <div class="column has-text-centered">
+            <div class="percent90">
+                <p class="heading">Dropping</p>
+                <p class="title">{{droppings | shortNumber}}/{{level.max_droppings | shortNumber}}</p>
+                <progress 
+                    class="progress is-primary" 
+                    [value]="droppings" 
+                    [max]="level.max_droppings">
+                </progress>
+            </div>
         </div>
-    </div>
     </nav>
 </div>

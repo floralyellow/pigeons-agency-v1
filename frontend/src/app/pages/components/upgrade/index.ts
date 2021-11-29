@@ -1,0 +1,1 @@
+export {UpgradeComponent} from './upgrade.component'

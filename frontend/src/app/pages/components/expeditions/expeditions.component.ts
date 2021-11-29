@@ -52,9 +52,9 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
         this.player = value.user.player;
         this.level = this.levelList[this.player.lvl - 1];
         this.seeds = this.player.seeds;
+        this.getCurrentSeeds();
       }
     })
-    this.getCurrentSeeds();
   }
   getCurrentSeeds(){
     (this.timeout !== undefined)?clearTimeout(this.timeout):null;
