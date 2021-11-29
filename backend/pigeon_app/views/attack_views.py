@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from ..models import Player, Pigeon
 from pigeon_app.models.player import UserSerializer
+from pigeon_app.models.attack_pigeon import AttackPigeonSerializer
 from django.db import transaction
 from ..services import update_service, attack_service
 import json
@@ -23,37 +24,11 @@ class AttackView(APIView):
         if not target_id.isdigit() :
             return JsonResponse({'message': 'Error: invalid input'})
 
+        attack, pigeons = attack_service.attack_player(request.user, target_id)
 
-        message = attack_service.attack_player(request.user, target_id)
+        pigeons_to_send = AttackPigeonSerializer(pigeons, many=True).data
 
-        #TODO response
-        
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data}})
-
-# class AttackView(APIView):
-
-#     # attack player
-#     def post(self, request):
-#         update_service.update_user_values(request.user)
-#         try:
-#             input = json.loads(request.body)
-#             logging.debug(input)
-#             pigeon_ids = input["pigeon_ids"]
-#         except (ValueError, KeyError) as e:  
-#             return JsonResponse({'message': 'Error: wrong input1'})
-        
-#         if not isinstance(pigeon_ids, list):
-#             return JsonResponse({'message': 'Error: wrong input2'})
-
-#         if not len(pigeon_ids) == 5:
-#             return JsonResponse({'message': 'Error: wrong input3'})
-
-#         if not all(isinstance(x, int) for x in pigeon_ids): 
-#             return JsonResponse({'message': 'Error: invalid input4'})
-
-#         if not len(pigeon_ids) == len(set(pigeon_ids)): 
-#             return JsonResponse({'message': 'Error: invalid input5'})
-
-#         o = attack_service.attack_player(request.user, pigeon_ids)
- 
-#         return JsonResponse({'message': o})
+        return JsonResponse({'message': {'user': UserSerializer(request.user).data, \
+                            'attack' : attack, \
+                            'attack_pigeons' : pigeons_to_send, 
+                            }}) 

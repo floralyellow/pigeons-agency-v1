@@ -1,3 +1,4 @@
+from pigeon_app.models.attack import AttackSerializer
 from ..models import attack
 from ..models import TR_Lvl_info
 from ..models import TR_Expedition
@@ -22,10 +23,6 @@ def attack_player(user, target_id):
 
         if target_id == user.player.last_attacked:
             return 'Error: Cant attack same player twice !'
-        
-        logging.debug(str(user.player.time_last_attack))
-        logging.debug(str(SECONDS_NEXT_ATTACK))
-        logging.debug(str(datetime.now(timezone.utc)))
 
         if user.player.time_last_attack + timedelta(seconds=SECONDS_NEXT_ATTACK) > datetime.now(timezone.utc):
             return 'Error: Cant attack yet !'
@@ -104,4 +101,6 @@ def attack_player(user, target_id):
         current_attack.def_new_military_score=0
         current_attack.save()
 
-    return list(attacking_pigeons.values()), list(defending_pigeons.values())
+        fighting_pigeons = AttackPigeon.objects.filter(attack=current_attack)
+
+    return AttackSerializer(current_attack).data, fighting_pigeons

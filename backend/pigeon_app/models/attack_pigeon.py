@@ -1,6 +1,6 @@
 from django.db import models
 from .attack import Attack
-from .pigeon import Pigeon
+from .pigeon import Pigeon, PigeonSerializer
 from rest_framework import serializers
 
 
@@ -14,6 +14,8 @@ class AttackPigeon(models.Model):
 
 
 class AttackPigeonSerializer(serializers.ModelSerializer):
+    pigeon = PigeonSerializer(many=False, read_only=True)
+
     class Meta:
         model = AttackPigeon
-        fields = '__all__'
+        fields = ['id', 'pigeon','is_attacker','phys_atk_bonus','magic_atk_bonus']
