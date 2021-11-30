@@ -61,7 +61,6 @@ def create_pigeon(user, expedition_lvl, expedition_type):
         p = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl, pigeon_type=pigeon_type)[0]
         logging.debug(str(p))
 
-
         luck_value = random.randint(1,100)
         phys_atk = int(luck_value/100*(p.max_phys_atk - p.min_phys_atk))+p.min_phys_atk
         magic_atk = int(luck_value/100*(p.max_magic_atk - p.min_magic_atk))+p.min_magic_atk

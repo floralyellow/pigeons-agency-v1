@@ -42,9 +42,9 @@ class PigeonView(APIView):
             return JsonResponse({'message': 'Error: No expedition_type'})
         expedition_lvl = request.POST.get('exp_lvl')
         expedition_type = request.POST.get('exp_type')
-        if not expedition_lvl.isdigit() or not int(expedition_lvl) in range(1,30):
+        if not expedition_lvl.isdigit() or not int(expedition_lvl) in range(1,30+1):
             return JsonResponse({'message': 'Error: invalid input lvl'})
-        if not expedition_type.isdigit() or not int(expedition_type) in range(1,4):
+        if not expedition_type.isdigit() or not int(expedition_type) in range(1,4+1):
             return JsonResponse({'message': 'Error: invalid input type'})
 
         expeditions = pigeon_service.create_pigeon(request.user, expedition_lvl, expedition_type)
