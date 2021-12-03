@@ -57,32 +57,43 @@ def create_pigeon(user, expedition_lvl, expedition_type):
             return 'Not enough seeds'
         player.seeds = player.seeds - expedition.seeds
         player.save()
-        
-        p = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl, pigeon_type=pigeon_type)[0]
-        logging.debug(str(p))
 
         luck_value = random.randint(1,100)
-        phys_atk = int(luck_value/100*(p.max_phys_atk - p.min_phys_atk))+p.min_phys_atk
-        magic_atk = int(luck_value/100*(p.max_magic_atk - p.min_magic_atk))+p.min_magic_atk
-        shield = int(luck_value/100*(p.max_shield - p.min_shield))+p.min_shield
-        drop_min = int(luck_value/100*(expedition.max_drop_minute - expedition.min_drop_minute))+expedition.min_drop_minute
-        feathers = int(luck_value/100*(expedition.max_feathers - expedition.min_feathers))+expedition.min_feathers
 
-        random_src = random.randint(0,len(p.src) - 1)
+        add_pigeon(user.id, expedition, pigeon_type, luck_value)
 
-        creation_time = timezone.now()
-        active_time = creation_time + timedelta(0,expedition.duration)
-
-        new_pigeon = Pigeon(player_id=user.id, pigeon_type=p.pigeon_type, 
-            name=p.name[random_src],src=p.src[random_src],pigeon_id=p.pigeon_id,luck=luck_value,
-            lvl=expedition_lvl, phys_atk=phys_atk,magic_atk=magic_atk,shield=shield,
-            droppings_minute=drop_min,feathers=feathers,
-            creation_time=creation_time,active_time=active_time)
-        new_pigeon.save()
         expeditions = Pigeon.objects.filter(player_id=user.id, is_open=False)  
         
     return list(expeditions.values())
 
+
+def add_pigeon(user_id, expedition, pigeon_type, luck_value):
+    '''
+    not directly an endpoint
+    used for create_pigeon endpoint & for fill pve pigeons
+    '''
+    p = TR_Pigeon.objects.filter(lvl_expedition=expedition.lvl, pigeon_type=pigeon_type)[0]
+    logging.debug(str(p))
+
+    phys_atk = int(luck_value/100*(p.max_phys_atk - p.min_phys_atk))+p.min_phys_atk
+    magic_atk = int(luck_value/100*(p.max_magic_atk - p.min_magic_atk))+p.min_magic_atk
+    shield = int(luck_value/100*(p.max_shield - p.min_shield))+p.min_shield
+    drop_min = int(luck_value/100*(expedition.max_drop_minute - expedition.min_drop_minute))+expedition.min_drop_minute
+    feathers = int(luck_value/100*(expedition.max_feathers - expedition.min_feathers))+expedition.min_feathers
+
+    random_src = random.randint(0,len(p.src) - 1)
+
+    creation_time = timezone.now()
+    active_time = creation_time + timedelta(0,expedition.duration)
+
+    new_pigeon = Pigeon(player_id=user_id, pigeon_type=p.pigeon_type, 
+        name=p.name[random_src],src=p.src[random_src],pigeon_id=p.pigeon_id,luck=luck_value,
+        lvl=expedition.lvl, phys_atk=phys_atk,magic_atk=magic_atk,shield=shield,
+        droppings_minute=drop_min,feathers=feathers,
+        creation_time=creation_time,active_time=active_time)
+    new_pigeon.save()
+
+    
 
 def set_in_team(user, pigeon_id):
 
