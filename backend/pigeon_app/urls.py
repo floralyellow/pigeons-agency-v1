@@ -4,6 +4,8 @@ from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
 from .views.pigeons_views import PigeonView, PigeonTeamView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
 from .views.attack_views import AttackView
 from .views.all_players_views import AllPlayersView, AllPlayersForAttackView
+from .views.adventure_views import AdventureView
+
 from django.contrib import admin
 from django.urls import include, path
 
@@ -30,7 +32,6 @@ urlpatterns = [
     
     path(r'api/attack', AttackView.as_view(), name='attack'),
 
-
     # TODO validate json/array data
     path(r'api/pigeons/organisedefenders', PigeonDefenderOrderView.as_view(), name='organise_defenders'),
 
@@ -41,7 +42,7 @@ urlpatterns = [
     path(r'api/leaderboard', AllPlayersView.as_view(), name='leaderboard'),
     path(r'api/attacklist', AllPlayersForAttackView.as_view(), name='attacklist'),
 
-
+    path(r'api/adventure', AdventureView.as_view(), name='adventure'),
 
 ]
 # urlpatterns += router.urls

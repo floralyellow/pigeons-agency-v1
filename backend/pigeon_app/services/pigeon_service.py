@@ -85,11 +85,21 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
     creation_time = timezone.now()
     active_time = creation_time + timedelta(0,expedition.duration)
 
-    new_pigeon = Pigeon(player_id=user_id, pigeon_type=p.pigeon_type, 
-        name=p.name[random_src],src=p.src[random_src],pigeon_id=p.pigeon_id,luck=luck_value,
-        lvl=expedition.lvl, phys_atk=phys_atk,magic_atk=magic_atk,shield=shield,
-        droppings_minute=drop_min,feathers=feathers,
-        creation_time=creation_time,active_time=active_time)
+    new_pigeon = Pigeon(
+        player_id=user_id, 
+        pigeon_type=p.pigeon_type, 
+        name=p.name[random_src],
+        src=p.src[random_src],
+        pigeon_id=p.pigeon_id,
+        luck=luck_value,
+        lvl=expedition.lvl,
+        phys_atk=phys_atk,
+        magic_atk=magic_atk,
+        shield=shield,
+        droppings_minute=drop_min,
+        feathers=feathers,
+        creation_time=creation_time,
+        active_time=active_time)
     new_pigeon.save()
 
     
