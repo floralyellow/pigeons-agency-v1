@@ -104,7 +104,7 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
 
     
 
-def set_in_team(user, pigeon_id):
+def set_in_team_A(user, pigeon_id):
 
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
@@ -116,9 +116,33 @@ def set_in_team(user, pigeon_id):
         
         pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
 
-        pigeon_to_update.is_in_team = not pigeon_to_update.is_in_team
+        pigeon_to_update.set_in_team_A = not pigeon_to_update.set_in_team_A
 
-        nb_in_team = pigeons.filter(is_in_team = True).count()
+        nb_in_team = pigeons.filter(set_in_team_A = True).count()
+
+        if nb_in_team > 5:
+            return 'Error : Too many in team'
+
+        pigeon_to_update.save()
+
+    return PigeonSerializer(pigeon_to_update).data
+
+
+def set_in_team_B(user, pigeon_id):
+
+    with transaction.atomic():
+        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
+        logging.debug("------"+str(pigeons))
+
+
+        if int(pigeon_id) not in pigeons.values_list('id',flat=True):
+            return 'Error: wrong id'
+        
+        pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
+
+        pigeon_to_update.set_in_team_B = not pigeon_to_update.set_in_team_B
+
+        nb_in_team = pigeons.filter(set_in_team_B = True).count()
 
         if nb_in_team > 5:
             return 'Error : Too many in team'

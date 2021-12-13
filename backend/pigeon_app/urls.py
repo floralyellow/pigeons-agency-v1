@@ -1,7 +1,7 @@
 from rest_framework import routers
 from .views.user_views import UserViewSet
 from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
-from .views.pigeons_views import PigeonView, PigeonTeamView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
+from .views.pigeons_views import PigeonView, PigeonTeamAView, PigeonTeamBView, PigeonActivateView, PigeonSellView, PigeonDefenderOrderView, ExpeditionView
 from .views.attack_views import AttackView
 from .views.all_players_views import AllPlayersView, AllPlayersForAttackView
 from .views.adventure_views import AdventureView
@@ -28,8 +28,10 @@ urlpatterns = [
 
     path(r'api/pigeons/activate', PigeonActivateView.as_view(), name='set_active'),
     path(r'api/pigeons/sell', PigeonSellView.as_view(), name='sell'),
-    path(r'api/pigeons/team', PigeonTeamView.as_view(), name='set_in_team'),
-    
+    path(r'api/pigeons/teama', PigeonTeamAView.as_view(), name='set_in_team_A'),
+    path(r'api/pigeons/teamb', PigeonTeamBView.as_view(), name='set_in_team_B'),
+
+
     path(r'api/attack', AttackView.as_view(), name='attack'),
 
     # TODO validate json/array data

@@ -20,7 +20,8 @@ class Pigeon(models.Model):
     active_time = models.DateTimeField(null=True)
     is_open = models.BooleanField(default=False)
     is_sold = models.BooleanField(default=False)
-    is_in_team = models.BooleanField(default=False)
+    is_in_team_A = models.BooleanField(default=False)
+    is_in_team_B = models.BooleanField(default=False)
 
 
 class PigeonSerializer(serializers.ModelSerializer):

@@ -1,3 +1,4 @@
+from ..errors.ServiceError import ServiceError
 from pigeon_app.models.attack import AttackSerializer
 from ..models import attack
 from ..models import TR_Lvl_info
@@ -12,24 +13,34 @@ from datetime import datetime,timezone,timedelta
 import random
 import logging
 
-def attack_player(user, target_id):
+def attack_player(user, target_id, attack_team):
+
     SECONDS_NEXT_ATTACK = 2 * 60 # 2 minutes
 
     with transaction.atomic():
         target = Player.objects.filter(id=target_id)
 
         if len(target) != 1 or target_id == user.id:
-            return 'Error: Invalid id'
+            raise ServiceError('Error: Invalid id')
 
         if target_id == user.player.last_attacked:
-            return 'Error: Cant attack same player twice !'
+            raise ServiceError('Error: Cant attack same player twice !')
 
         if user.player.time_last_attack + timedelta(seconds=SECONDS_NEXT_ATTACK) > datetime.now(timezone.utc):
-            return 'Error: Cant attack yet !'
+            raise ServiceError('Error: Cant attack yet !')
 
+        if attack_team == 'A':
+            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_A=True)
+        elif attack_team == 'B':
+            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_B=True)
+        
+        defender = target[0]
 
-        attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team=True)
-        defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team=True)
+        defend_team = defender.defense_team
+        if defend_team == 'A':
+            defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team_A=True)
+        elif defend_team == 'B':
+            defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team_B=True)
 
         # if len(attacking_pigeons) != 5:
         #     return 'Error: You need 5 pigeons to attack'
@@ -43,7 +54,7 @@ def attack_player(user, target_id):
         sum_shield_value_atk = sum([i.shield for i in attacking_pigeons]) 
         sum_shield_value_def = sum([i.shield for i in attacking_pigeons])
 
-        current_attack = Attack(attacker=user.player, defender=target[0])
+        current_attack = Attack(attacker=user.player, defender=defender)
         current_attack.save()
 
         for p in attacking_pigeons:
