@@ -1,9 +1,8 @@
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from pigeon_app.models.player import UserSerializer
 from ..services import update_service
-import logging
+from ..utils.standard_response import StandardJsonResponse as SJR
 
 class AllPlayersView(APIView):
 
@@ -14,7 +13,7 @@ class AllPlayersView(APIView):
 
         users = UserSerializer(User.objects.order_by('-player__military_score', '-player__lvl'), many=True).data
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data,'users' : users}})
+        return ({'user': UserSerializer(request.user).data,'users' : users})
 
 class AllPlayersForAttackView(APIView):
 
@@ -36,4 +35,4 @@ class AllPlayersForAttackView(APIView):
             .extra(select={'offset_lvl': 'abs(pigeon_app_player.lvl - %s)'},select_params=(request.user.player.lvl,),)
             .order_by('offset_lvl', '-player__lvl', 'offset_military', '-player__military_score'), many=True).data
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data,'users' : users}})
+        return SJR({'user': UserSerializer(request.user).data,'users' : users})

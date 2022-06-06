@@ -1,13 +1,10 @@
 
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from pigeon_app.models.player import UserSerializer
 from pigeon_app.models.adventure import AdventureSerializer
 from pigeon_app.models.pve_pigeon import PvePigeonSerializer
 from ..services import update_service, adventure_service
-from ..models import Player, Pigeon
-
-import logging
+from ..utils.standard_response import StandardJsonResponse as SJR
 
 class AdventureView(APIView):
 
@@ -18,10 +15,10 @@ class AdventureView(APIView):
 
         adventure_pigeons = adventure_service.get_adventure_pigeons(adventure.lvl, adventure.encounter)
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data, \
+        return SJR({'user': UserSerializer(request.user).data, \
                             'adventure' : AdventureSerializer(adventure).data, \
                             'adventure_pigeons' : PvePigeonSerializer(adventure_pigeons, many=True).data
-                            }}) 
+                            }) 
 
 
     def post(self, request):

@@ -1,15 +1,11 @@
 
-from ..models import TR_Pigeon
 from ..models import TR_Lvl_info
-from ..models import TR_Expedition
 from django.http import JsonResponse
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from ..models import Player
 from pigeon_app.models.player import UserSerializer
 from django.db import transaction
 from ..services import update_service, pigeon_service
-import logging
+from ..utils.standard_response import StandardJsonResponse as SJR
 
 class PlayerView(APIView):
 
@@ -20,7 +16,7 @@ class PlayerView(APIView):
 
         nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute}})
+        return SJR({'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute})
 
 
 class PlayerLvlupView(APIView):
@@ -47,7 +43,7 @@ class PlayerLvlupView(APIView):
 
             nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute}})
+        return SJR({'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute})
 
 class PlayerUseBucketView(APIView):
 
@@ -70,4 +66,4 @@ class PlayerUseBucketView(APIView):
 
             nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute}})
+        return ({'user': UserSerializer(request.user).data, 'nb_pigeons' : nb_pigeons, 'droppings_minute' : droppings_minute})

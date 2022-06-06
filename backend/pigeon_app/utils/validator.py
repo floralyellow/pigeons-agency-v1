@@ -21,3 +21,9 @@ class InputValidator:
     def validate_is_int_in_range(value: Any, min_value: int, max_value: int, error: Optional[str]):
         if not value.isdigit() or not int(value) in range(min_value, max_value):
             raise WrongInputException(f'Error: invalid input {error}')
+
+    def validate_is_in_values(value: Any, keys: List[str], error: Optional[str]):
+        if not value in keys:
+            raise WrongInputException(f'Error: invalid input {error}')
+
+
