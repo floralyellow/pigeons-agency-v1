@@ -4,8 +4,8 @@ from rest_framework import serializers
 
 
 class Attack(models.Model):
-    attacker = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_atk')
-    defender = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='player_def')
+    attacker = models.ForeignKey(Player, on_delete=models.CASCADE, related_name="player_atk")
+    defender = models.ForeignKey(Player, on_delete=models.CASCADE, related_name="player_def")
     winner_id = models.IntegerField(default=0)
     atk_tot_score = models.IntegerField(default=0)
     atk_tot_phys = models.IntegerField(default=0)
@@ -26,4 +26,4 @@ class Attack(models.Model):
 class AttackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attack
-        fields = '__all__'
+        fields = "__all__"

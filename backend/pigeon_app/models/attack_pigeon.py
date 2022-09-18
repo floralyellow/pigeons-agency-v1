@@ -18,4 +18,4 @@ class AttackPigeonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AttackPigeon
-        fields = ['id', 'pigeon','is_attacker','phys_atk_bonus','magic_atk_bonus']
+        fields = ["id", "pigeon", "is_attacker", "phys_atk_bonus", "magic_atk_bonus"]

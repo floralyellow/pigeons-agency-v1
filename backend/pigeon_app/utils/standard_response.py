@@ -1,3 +1,5 @@
 from django.http import JsonResponse
+
+
 def StandardJsonResponse(input):
-    return JsonResponse({'message': input })
+    return JsonResponse({"message": input})
