@@ -124,9 +124,9 @@ def set_in_team_A(user, pigeon_id):
 
         pigeon_to_update = pigeons.filter(id=pigeon_id)[0]
 
-        pigeon_to_update.set_in_team_A = not pigeon_to_update.set_in_team_A
+        pigeon_to_update.is_in_team_A = not pigeon_to_update.is_in_team_A
 
-        nb_in_team = pigeons.filter(set_in_team_A=True).count()
+        nb_in_team = pigeons.filter(is_in_team_A=True).count()
 
         if nb_in_team > 5:
             return "Error : Too many in team"
@@ -149,9 +149,9 @@ def set_in_team_B(user, pigeon_id):
 
         pigeon_to_update = pigeons.filter(id=pigeon_id)[0]
 
-        pigeon_to_update.set_in_team_B = not pigeon_to_update.set_in_team_B
+        pigeon_to_update.is_in_team_B = not pigeon_to_update.is_in_team_B
 
-        nb_in_team = pigeons.filter(set_in_team_B=True).count()
+        nb_in_team = pigeons.filter(is_in_team_B=True).count()
 
         if nb_in_team > 5:
             return "Error : Too many in team"
