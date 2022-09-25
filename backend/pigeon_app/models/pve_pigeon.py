@@ -23,8 +23,7 @@ class PvePigeon(models.Model):
     is_in_team_B = models.BooleanField(default=False)
 
 
-
 class PvePigeonSerializer(serializers.ModelSerializer):
     class Meta:
         model = PvePigeon
-        fields = '__all__'
+        fields = "__all__"

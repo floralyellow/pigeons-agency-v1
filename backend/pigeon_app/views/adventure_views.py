@@ -1,4 +1,3 @@
-
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from pigeon_app.models.player import UserSerializer
@@ -9,23 +8,29 @@ from ..models import Player, Pigeon
 
 import logging
 
-class AdventureView(APIView):
 
+class AdventureView(APIView):
     def get(self, request):
         update_service.update_user_values(request.user)
 
         adventure = adventure_service.get_adventure(request.user)
 
-        adventure_pigeons = adventure_service.get_adventure_pigeons(adventure.lvl, adventure.encounter)
+        adventure_pigeons = adventure_service.get_adventure_pigeons(
+            adventure.lvl, adventure.encounter
+        )
 
-        return JsonResponse({'message': {'user': UserSerializer(request.user).data, \
-                            'adventure' : AdventureSerializer(adventure).data, \
-                            'adventure_pigeons' : PvePigeonSerializer(adventure_pigeons, many=True).data
-                            }}) 
-
+        return JsonResponse(
+            {
+                "message": {
+                    "user": UserSerializer(request.user).data,
+                    "adventure": AdventureSerializer(adventure).data,
+                    "adventure_pigeons": PvePigeonSerializer(adventure_pigeons, many=True).data,
+                }
+            }
+        )
 
     def post(self, request):
-        #TODO
+        # TODO
         update_service.update_user_values(request.user)
 
         return None
