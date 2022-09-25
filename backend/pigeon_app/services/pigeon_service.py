@@ -57,35 +57,54 @@ def create_pigeon(user, expedition_lvl, expedition_type):
             return 'Not enough seeds'
         player.seeds = player.seeds - expedition.seeds
         player.save()
-        
-        p = TR_Pigeon.objects.filter(lvl_expedition=expedition_lvl, pigeon_type=pigeon_type)[0]
-        logging.debug(str(p))
-
 
         luck_value = random.randint(1,100)
-        phys_atk = int(luck_value/100*(p.max_phys_atk - p.min_phys_atk))+p.min_phys_atk
-        magic_atk = int(luck_value/100*(p.max_magic_atk - p.min_magic_atk))+p.min_magic_atk
-        shield = int(luck_value/100*(p.max_shield - p.min_shield))+p.min_shield
-        drop_min = int(luck_value/100*(expedition.max_drop_minute - expedition.min_drop_minute))+expedition.min_drop_minute
-        feathers = int(luck_value/100*(expedition.max_feathers - expedition.min_feathers))+expedition.min_feathers
 
-        random_src = random.randint(0,len(p.src) - 1)
+        add_pigeon(user.id, expedition, pigeon_type, luck_value)
 
-        creation_time = timezone.now()
-        active_time = creation_time + timedelta(0,expedition.duration)
-
-        new_pigeon = Pigeon(player_id=user.id, pigeon_type=p.pigeon_type, 
-            name=p.name[random_src],src=p.src[random_src],pigeon_id=p.pigeon_id,luck=luck_value,
-            lvl=expedition_lvl, phys_atk=phys_atk,magic_atk=magic_atk,shield=shield,
-            droppings_minute=drop_min,feathers=feathers,
-            creation_time=creation_time,active_time=active_time)
-        new_pigeon.save()
         expeditions = Pigeon.objects.filter(player_id=user.id, is_open=False)  
         
     return list(expeditions.values())
 
 
-def set_in_team(user, pigeon_id):
+def add_pigeon(user_id, expedition, pigeon_type, luck_value):
+    '''
+    not directly an endpoint
+    used for create_pigeon endpoint
+    '''
+    p = TR_Pigeon.objects.filter(lvl_expedition=expedition.lvl, pigeon_type=pigeon_type)[0]
+
+    phys_atk = int(luck_value/100*(p.max_phys_atk - p.min_phys_atk))+p.min_phys_atk
+    magic_atk = int(luck_value/100*(p.max_magic_atk - p.min_magic_atk))+p.min_magic_atk
+    shield = int(luck_value/100*(p.max_shield - p.min_shield))+p.min_shield
+    drop_min = int(luck_value/100*(expedition.max_drop_minute - expedition.min_drop_minute))+expedition.min_drop_minute
+    feathers = int(luck_value/100*(expedition.max_feathers - expedition.min_feathers))+expedition.min_feathers
+
+    random_src = random.randint(0,len(p.src) - 1)
+
+    creation_time = timezone.now()
+    active_time = creation_time + timedelta(0,expedition.duration)
+
+    new_pigeon = Pigeon(
+        player_id=user_id, 
+        pigeon_type=p.pigeon_type, 
+        name=p.name[random_src],
+        src=p.src[random_src],
+        pigeon_id=p.pigeon_id,
+        luck=luck_value,
+        lvl=expedition.lvl,
+        phys_atk=phys_atk,
+        magic_atk=magic_atk,
+        shield=shield,
+        droppings_minute=drop_min,
+        feathers=feathers,
+        creation_time=creation_time,
+        active_time=active_time)
+    new_pigeon.save()
+
+    
+
+def set_in_team_A(user, pigeon_id):
 
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
@@ -97,9 +116,33 @@ def set_in_team(user, pigeon_id):
         
         pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
 
-        pigeon_to_update.is_in_team = not pigeon_to_update.is_in_team
+        pigeon_to_update.set_in_team_A = not pigeon_to_update.set_in_team_A
 
-        nb_in_team = pigeons.filter(is_in_team = True).count()
+        nb_in_team = pigeons.filter(set_in_team_A = True).count()
+
+        if nb_in_team > 5:
+            return 'Error : Too many in team'
+
+        pigeon_to_update.save()
+
+    return PigeonSerializer(pigeon_to_update).data
+
+
+def set_in_team_B(user, pigeon_id):
+
+    with transaction.atomic():
+        pigeons = Pigeon.objects.select_for_update().filter(player_id=user.id, is_sold=False, is_open=True)
+        logging.debug("------"+str(pigeons))
+
+
+        if int(pigeon_id) not in pigeons.values_list('id',flat=True):
+            return 'Error: wrong id'
+        
+        pigeon_to_update = pigeons.filter(id = pigeon_id)[0]
+
+        pigeon_to_update.set_in_team_B = not pigeon_to_update.set_in_team_B
+
+        nb_in_team = pigeons.filter(set_in_team_B = True).count()
 
         if nb_in_team > 5:
             return 'Error : Too many in team'

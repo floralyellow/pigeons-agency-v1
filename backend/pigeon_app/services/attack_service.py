@@ -1,46 +1,117 @@
+from ..errors.ServiceError import ServiceError
+from pigeon_app.models.attack import AttackSerializer
+from ..models import attack
 from ..models import TR_Lvl_info
 from ..models import TR_Expedition
+from ..models import Attack
+from ..models import AttackPigeon
 from django.contrib.auth.models import User
 from ..models import Player, Pigeon
 from pigeon_app.models.player import UserSerializer
 from django.db import transaction
-from ..services import update_service, attack_service
+from datetime import datetime,timezone,timedelta
+import random
 import logging
 
-def init_attack(user, target_id):
+def attack_player(user, target_id, attack_team):
+
+    SECONDS_NEXT_ATTACK = 2 * 60 # 2 minutes
 
     with transaction.atomic():
-        res = Player.objects.filter(id=target_id)
+        target = Player.objects.filter(id=target_id)
 
-        if len(res) != 1 or target_id == user.id:
-            return 'Error: Invalid id'
+        if len(target) != 1 or target_id == user.id:
+            raise ServiceError('Error: Invalid id')
 
         if target_id == user.player.last_attacked:
-            return 'Error: Cant attack same player twice !'
+            raise ServiceError('Error: Cant attack same player twice !')
 
-        attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_attacker=True)
-        defending_pigeons = Pigeon.objects.filter(player_id=target_id, defender_pos__isnull=False)
+        if user.player.time_last_attack + timedelta(seconds=SECONDS_NEXT_ATTACK) > datetime.now(timezone.utc):
+            raise ServiceError('Error: Cant attack yet !')
 
-        if len(attacking_pigeons) != 5:
-            return 'Error: You need 5 pigeons to attack'
+        if attack_team == 'A':
+            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_A=True)
+        elif attack_team == 'B':
+            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_B=True)
+        
+        defender = target[0]
 
-        user.player.attacking_id = target_id
-        user.player.save()
+        defend_team = defender.defense_team
+        if defend_team == 'A':
+            defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team_A=True)
+        elif defend_team == 'B':
+            defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team_B=True)
 
-    return list(attacking_pigeons.values()), list(defending_pigeons.values())
+        # if len(attacking_pigeons) != 5:
+        #     return 'Error: You need 5 pigeons to attack'
+        total_phys_atk = 0
+        total_phys_def = 0
+        total_magic_atk = 0
+        total_magic_def = 0
+        total_shield_atk = 0
+        total_shield_def = 0
+        # sum shields needed before loop
+        sum_shield_value_atk = sum([i.shield for i in attacking_pigeons]) 
+        sum_shield_value_def = sum([i.shield for i in attacking_pigeons])
 
-def attack_player(user, pigeon_ids):
+        current_attack = Attack(attacker=user.player, defender=defender)
+        current_attack.save()
 
-    with transaction.atomic():
-        atk_pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False, is_open=True, is_attacker=True)
-        logging.info(atk_pigeons.values_list('id',flat=True))
+        for p in attacking_pigeons:
+            bonus_phys_atk = round(random.randint(-15,15) * p.phys_atk / 100)
+            bonus_magic_atk = round(random.randint(-15,15) * p.magic_atk / 100)
 
-        if not all(int(p) in atk_pigeons.values_list('id',flat=True) for p in pigeon_ids): 
-            return 'Error: wrong id'
+            if p.phys_atk > 0:
+                total_phys_atk += p.phys_atk + bonus_phys_atk
+                total_shield_def += sum_shield_value_def
 
-        def_pigeons = Pigeon.objects.filter(player_id=user.player.attacking_id, is_sold=False, is_open=True, defender_pos__isnull=False)
-        logging.info(def_pigeons)
+            total_magic_atk += p.magic_atk + bonus_magic_atk
 
+            attack_pigeon = AttackPigeon(attack=current_attack,pigeon=p,is_attacker=True,phys_atk_bonus=bonus_phys_atk,magic_atk_bonus=bonus_magic_atk)
+            attack_pigeon.save()
 
-    return 'wip'
+        for p in defending_pigeons:
+            bonus_phys_atk = round(random.randint(-15,15) * p.phys_atk / 100)
+            bonus_magic_atk = round(random.randint(-15,15) * p.magic_atk / 100)
 
+            if p.phys_atk > 0:
+                total_phys_def += p.phys_atk + bonus_phys_atk
+                total_shield_atk += sum_shield_value_atk
+
+            total_magic_def += + p.magic_atk + bonus_magic_atk
+
+            attack_pigeon = AttackPigeon(attack=current_attack,pigeon=p,is_attacker=False,phys_atk_bonus=bonus_phys_atk,magic_atk_bonus=bonus_magic_atk)
+            attack_pigeon.save()
+
+        total_attacker = total_phys_atk + total_magic_atk - total_shield_def
+        total_defender = total_phys_def + total_magic_def - total_shield_atk
+        
+        winner_id = user.id if total_attacker > total_defender else target_id
+
+        # TODO stolen droppings
+
+        # TODO militaryscore
+
+        # TODO timetonextattack & last attack id
+
+        # TODO protecteduntil (with model)
+
+        current_attack.winner_id=winner_id
+        current_attack.atk_tot_score=total_attacker
+        current_attack.atk_tot_phys=total_phys_atk
+        current_attack.atk_tot_magic=total_magic_atk
+        current_attack.atk_tot_shield=total_shield_atk
+        current_attack.def_tot_score=total_defender
+        current_attack.def_tot_phys=total_phys_def
+        current_attack.def_tot_magic=total_magic_def
+        current_attack.def_tot_shield=total_shield_def
+        current_attack.stolen_droppings=0
+        current_attack.atk_old_military_score=0
+        current_attack.atk_new_military_score=0
+        current_attack.def_old_military_score=0
+        current_attack.def_new_military_score=0
+        current_attack.save()
+
+        fighting_pigeons = AttackPigeon.objects.filter(attack=current_attack)
+
+    return AttackSerializer(current_attack).data, fighting_pigeons

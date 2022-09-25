@@ -42,9 +42,9 @@ class PigeonView(APIView):
             return JsonResponse({'message': 'Error: No expedition_type'})
         expedition_lvl = request.POST.get('exp_lvl')
         expedition_type = request.POST.get('exp_type')
-        if not expedition_lvl.isdigit() or not int(expedition_lvl) in range(1,30):
+        if not expedition_lvl.isdigit() or not int(expedition_lvl) in range(1,30+1):
             return JsonResponse({'message': 'Error: invalid input lvl'})
-        if not expedition_type.isdigit() or not int(expedition_lvl) in range(1,4):
+        if not expedition_type.isdigit() or not int(expedition_type) in range(1,4+1):
             return JsonResponse({'message': 'Error: invalid input type'})
 
         expeditions = pigeon_service.create_pigeon(request.user, expedition_lvl, expedition_type)
@@ -65,7 +65,7 @@ class ExpeditionView(APIView):
 
 
 
-class PigeonTeamView(APIView):
+class PigeonTeamAView(APIView):
 
     # set/unset in team
     def post(self, request):
@@ -78,7 +78,24 @@ class PigeonTeamView(APIView):
         if not pigeon_id.isdigit() :
             return JsonResponse({'message': 'Error: invalid input'})
         
-        message = pigeon_service.set_in_team(request.user, pigeon_id)
+        message = pigeon_service.set_in_team_A(request.user, pigeon_id)
+
+        return JsonResponse({'message': message})
+
+class PigeonTeamBView(APIView):
+
+    # set/unset in team
+    def post(self, request):
+
+        update_service.update_user_values(request.user)
+
+        if 'p_id' not in request.POST:
+            return JsonResponse({'message': 'Error: No post info'})
+        pigeon_id = request.POST.get('p_id')
+        if not pigeon_id.isdigit() :
+            return JsonResponse({'message': 'Error: invalid input'})
+        
+        message = pigeon_service.set_in_team_B(request.user, pigeon_id)
 
         return JsonResponse({'message': message})
 
