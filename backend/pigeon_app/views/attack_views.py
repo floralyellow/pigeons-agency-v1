@@ -11,22 +11,18 @@ from django.db import transaction
 from ..services import update_service, attack_service
 import json
 import logging
+from ..utils.validators import InputValidator
 
 
 class AttackView(APIView):
     def post(self, request):
         update_service.update_user_values(request.user)
 
-        if "u_id" not in request.POST:
-            return JsonResponse({"message": "Error: No post info"})
-        if "a_team" not in request.POST:
-            return JsonResponse({"message": "Error: No post info"})
-        attack_team = request.POST.get("a_team")
-        target_id = request.POST.get("u_id")
-        if not target_id.isdigit():
-            return JsonResponse({"message": "Error: invalid input"})
-        if not attack_team in ("A", "B"):
-            return JsonResponse({"message": "Error: invalid input"})
+        attack_team = InputValidator.get_key(request, "a_team")
+        target_id = InputValidator.get_key(request, "u_id")
+
+        InputValidator.validate_is_int(target_id)
+        InputValidator.validate_is_in_values(attack_team, ["A", "B"])
 
         try:
             attack, pigeons = attack_service.attack_player(
