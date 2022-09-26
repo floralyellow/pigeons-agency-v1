@@ -3,7 +3,6 @@ from pigeon_app.models.attack_pigeon import AttackPigeonSerializer
 from pigeon_app.models.player import UserSerializer
 from rest_framework.views import APIView
 
-from ..errors.ServiceError import ServiceError
 from ..services import attack_service, update_service
 from ..utils.validators import InputValidator
 
@@ -18,17 +17,12 @@ class AttackView(APIView):
         InputValidator.validate_is_int(target_id)
         InputValidator.validate_is_in_values(attack_team, ["A", "B"])
 
-        try:
-            attack, pigeons = attack_service.attack_player(
-                request.user, int(target_id), attack_team
-            )
-            pigeons_to_send = AttackPigeonSerializer(pigeons, many=True).data
-            message = {
-                "user": UserSerializer(request.user).data,
-                "attack": attack,
-                "attack_pigeons": pigeons_to_send,
-            }
-        except ServiceError as e:
-            message = e.args[0]
+        attack, pigeons = attack_service.attack_player(request.user, int(target_id), attack_team)
+        pigeons_to_send = AttackPigeonSerializer(pigeons, many=True).data
+        message = {
+            "user": UserSerializer(request.user).data,
+            "attack": attack,
+            "attack_pigeons": pigeons_to_send,
+        }
 
         return JsonResponse({"message": message})

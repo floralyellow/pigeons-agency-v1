@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 from django.db import transaction
 from pigeon_app.models.attack import AttackSerializer
 
-from ..errors.ServiceError import ServiceError
+from ..exceptions.custom_exceptions import ServiceException
 from ..models import Attack, AttackPigeon, Pigeon, Player
 
 
@@ -16,15 +16,15 @@ def attack_player(user, target_id, attack_team):
         target = Player.objects.filter(id=target_id)
 
         if len(target) != 1 or target_id == user.id:
-            raise ServiceError("Error: Invalid id")
+            raise ServiceException("Error: Invalid id")
 
         if target_id == user.player.last_attacked:
-            raise ServiceError("Error: Cant attack same player twice !")
+            raise ServiceException("Error: Cant attack same player twice !")
 
         if user.player.time_last_attack + timedelta(seconds=SECONDS_NEXT_ATTACK) > datetime.now(
             timezone.utc
         ):
-            raise ServiceError("Error: Cant attack yet !")
+            raise ServiceException("Error: Cant attack yet !")
 
         if attack_team == "A":
             attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_A=True)

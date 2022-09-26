@@ -6,6 +6,7 @@ from django.db import transaction
 from django.utils import timezone
 from pigeon_app.models.pigeon import PigeonSerializer
 
+from ..exceptions.custom_exceptions import ServiceException
 from ..models import Pigeon, TR_Expedition, TR_Lvl_info, TR_Pigeon
 
 
@@ -26,7 +27,7 @@ def create_pigeon(user, expedition_lvl, expedition_type):
 
         player = user.player
         if player.lvl < expedition_lvl:
-            return "Invalid lvl"
+            raise ServiceException("Error: Invalid lvl !")
 
         pigeon_type = random.randint(1, 3)
         # expedition type input gives slighlty more chances to get wanted pigeon if we did not get it (1/3 to 1/2)
@@ -41,9 +42,10 @@ def create_pigeon(user, expedition_lvl, expedition_type):
         nb_pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False).count()
 
         if nb_pigeons >= lvl_info.max_pigeons:
-            return "Error too many pigeons"
+            raise ServiceException("Error: too many pigeons !")
         if player.seeds < expedition.seeds:
-            return "Not enough seeds"
+            raise ServiceException("Error: Not enough seeds !")
+
         player.seeds = player.seeds - expedition.seeds
         player.save()
 
@@ -108,7 +110,7 @@ def set_in_team_A(user, pigeon_id):
         logging.debug("------" + str(pigeons))
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
-            return "Error: wrong id"
+            raise ServiceException("Error: wrong id !")
 
         pigeon_to_update = pigeons.filter(id=pigeon_id)[0]
 
@@ -117,7 +119,7 @@ def set_in_team_A(user, pigeon_id):
         nb_in_team = pigeons.filter(is_in_team_A=True).count()
 
         if nb_in_team > 5:
-            return "Error : Too many in team"
+            raise ServiceException("Error: Too many in team !")
 
         pigeon_to_update.save()
 
@@ -133,7 +135,7 @@ def set_in_team_B(user, pigeon_id):
         logging.debug("------" + str(pigeons))
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
-            return "Error: wrong id"
+            raise ServiceException("Error: wrong id !")
 
         pigeon_to_update = pigeons.filter(id=pigeon_id)[0]
 
@@ -142,7 +144,7 @@ def set_in_team_B(user, pigeon_id):
         nb_in_team = pigeons.filter(is_in_team_B=True).count()
 
         if nb_in_team > 5:
-            return "Error : Too many in team"
+            raise ServiceException("Error:  Too many in team !")
 
         pigeon_to_update.save()
 
@@ -156,12 +158,12 @@ def activate_pigeon(user, pigeon_id):
         )
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
-            return "Error: wrong id"
+            raise ServiceException("Error: wrong id !")
 
         pigeon_to_activate = pigeons.filter(id=pigeon_id)[0]
 
         if timezone.now() < pigeon_to_activate.active_time:
-            return "Error: pigeon not yet active !"
+            raise ServiceException("Error: pigeon not yet active !")
 
         pigeon_to_activate.is_open = True
 
@@ -176,7 +178,7 @@ def sell_pigeon(user, pigeon_id):
         )
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
-            return "Error: wrong id"
+            raise ServiceException("Error: wrong id !")
 
         max_feathers = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_feathers
 
