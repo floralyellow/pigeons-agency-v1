@@ -1,17 +1,11 @@
-from ..errors.ServiceError import ServiceError
-from pigeon_app.models.attack import AttackSerializer
-from ..models import attack
-from ..models import TR_Lvl_info
-from ..models import TR_Expedition
-from ..models import Attack
-from ..models import AttackPigeon
-from django.contrib.auth.models import User
-from ..models import Player, Pigeon
-from pigeon_app.models.player import UserSerializer
-from django.db import transaction
-from datetime import datetime, timezone, timedelta
 import random
-import logging
+from datetime import datetime, timedelta, timezone
+
+from django.db import transaction
+from pigeon_app.models.attack import AttackSerializer
+
+from ..errors.ServiceError import ServiceError
+from ..models import Attack, AttackPigeon, Pigeon, Player
 
 
 def attack_player(user, target_id, attack_team):

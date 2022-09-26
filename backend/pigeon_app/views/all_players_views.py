@@ -1,9 +1,9 @@
-from django.http import JsonResponse
-from rest_framework.views import APIView
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from pigeon_app.models.player import UserSerializer
+from rest_framework.views import APIView
+
 from ..services import update_service
-import logging
 
 
 class AllPlayersView(APIView):

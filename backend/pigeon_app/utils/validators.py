@@ -1,4 +1,5 @@
-from typing import List, Any
+from typing import Any, List
+
 from ..exceptions.custom_exceptions import WrongInputException
 
 

@@ -1,12 +1,10 @@
 from django.http import JsonResponse
-from rest_framework.views import APIView
-from pigeon_app.models.player import UserSerializer
 from pigeon_app.models.adventure import AdventureSerializer
+from pigeon_app.models.player import UserSerializer
 from pigeon_app.models.pve_pigeon import PvePigeonSerializer
-from ..services import update_service, adventure_service
-from ..models import Player, Pigeon
+from rest_framework.views import APIView
 
-import logging
+from ..services import adventure_service, update_service
 
 
 class AdventureView(APIView):

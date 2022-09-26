@@ -1,14 +1,6 @@
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-import logging
-from django.utils import timezone
-from ..models import TR_Pigeon
-from ..models import TR_Lvl_info
-from ..models import TR_Expedition
-from datetime import datetime, timedelta
-from ..models import Player, Pigeon, Adventure, PvePigeon
-import random
 from django.db import transaction
+
+from ..models import Adventure, PvePigeon, TR_Lvl_info
 
 
 def get_adventure(user):

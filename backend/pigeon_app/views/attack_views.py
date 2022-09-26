@@ -1,16 +1,10 @@
-from ..errors.ServiceError import ServiceError
-from ..models import TR_Lvl_info
-from ..models import TR_Expedition
 from django.http import JsonResponse
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from ..models import Player, Pigeon
-from pigeon_app.models.player import UserSerializer
 from pigeon_app.models.attack_pigeon import AttackPigeonSerializer
-from django.db import transaction
-from ..services import update_service, attack_service
-import json
-import logging
+from pigeon_app.models.player import UserSerializer
+from rest_framework.views import APIView
+
+from ..errors.ServiceError import ServiceError
+from ..services import attack_service, update_service
 from ..utils.validators import InputValidator
 
 

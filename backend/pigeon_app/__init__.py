@@ -1,4 +1,5 @@
 import logging
+
 from django.conf import settings
 
 fmt = getattr(settings, "LOG_FORMAT", None)

@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Player
-from .models import Pigeon
-from .models import TR_Lvl_info
+
+from .models import Pigeon, Player, TR_Lvl_info
 
 print("------" + "admin.py")
 

@@ -1,14 +1,10 @@
-from ..models import TR_Pigeon
-from ..models import TR_Lvl_info
-from ..models import TR_Expedition
-from django.http import JsonResponse
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from ..models import Player
-from pigeon_app.models.player import UserSerializer
 from django.db import transaction
-from ..services import update_service, pigeon_service
-import logging
+from django.http import JsonResponse
+from pigeon_app.models.player import UserSerializer
+from rest_framework.views import APIView
+
+from ..models import TR_Lvl_info
+from ..services import pigeon_service, update_service
 
 
 class PlayerView(APIView):

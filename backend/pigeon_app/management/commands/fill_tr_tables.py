@@ -1,6 +1,7 @@
-from django.contrib.postgres.fields import ArrayField
 from django.core.management.base import BaseCommand
-from ...models import TR_Pigeon, TR_Expedition, TR_Lvl_info
+
+from ...models import TR_Expedition, TR_Lvl_info, TR_Pigeon
+
 
 class Command(BaseCommand):
     help = 'Fills tr tables'

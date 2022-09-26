@@ -1,26 +1,22 @@
-from rest_framework import routers
-from .views.user_views import UserViewSet
-from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
-from .views.pigeons_views import (
-    PigeonView,
-    PigeonTeamAView,
-    PigeonTeamBView,
-    PigeonActivateView,
-    PigeonSellView,
-    PigeonDefenderOrderView,
-    ExpeditionView,
-)
-from .views.attack_views import AttackView
-from .views.all_players_views import AllPlayersView, AllPlayersForAttackView
-from .views.adventure_views import AdventureView
-
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
+from .views.adventure_views import AdventureView
+from .views.all_players_views import AllPlayersForAttackView, AllPlayersView
+from .views.attack_views import AttackView
+from .views.pigeons_views import (
+    ExpeditionView,
+    PigeonActivateView,
+    PigeonDefenderOrderView,
+    PigeonSellView,
+    PigeonTeamAView,
+    PigeonTeamBView,
+    PigeonView,
 )
+from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
+from .views.user_views import UserViewSet
 
 router = routers.SimpleRouter()
 router.register(r"api/users", UserViewSet)

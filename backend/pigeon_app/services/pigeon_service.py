@@ -1,24 +1,12 @@
-from pigeon_app.models.player import UserSerializer
-from pigeon_app.models.player import PlayerSerializer
-from pigeon_app.models.pigeon import PigeonSerializer
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-from ..models import Player
-from ..models import Pigeon
 import logging
-from django.core import serializers
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from django.core.signals import request_finished
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from django.utils import timezone
-from ..models import TR_Pigeon
-from ..models import TR_Lvl_info
-from ..models import TR_Expedition
-from datetime import datetime, timedelta
 import random
+from datetime import timedelta
+
 from django.db import transaction
+from django.utils import timezone
+from pigeon_app.models.pigeon import PigeonSerializer
+
+from ..models import Pigeon, TR_Expedition, TR_Lvl_info, TR_Pigeon
 
 
 def get_global_pigeon_info(user):
