@@ -157,7 +157,6 @@ class PigeonActivateView(APIView):
             return JsonResponse({"message": "Error: invalid input"})
 
         message = pigeon_service.activate_pigeon(request.user, pigeon_id)
-        logging.debug("yee1")
         return JsonResponse({"message": message})
 
 
