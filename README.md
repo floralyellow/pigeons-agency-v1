@@ -15,3 +15,11 @@ docker-compose up
 Python 3.8 or higher
 
 [Code example for my blog post](http://felipelinsmachado.com/connecting-django-reactjs-via-nginx-using-docker-containers/)
+
+## Helps
+
+If \r issues when switching unix/dos :
+```
+sudo apt-get install dos2unix
+dos2unix backend/entrypoint.sh
+```

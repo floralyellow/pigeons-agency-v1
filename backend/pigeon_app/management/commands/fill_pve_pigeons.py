@@ -1,8 +1,8 @@
-from django.contrib.postgres.fields import ArrayField
-from django.core.management.base import BaseCommand
 import random
-from ...models import TR_Expedition, PvePigeon, TR_Pigeon
-import logging
+
+from django.core.management.base import BaseCommand
+
+from ...models import PvePigeon, TR_Expedition, TR_Pigeon
 
 
 class Command(BaseCommand):

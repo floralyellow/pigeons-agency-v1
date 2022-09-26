@@ -1,11 +1,9 @@
-from django.db.models import Sum
-from ..models import Pigeon
 from datetime import datetime, timezone
+
 from django.db import transaction
-from ..models import TR_Lvl_info
-from ..models import Player
-import math
-import logging
+from django.db.models import Sum
+
+from ..models import Pigeon, TR_Lvl_info
 
 
 def update_user_values(user):

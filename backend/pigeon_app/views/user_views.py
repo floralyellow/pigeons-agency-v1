@@ -1,18 +1,12 @@
-from pigeon_app.models.player import UserSerializer
-from pigeon_app.models.player import PlayerSerializer
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-from ..models import Player
-from ..models import Pigeon
 import logging
-from django.core import serializers
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from django.core.signals import request_finished
-from django.dispatch import receiver
-from django.db.models.signals import post_save, pre_save
 
-import random
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from pigeon_app.models.player import UserSerializer
+from rest_framework import viewsets
+
+from ..models import Player
 
 
 class UserViewSet(viewsets.ModelViewSet):

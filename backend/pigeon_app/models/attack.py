@@ -1,6 +1,7 @@
 from django.db import models
-from .player import Player
 from rest_framework import serializers
+
+from .player import Player
 
 
 class Attack(models.Model):
