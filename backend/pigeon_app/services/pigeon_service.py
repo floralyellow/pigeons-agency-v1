@@ -149,27 +149,6 @@ def set_in_team_B(user, pigeon_id):
     return PigeonSerializer(pigeon_to_update).data
 
 
-def organise_defenders(user, pigeon_ids):
-
-    with transaction.atomic():
-        pigeons = Pigeon.objects.select_for_update().filter(
-            player_id=user.id, is_sold=False, is_open=True
-        )
-
-        if not all(int(p) in pigeons.values_list("id", flat=True) for p in pigeon_ids):
-            return "Error: wrong id"
-
-        previous_defenders = pigeons.exclude(defender_pos__isnull=True)
-        previous_defenders.update(defender_pos=None)
-
-        def_pos = 1
-        for p in pigeon_ids:
-            pigeons.filter(id=int(p)).update(defender_pos=def_pos)
-            def_pos = def_pos + 1
-
-        return list(pigeons.values())
-
-
 def activate_pigeon(user, pigeon_id):
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(

@@ -9,7 +9,6 @@ from .views.attack_views import AttackView
 from .views.pigeons_views import (
     ExpeditionView,
     PigeonActivateView,
-    PigeonDefenderOrderView,
     PigeonSellView,
     PigeonTeamAView,
     PigeonTeamBView,
@@ -33,12 +32,6 @@ urlpatterns = [
     path(r"api/pigeons/teama", PigeonTeamAView.as_view(), name="set_in_team_A"),
     path(r"api/pigeons/teamb", PigeonTeamBView.as_view(), name="set_in_team_B"),
     path(r"api/attack", AttackView.as_view(), name="attack"),
-    # TODO validate json/array data
-    path(
-        r"api/pigeons/organisedefenders",
-        PigeonDefenderOrderView.as_view(),
-        name="organise_defenders",
-    ),
     path(r"api/player/", PlayerView.as_view(), name="player"),
     path(r"api/player/lvlup", PlayerLvlupView.as_view(), name="lvl_up"),
     path(r"api/player/usebucket", PlayerUseBucketView.as_view(), name="usebucket"),

@@ -1,6 +1,3 @@
-import json
-import logging
-
 from django.http import JsonResponse
 from pigeon_app.models.player import UserSerializer
 from rest_framework.views import APIView
@@ -89,37 +86,6 @@ class PigeonTeamBView(APIView):
         InputValidator.validate_is_int(pigeon_id)
 
         message = pigeon_service.set_in_team_B(request.user, pigeon_id)
-
-        return JsonResponse({"message": message})
-
-
-class PigeonDefenderOrderView(APIView):
-    # organise defenders
-    def post(self, request):
-
-        update_service.update_user_values(request.user)
-
-        try:
-            input = json.loads(request.body)
-            logging.debug(input)
-            pigeon_ids = input["pigeon_ids"]
-
-        except (ValueError, KeyError) as e:
-            return JsonResponse({"message": "Error: wrong input1"})
-
-        if not isinstance(pigeon_ids, list):
-            return JsonResponse({"message": "Error: wrong input2"})
-
-        if not len(pigeon_ids) == 5:
-            return JsonResponse({"message": "Error: wrong input3"})
-
-        if not all(isinstance(x, int) for x in pigeon_ids):
-            return JsonResponse({"message": "Error: invalid input4"})
-
-        if not len(pigeon_ids) == len(set(pigeon_ids)):
-            return JsonResponse({"message": "Error: invalid input5"})
-
-        message = pigeon_service.organise_defenders(request.user, pigeon_ids)
 
         return JsonResponse({"message": message})
 
