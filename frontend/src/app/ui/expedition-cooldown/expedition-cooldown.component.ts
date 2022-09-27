@@ -21,6 +21,9 @@ export class ExpeditionCooldownComponent implements OnInit {
     this.getTimeLeft()
   }
   getTimeLeft(){
+    this.timeLeft = Math.round(
+      ((new Date(this.pigeon.active_time).getTime() - new Date(Date.now()).getTime()
+    )/1000) - 1);
     if(new Date(this.pigeon.active_time).getTime() > new Date(Date.now()).getTime()){
       setTimeout(()=>{
         this.timeLeft = Math.round(

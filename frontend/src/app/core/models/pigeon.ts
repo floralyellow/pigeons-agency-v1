@@ -16,5 +16,6 @@ export class Pigeon {
     active_time: Date
     is_open: boolean
     is_sold: boolean
-    is_in_team: boolean
+    is_in_team_A: boolean
+    is_in_team_B: boolean
 }
