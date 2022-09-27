@@ -3,6 +3,7 @@ import {  Player } from 'src/app/core/models';
 import { Aviary } from 'src/app/core/models/aviary';
 import { Pigeon } from 'src/app/core/models/pigeon';
 import { ExpeditionsService } from 'src/app/core/services';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-aviary',
@@ -10,14 +11,18 @@ import { ExpeditionsService } from 'src/app/core/services';
   styleUrls: ['./aviary.component.scss']
 })
 export class AviaryComponent implements OnInit {
+  faPlus = faPlus
+  faMinus = faMinus
   pigeons: Pigeon[];
   player: Player;
-  nbInTeam = 0;
+  nbInTeamA = 0;
+  nbInTeamB = 0;
   constructor(private pigeonService: ExpeditionsService) {
     pigeonService.getAviary().then((value : Aviary) => {
       this.pigeons = value.pigeons.sort((a,b)=>b.id - a.id);
       this.player = value.user.player;
-      this.nbInTeam = this.pigeons.filter((pigeonInTab)=>pigeonInTab.is_in_team === true).length;
+      this.nbInTeamA = this.pigeons.filter((pigeonInTab)=>pigeonInTab.is_in_team_A === true).length;
+      this.nbInTeamB = this.pigeons.filter((pigeonInTab)=>pigeonInTab.is_in_team_B === true).length;
     })
    }
 
@@ -38,21 +43,27 @@ export class AviaryComponent implements OnInit {
     })
   }
 
-  toggleTeam(pigeon : Pigeon){
+  toggleTeam(pigeon : Pigeon, team: 'A'|'B'){
     const index = this.pigeons.indexOf(pigeon);
-    if (
-      this.nbInTeam >= 5 &&
-      this.pigeons[index].is_in_team === false
-    ){
-      return false;
+    if(team === 'A') {
+      this.pigeonService.toggleTeam(pigeon.id,'A').then((value : Pigeon) => {
+        this.pigeons[index] = value;
+        if(value.is_in_team_A){
+          this.nbInTeamA ++;
+        } else {
+          this.nbInTeamA --;
+        }
+      })
     }
-    this.pigeonService.toggleTeam(pigeon.id).then((value : Pigeon) => {
-      this.pigeons[index] = value;
-      if(value.is_in_team){
-        this.nbInTeam ++;
-      } else {
-        this.nbInTeam --;
-      }
-    })
+    else{
+      this.pigeonService.toggleTeam(pigeon.id,'B').then((value : Pigeon) => {
+        this.pigeons[index] = value;
+        if(value.is_in_team_B){
+          this.nbInTeamB ++;
+        } else {
+          this.nbInTeamB --;
+        }
+      })
+    }
   }
 }

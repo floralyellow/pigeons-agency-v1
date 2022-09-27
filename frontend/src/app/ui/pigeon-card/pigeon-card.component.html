@@ -1,22 +1,22 @@
-<div class="card flip-card-front d-flex clickable" 
-  *ngIf="pigeon.is_open === false && (secondLeft === undefined || secondLeft === 0)" 
+<div class="card flip-card-front d-flex clickable"
+  *ngIf="pigeon.is_open === false && (secondLeft === undefined || secondLeft === 0)"
   (click)="openCard()">
   <p class="m-auto image">
     <fa-icon class="big-icon" [icon]="faEgg"></fa-icon> <br>
     Open <fa-icon [icon]="faHandPointer"></fa-icon>
   </p>
 </div>
-<div class="card flip-card-front d-flex" 
+<div class="card flip-card-front d-flex"
   *ngIf="pigeon.is_open === false && !!secondLeft">
   <p class="m-auto image">
     <fa-icon class="big-icon" [icon]="faEgg"></fa-icon> <br>
-    <progress 
-        class="progress is-primary" 
-        [value]="secondLeft" 
+    <progress
+        class="progress is-primary"
+        [value]="secondLeft"
         [max]="maxSecondLeft">
     </progress>
   </p>
-</div>  
+</div>
 <div class="card" [ngClass]="classToApply" *ngIf="pigeon.is_sold === false && pigeon.is_open">
   <div class="card-header px-3 py-2">
     <div class="elem-n-rarety d-flex">

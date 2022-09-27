@@ -17,7 +17,7 @@ export class ExpeditionsService {
               .subscribe((res: {'message' :Expedition}) => {
                 resolve(res.message)
               }, err => {
-                  reject(err); 
+                  reject(err);
               });
       });
   }
@@ -27,7 +27,7 @@ export class ExpeditionsService {
               .subscribe((res: {'message' :Aviary}) => {
                 resolve(res.message)
               }, err => {
-                  reject(err); 
+                  reject(err);
               });
       });
   }
@@ -37,7 +37,7 @@ export class ExpeditionsService {
               .subscribe((res: {'message' :Expedition}) => {
                 resolve(res.message)
               }, err => {
-                  reject(err); 
+                  reject(err);
               });
       });
   }
@@ -47,7 +47,7 @@ export class ExpeditionsService {
               .subscribe((res: {'message' :Pigeon}) => {
                 resolve(res.message)
               }, err => {
-                  reject(err); 
+                  reject(err);
               });
       });
   }
@@ -57,19 +57,19 @@ export class ExpeditionsService {
               .subscribe((res: {'message' :Pigeon}) => {
                 resolve(res.message)
               }, err => {
-                  reject(err); 
+                  reject(err);
               });
       });
   }
-  toggleTeam(pigeonId: number): Promise<any> {
+  toggleTeam(pigeonId: number, team: 'A'|'B'): Promise<any> {
       return new Promise((resolve, reject) => {
-          this.http.post(environment.apiBaseUrl + '/pigeons/team',`p_id=${pigeonId}`)
+          this.http.post(environment.apiBaseUrl + '/pigeons/team' + team.toLocaleLowerCase(),`p_id=${pigeonId}`)
               .subscribe((res: {'message' :Pigeon}) => {
                 resolve(res.message)
               }, err => {
-                  reject(err); 
+                  reject(err);
               });
       });
   }
-  
+
 }

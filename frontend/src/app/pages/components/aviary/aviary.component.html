@@ -1,21 +1,34 @@
 <div class="container">
     <div class="columns is-multiline">
-        <app-pigeon-card 
+        <app-pigeon-card
             *ngFor="let pigeon of pigeons"
             [pigeon]="pigeon"
             (sellPigeonEvent)="sellPigeon($event)"
             (openCardEvent)="openCard($event)"
             class="column is-one-quarter">
-            <button 
-            (click)="toggleTeam(pigeon)" *ngIf="pigeon.is_in_team === false"
-            class="card-footer-item button is-primary" 
-            [disabled]="this.nbInTeam >= 5">
-            <span>Add to team</span>
+            <button
+            (click)="toggleTeam(pigeon,'A')"
+            class="card-footer-item button"
+            [ngClass]="{'is-primary' : pigeon.is_in_team_A === false,'is-danger' : pigeon.is_in_team_A === true}"
+            [disabled]="this.nbInTeamA >= 5 && pigeon.is_in_team_A === false">
+            <span *ngIf="pigeon.is_in_team_A === false;else removeText">
+              <fa-icon [icon]="faPlus"></fa-icon> team A
+            </span>
+            <ng-template #removeText>
+              <span><fa-icon [icon]="faMinus"></fa-icon> team A</span>
+            </ng-template>
             </button>
-            <button 
-            (click)="toggleTeam(pigeon)" *ngIf="pigeon.is_in_team" 
-            class="card-footer-item button is-danger" >
-            <span>Remove from team</span>
+            <button
+            (click)="toggleTeam(pigeon,'B')"
+            class="card-footer-item button"
+            [ngClass]="{'is-primary' : pigeon.is_in_team_B === false,'is-danger' : pigeon.is_in_team_B === true}"
+            [disabled]="this.nbInTeamB >= 5 && pigeon.is_in_team_B === false">
+            <span *ngIf="pigeon.is_in_team_B === false;else removeTextB">
+              <fa-icon [icon]="faPlus"></fa-icon> team B
+            </span>
+            <ng-template #removeTextB>
+              <span><fa-icon [icon]="faMinus"></fa-icon> team B</span>
+            </ng-template>
             </button>
         </app-pigeon-card>
     </div>
