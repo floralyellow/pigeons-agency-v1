@@ -1,48 +1,32 @@
 <div class="container d-flex" *ngIf="level && player">
-    <nav class="columns m-auto percent90">
-        <div class="column has-text-centered">
-            <div class="percent90">
-                <p class="heading">Pigeon</p>
-                <p class="title">{{player.nb_pigeons | shortNumber}}/{{level.max_pigeons | shortNumber}}</p>
-                <progress 
-                    class="progress is-primary" 
-                    [value]="player.nb_pigeons" 
-                    [max]="level.max_pigeons">
-                </progress>
-            </div>
-        </div>
-        <div class="column has-text-centered">
-            <div class="percent90">
-                <p class="heading">Seeds</p>
-                <p class="title">{{seeds | shortNumber}}/{{level.max_seeds | shortNumber}}</p>
-                <progress 
-                    class="progress is-primary" 
-                    [value]="seeds" 
-                    [max]="level.max_seeds">
-                </progress>
-            </div>
-        </div>
-        <div class="column has-text-centered">
-            <div class="percent90">
-                <p class="heading">Feathers</p>
-                <p class="title">{{player.user.player.feathers | shortNumber}}/{{level.max_feathers | shortNumber}}</p>
-                <progress 
-                    class="progress is-primary" 
-                    [value]="player.user.player.feathers" 
-                    [max]="level.max_feathers">
-                </progress>
-            </div>
-        </div>
-        <div class="column has-text-centered">
-            <div class="percent90">
-                <p class="heading">Dropping</p>
-                <p class="title">{{droppings | shortNumber}}/{{level.max_droppings | shortNumber}}</p>
-                <progress 
-                    class="progress is-primary" 
-                    [value]="droppings" 
-                    [max]="level.max_droppings">
-                </progress>
-            </div>
-        </div>
-    </nav>
+  <nav class="columns m-auto percent90">
+    <app-dashboard-card
+      class="column has-text-centered"
+      [actuelNumber]="player.nb_pigeons"
+      [maxNumber]="level.max_pigeons"
+      [title]="'Pigeon'"
+    >
+    </app-dashboard-card>
+    <app-dashboard-card
+      class="column has-text-centered"
+      [actuelNumber]="seeds"
+      [maxNumber]="level.max_seeds"
+      [title]="'Seeds'"
+    >
+    </app-dashboard-card>
+    <app-dashboard-card
+      class="column has-text-centered"
+      [actuelNumber]="player.user.player.feathers"
+      [maxNumber]="level.max_feathers"
+      [title]="'Feathers'"
+    >
+    </app-dashboard-card>
+    <app-dashboard-card
+      class="column has-text-centered"
+      [actuelNumber]="droppings"
+      [maxNumber]="level.max_droppings"
+      [title]="'Dropping'"
+    >
+    </app-dashboard-card>
+  </nav>
 </div>

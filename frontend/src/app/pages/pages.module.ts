@@ -1,19 +1,25 @@
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './components/dashboard/';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
-import { CommonModule } from '@angular/common';
 import { UiModule } from '../ui/ui.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {AuthInterceptor} from '../core/interceptors/auth-interceptor'
-import { PlayerService } from '../core/services/player.service';
-import { ExpeditionsComponent } from './components/expeditions/';
-import { ExpeditionsService, LeaderboardService, UpgradeService } from '../core/services';
-import { AviaryComponent } from './components/aviary/aviary.component';
+import { AuthInterceptor } from '../core/interceptors/auth-interceptor'
 import { PipesModule } from '../pipes/pipes.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LeaderboardComponent } from './components/leaderboard/';
-import { UpgradeComponent } from './components/upgrade/';
+import {
+  ExpeditionsComponent,
+  AviaryComponent,
+  LeaderboardComponent,
+  UpgradeComponent,
+  DashboardComponent
+} from './components/';
+import {
+  ExpeditionsService,
+  LeaderboardService,
+  UpgradeService,
+  PlayerService
+} from '../core/services';
 
 @NgModule({
   declarations: [

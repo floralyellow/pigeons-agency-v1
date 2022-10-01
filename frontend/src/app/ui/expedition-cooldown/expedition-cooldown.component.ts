@@ -7,10 +7,10 @@ import { Pigeon } from 'src/app/core/models/pigeon';
   styleUrls: ['./expedition-cooldown.component.scss']
 })
 export class ExpeditionCooldownComponent implements OnInit {
-  @Input() pigeon : Pigeon;
+  @Input() pigeon: Pigeon;
   constructor() { }
-  duration : number;
-  timeLeft : number;
+  duration: number;
+  timeLeft: number;
   ngOnInit(): void {
     const activeTime = new Date(this.pigeon.active_time).getTime();
     const creationTime = new Date(this.pigeon.creation_time).getTime();
@@ -20,19 +20,19 @@ export class ExpeditionCooldownComponent implements OnInit {
     ) / 1000;
     this.getTimeLeft()
   }
-  getTimeLeft(){
+  getTimeLeft() {
     this.timeLeft = Math.round(
       ((new Date(this.pigeon.active_time).getTime() - new Date(Date.now()).getTime()
-    )/1000) - 1);
-    if(new Date(this.pigeon.active_time).getTime() > new Date(Date.now()).getTime()){
-      setTimeout(()=>{
+      ) / 1000) - 1);
+    if (new Date(this.pigeon.active_time).getTime() > new Date(Date.now()).getTime()) {
+      setTimeout(() => {
         this.timeLeft = Math.round(
           ((new Date(this.pigeon.active_time).getTime() - new Date(Date.now()).getTime()
-      )/1000) - 1);
-      this.getTimeLeft();
+          ) / 1000) - 1);
+        this.getTimeLeft();
       }, 1000);
     }
-    else{
+    else {
       this.timeLeft = 0;
     }
   }

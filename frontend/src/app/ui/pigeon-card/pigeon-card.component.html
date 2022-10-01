@@ -1,54 +1,84 @@
-<div class="card flip-card-front d-flex clickable"
-  *ngIf="pigeon.is_open === false && (secondLeft === undefined || secondLeft === 0)"
-  (click)="openCard()">
+<div
+  class="card flip-card-front d-flex clickable"
+  *ngIf="
+    pigeon.is_open === false && (secondLeft === undefined || secondLeft === 0)
+  "
+  (click)="openCard()"
+>
   <p class="m-auto image">
-    <fa-icon class="big-icon" [icon]="faEgg"></fa-icon> <br>
+    <fa-icon class="big-icon" [icon]="faEgg"></fa-icon> <br />
     Open <fa-icon [icon]="faHandPointer"></fa-icon>
   </p>
 </div>
-<div class="card flip-card-front d-flex"
-  *ngIf="pigeon.is_open === false && !!secondLeft">
+<div
+  class="card flip-card-front d-flex"
+  *ngIf="pigeon.is_open === false && !!secondLeft"
+>
   <p class="m-auto image">
-    <fa-icon class="big-icon" [icon]="faEgg"></fa-icon> <br>
+    <fa-icon class="big-icon" [icon]="faEgg"></fa-icon> <br />
     <progress
-        class="progress is-primary"
-        [value]="secondLeft"
-        [max]="maxSecondLeft">
-    </progress>
+      class="progress is-primary"
+      [value]="secondLeft"
+      [max]="maxSecondLeft"
+    ></progress>
   </p>
 </div>
-<div class="card" [ngClass]="classToApply" *ngIf="pigeon.is_sold === false && pigeon.is_open">
+<div
+  class="card"
+  [ngClass]="classToApply"
+  *ngIf="pigeon.is_sold === false && pigeon.is_open"
+>
   <div class="card-header px-3 py-2">
     <div class="elem-n-rarety d-flex">
       <div class="mv-auto d-flex mx-1">
-        <fa-icon class="mv-auto icon-pigeon-type" [icon]="pigeonType"></fa-icon>&nbsp;
-        <fa-icon class="mv-auto stars" [icon]="faStar" *ngFor="let star of luckStar|numberToArray"></fa-icon>
+        <fa-icon class="mv-auto icon-pigeon-type" [icon]="pigeonType"></fa-icon
+        >&nbsp;
+        <fa-icon
+          class="mv-auto stars"
+          [icon]="faStar"
+          *ngFor="let star of luckStar | numberToArray"
+        ></fa-icon>
       </div>
     </div>
     <button class="absolute button is-danger p-2" (click)="sellPigeon()">
-      Sell {{pigeon.feathers}}  <fa-icon [icon]="faFeatherAlt"></fa-icon>
+      Sell {{ pigeon.feathers }} <fa-icon [icon]="faFeatherAlt"></fa-icon>
     </button>
   </div>
   <div class="card-image">
     <figure class="image is-square">
-      <img [src]="'assets/pigeons/'+pigeon.src" alt="Placeholder image">
+      <img [src]="'assets/pigeons/' + pigeon.src" alt="Placeholder image" />
     </figure>
   </div>
   <div class="card-content py-0">
-  <h1><span>{{pigeon.name}} ({{pigeon.droppings_minute}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>/m)</span></h1>
+    <h1>
+      <span
+        >{{ pigeon.name }} ({{ pigeon.droppings_minute }}&nbsp;<fa-icon
+          [icon]="faPoop"
+        ></fa-icon
+        >/m)</span
+      >
+    </h1>
     <div class="columns is-mobile">
-    <div class="box column is-one-third has-background-danger has-text-white">
-      <span>{{pigeon.phys_atk}} <fa-icon [icon]="faFistRaised"></fa-icon></span>
-    </div>
-    <div class="box column is-one-third has-background-primary has-text-white">
-      <span>{{pigeon.magic_atk}} <fa-icon [icon]="faHatWizard"></fa-icon></span>
-    </div>
-    <div class="box column is-one-third has-background-info has-text-white">
-      <span>{{pigeon.shield}} <fa-icon [icon]="faShieldAlt"></fa-icon></span>
-    </div>
+      <div class="box column is-one-third has-background-danger has-text-white">
+        <span
+          >{{ pigeon.phys_atk }} <fa-icon [icon]="faFistRaised"></fa-icon
+        ></span>
+      </div>
+      <div
+        class="box column is-one-third has-background-primary has-text-white"
+      >
+        <span
+          >{{ pigeon.magic_atk }} <fa-icon [icon]="faHatWizard"></fa-icon
+        ></span>
+      </div>
+      <div class="box column is-one-third has-background-info has-text-white">
+        <span
+          >{{ pigeon.shield }} <fa-icon [icon]="faShieldAlt"></fa-icon
+        ></span>
+      </div>
     </div>
   </div>
   <footer class="card-footer">
     <ng-content></ng-content>
   </footer>
-  </div>
+</div>

@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { AuthentificationComponent } from './auth';
-import { IsNotAuth,IsAuth } from './core/guards/';
+import { IsNotAuth, IsAuth } from './core/guards/';
 
 const routes: Routes = [
   {
-    path : "authentification",
-    component : AuthentificationComponent,
-    canActivate : [IsNotAuth]
+    path: "authentification",
+    component: AuthentificationComponent,
+    canActivate: [IsNotAuth]
   },
   {
-    path : "",
-    canActivate : [IsAuth],
+    path: "",
+    canActivate: [IsAuth],
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
   },
-  { 
+  {
     path: '',
     redirectTo: '/index',
-    pathMatch: 'full' 
+    pathMatch: 'full'
   },
 ];
 

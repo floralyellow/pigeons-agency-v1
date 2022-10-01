@@ -9,13 +9,13 @@ export class PlayerService {
   constructor(private http: HttpClient) { }
 
   getPlayerInfo(): Promise<GlobalInfo> {
-      return new Promise((resolve, reject) => {
-          this.http.get(environment.apiBaseUrl + '/player/')
-              .subscribe((res: {'message' :GlobalInfo}) => {
-                resolve(res.message)
-              }, err => {
-                  reject(err); 
-              });
-      });
+    return new Promise((resolve, reject) => {
+      this.http.get(environment.apiBaseUrl + '/player/')
+        .subscribe((res: { 'message': GlobalInfo }) => {
+          resolve(res.message)
+        }, err => {
+          reject(err);
+        });
+    });
   }
 }

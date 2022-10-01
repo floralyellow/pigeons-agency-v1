@@ -2,6 +2,6 @@ import { Pigeon } from "./pigeon";
 import { User } from "./user";
 
 export class Aviary {
-  user :User
+  user: User
   pigeons: Pigeon[]
 }

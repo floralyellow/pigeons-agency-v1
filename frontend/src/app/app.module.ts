@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { Router } from '@angular/router';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {AuthModule} from './auth/auth.module';
-import {CoreModule} from './core/core.module';
+import { AuthModule } from './auth/auth.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -21,5 +21,5 @@ import {CoreModule} from './core/core.module';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(router: Router) {}
- }
+  constructor(router: Router) { }
+}

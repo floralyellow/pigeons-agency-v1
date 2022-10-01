@@ -3,20 +3,20 @@ import { Router, CanActivate } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class IsNotAuth implements CanActivate {
 
-    constructor(public router: Router, private auth: AuthService) { }
+  constructor(public router: Router, private auth: AuthService) { }
 
-    canActivate(): boolean {
-        const isLoggedIn = this.auth.checkIfLoggedIn();
+  canActivate(): boolean {
+    const isLoggedIn = this.auth.checkIfLoggedIn();
 
-        if (isLoggedIn) {
-            this.router.navigate(['/index']);
-            return false;
-        }
-
-        return true;
+    if (isLoggedIn) {
+      this.router.navigate(['/index']);
+      return false;
     }
+
+    return true;
+  }
 }
