@@ -107,7 +107,6 @@ def set_in_team_A(user, pigeon_id):
         pigeons = Pigeon.objects.select_for_update().filter(
             player_id=user.id, is_sold=False, is_open=True
         )
-        logging.debug("------" + str(pigeons))
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
             raise ServiceException("Error: wrong id !")
@@ -132,7 +131,6 @@ def set_in_team_B(user, pigeon_id):
         pigeons = Pigeon.objects.select_for_update().filter(
             player_id=user.id, is_sold=False, is_open=True
         )
-        logging.debug("------" + str(pigeons))
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
             raise ServiceException("Error: wrong id !")

@@ -39,8 +39,6 @@ def attack_player(user, target_id, attack_team):
         elif defend_team == "B":
             defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team_B=True)
 
-        # if len(attacking_pigeons) != 5:
-        #     return 'Error: You need 5 pigeons to attack'
         total_phys_atk = 0
         total_phys_def = 0
         total_magic_atk = 0

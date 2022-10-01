@@ -1,4 +1,5 @@
 from .adventure import Adventure
+from .adventure_attack import AdventureAttack
 from .attack import Attack
 from .attack_pigeon import AttackPigeon
 from .pigeon import Pigeon

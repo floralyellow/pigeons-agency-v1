@@ -1,8 +1,8 @@
 from django.db import models
 from rest_framework import serializers
 
-from .player import Player
 from .abstract_pigeon import AbstractPigeon
+from .player import Player
 
 
 class Pigeon(AbstractPigeon):

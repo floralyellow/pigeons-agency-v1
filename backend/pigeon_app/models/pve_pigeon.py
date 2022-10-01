@@ -8,7 +8,6 @@ class PvePigeon(AbstractPigeon):
     player_id = models.IntegerField(default=-1)
 
 
-
 class PvePigeonSerializer(serializers.ModelSerializer):
     class Meta:
         model = PvePigeon
