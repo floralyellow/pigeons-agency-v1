@@ -10,14 +10,14 @@ export class LeaderboardService {
 
   constructor(private http: HttpClient) { }
 
-  getLeaderboard(): Promise<{user : User, users :User[]}> {
+  getLeaderboard(): Promise<{ user: User, users: User[] }> {
     return new Promise((resolve, reject) => {
-        this.http.get(environment.apiBaseUrl + '/leaderboard')
-            .subscribe((res: {'message' : {user : User, users :User[]}}) => {
-              resolve(res.message)
-            }, err => {
-                reject(err); 
-            });
+      this.http.get(environment.apiBaseUrl + '/leaderboard')
+        .subscribe((res: { 'message': { user: User, users: User[] } }) => {
+          resolve(res.message)
+        }, err => {
+          reject(err);
+        });
     });
   }
 }

@@ -1,25 +1,29 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faCrow } from '@fortawesome/free-solid-svg-icons';
-import { faMapSigns } from '@fortawesome/free-solid-svg-icons';
-import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
-import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
-import { faRoute } from '@fortawesome/free-solid-svg-icons';
-import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { faScroll } from '@fortawesome/free-solid-svg-icons';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
+import {
+  faCrow,
+  faMapSigns,
+  faSkullCrossbones,
+  faArrowAltCircleUp,
+  faEllipsisH,
+  faUserAlt,
+  faCalendarDay,
+  faRoute,
+  faTrophy,
+  faScroll,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons';
+
 import { AuthService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'] 
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  darkMode = false; 
+  darkMode = false;
   faCrow = faCrow;
   faSignOutAlt = faSignOutAlt;
   faTrophy = faTrophy;
@@ -31,19 +35,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   faArrowAltCircleUp = faArrowAltCircleUp;
   faEllipsisH = faEllipsisH;
   faUserAlt = faUserAlt;
-  constructor(private authService : AuthService, public router: Router) { }
+  constructor(private authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
   }
-  changeStyleMode(isDarkMode : any){
+  changeStyleMode(isDarkMode: any) {
     this.darkMode = isDarkMode;
     const body = document.getElementById('body');
     body.classList.toggle("dark");
   }
-  toggle(){
-    const burgerButton = document.querySelectorAll('.navbar-burger').forEach((value)=>{
+  toggle() {
+    const burgerButton = document.querySelectorAll('.navbar-burger').forEach((value) => {
       value.classList.toggle('is-active');
     });
     document.getElementById('navMenu').classList.toggle('is-active')

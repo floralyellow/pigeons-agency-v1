@@ -8,25 +8,25 @@ export class UpgradeService {
 
   constructor(private http: HttpClient) { }
 
-  postSwapDroppingsWithSeeds(){
+  postSwapDroppingsWithSeeds() {
     return new Promise<GlobalInfo>((resolve, reject) => {
-      this.http.post(environment.apiBaseUrl + '/player/usebucket','')
-          .subscribe((res: {'message' :GlobalInfo}) => {
-            resolve(res.message)
-          }, err => {
-              reject(err); 
-          });
+      this.http.post(environment.apiBaseUrl + '/player/usebucket', '')
+        .subscribe((res: { 'message': GlobalInfo }) => {
+          resolve(res.message)
+        }, err => {
+          reject(err);
+        });
     });
   }
 
-  postLevelUp(){
+  postLevelUp() {
     return new Promise<GlobalInfo>((resolve, reject) => {
-      this.http.post(environment.apiBaseUrl + '/player/lvlup','')
-          .subscribe((res: {'message' :GlobalInfo}) => {
-            resolve(res.message)
-          }, err => {
-              reject(err); 
-          });
+      this.http.post(environment.apiBaseUrl + '/player/lvlup', '')
+        .subscribe((res: { 'message': GlobalInfo }) => {
+          resolve(res.message)
+        }, err => {
+          reject(err);
+        });
     });
   }
 }

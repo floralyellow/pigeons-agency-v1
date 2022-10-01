@@ -1,15 +1,17 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand d-flex">
     <a class="navbar-item" [routerLink]="['index']">
-      <img src="assets/pigeons/furegeon.png">
+      <img src="assets/pigeons/furegeon.png" />
       <span> Pigeon Agency</span>
     </a>
-    <a role="button"
-    class="navbar-burger"
-    data-target="navMenu"
-    aria-label="menu"
-    aria-expanded="false"
-    (click)="toggle()">
+    <a
+      role="button"
+      class="navbar-burger"
+      data-target="navMenu"
+      aria-label="menu"
+      aria-expanded="false"
+      (click)="toggle()"
+    >
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -17,39 +19,35 @@
   </div>
   <div class="navbar-menu" id="navMenu">
     <div class="navbar-start">
-      <a [routerLink]="['aviary']" class="navbar-item"
-      (click)="toggle()">
+      <a [routerLink]="['aviary']" class="navbar-item" (click)="toggle()">
         <span><fa-icon [icon]="faCrow"></fa-icon> Aviary</span>
       </a>
-      <a [routerLink]="['expeditions']" class="navbar-item"
-      (click)="toggle()">
+      <a [routerLink]="['expeditions']" class="navbar-item" (click)="toggle()">
         <span><fa-icon [icon]="faMapSigns"></fa-icon> Expeditions</span>
       </a>
-      <a class="navbar-item"
-      (click)="toggle()">
+      <a class="navbar-item" (click)="toggle()">
         <span><fa-icon [icon]="faSkullCrossbones"></fa-icon> Attacks</span>
       </a>
-      <a [routerLink]="['upgrade']" class="navbar-item"
-      (click)="toggle()">
+      <a [routerLink]="['upgrade']" class="navbar-item" (click)="toggle()">
         <span><fa-icon [icon]="faArrowAltCircleUp"></fa-icon> Upgrade</span>
       </a>
       <a class="navbar-item has-dropdown is-hoverable">
         <span class="navbar-link">others</span>
         <div class="navbar-dropdown">
-          <a class="navbar-item"
-          (click)="toggle()">
+          <a class="navbar-item" (click)="toggle()">
             Event&nbsp;<fa-icon [icon]="faCalendarDay"></fa-icon>
           </a>
-          <a class="navbar-item"
-          (click)="toggle()">
+          <a class="navbar-item" (click)="toggle()">
             Adventure&nbsp;<fa-icon [icon]="faRoute"></fa-icon>
           </a>
-          <a class="navbar-item" [routerLink]="['leaderboard']"
-          (click)="toggle()">
+          <a
+            class="navbar-item"
+            [routerLink]="['leaderboard']"
+            (click)="toggle()"
+          >
             Leaderboard&nbsp;<fa-icon [icon]="faTrophy"></fa-icon>
           </a>
-          <a class="navbar-item"
-          (click)="toggle()">
+          <a class="navbar-item" (click)="toggle()">
             History&nbsp;<fa-icon [icon]="faScroll"></fa-icon>
           </a>
         </div>
@@ -57,14 +55,18 @@
     </div>
     <div class="navbar-end">
       <div class="navbar-item">
-        <label class="switch mv-auto ">
-          <input type="checkbox" (click)="changeStyleMode(!darkMode);toggle()">
-          <span class="slider round">
-          </span>
+        <label class="switch mv-auto">
+          <input
+            type="checkbox"
+            (click)="changeStyleMode(!darkMode); toggle()"
+          />
+          <span class="slider round"> </span>
         </label>
       </div>
       <a class="navbar-item has-dropdown is-hoverable">
-        <span class="navbar-link">Me&nbsp;<fa-icon [icon]="faUserAlt"></fa-icon></span>
+        <span class="navbar-link"
+          >Me&nbsp;<fa-icon [icon]="faUserAlt"></fa-icon
+        ></span>
         <div class="navbar-dropdown">
           <a class="navbar-item" (click)="logOut()">
             Log out&nbsp;<fa-icon [icon]="faSignOutAlt"></fa-icon>

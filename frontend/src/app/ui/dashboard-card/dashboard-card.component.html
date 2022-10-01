@@ -1,1 +1,13 @@
-<p>dashboard-card works!</p>
+  <div class="percent90">
+    <p class="heading">{{title}}</p>
+    <p class="title">
+      {{ actuelNumber | shortNumber }}/{{
+        maxNumber | shortNumber
+      }}
+    </p>
+    <progress
+      class="progress is-primary"
+      [value]="actuelNumber"
+      [max]="maxNumber"
+    ></progress>
+  </div>

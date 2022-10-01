@@ -5,10 +5,10 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./expedition-card.component.scss']
 })
 export class ExpeditionCardComponent implements OnInit {
-  @Input() info:{
-    name:string,
-    duration:number,
-    seeds:number
+  @Input() info: {
+    name: string,
+    duration: number,
+    seeds: number
   };
   constructor() { }
 

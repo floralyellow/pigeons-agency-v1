@@ -7,7 +7,7 @@ import { Pigeon } from '../core/models/pigeon';
 export class FilterNotSoldPigeonPipe implements PipeTransform {
 
   transform(value: Pigeon[]): Pigeon[] {
-    return value.filter(pigeon =>{
+    return value.filter(pigeon => {
       pigeon.is_sold === false
     });
   }
