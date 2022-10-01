@@ -42,12 +42,14 @@ class PlayerLvlupView(APIView):
             player_lvl = player.lvl
 
             feathers_to_lvlup = TR_Lvl_info.objects.filter(lvl=player_lvl)[0].max_feathers
+            max_seeds_next_lvl = TR_Lvl_info.objects.filter(lvl=player_lvl + 1)[0].max_seeds
 
             if feathers_to_lvlup > feathers:
                 raise ServiceException("Error: Not enough feathers !")
 
             player.feathers = 0
             player.lvl = player.lvl + 1
+            player.seeds = max_seeds_next_lvl
             player.save()
 
             nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
@@ -67,6 +69,7 @@ class PlayerUseBucketView(APIView):
 
     # use bucket
     def post(self, request):
+        NEEDED_DROPPINGS_RATIO = 0.25
 
         update_service.update_user_values(request.user)
 
@@ -75,10 +78,12 @@ class PlayerUseBucketView(APIView):
 
             lvl_info = TR_Lvl_info.objects.filter(lvl=player.lvl)[0]
 
-            if lvl_info.max_droppings > player.droppings:
+            cost_droppings = int(lvl_info.max_droppings * NEEDED_DROPPINGS_RATIO)
+
+            if cost_droppings > player.droppings:
                 raise ServiceException("Error: Not enough droppings !")
 
-            player.droppings = 0
+            player.droppings = player.droppings - cost_droppings
             player.seeds = lvl_info.max_seeds
             player.save()
 
