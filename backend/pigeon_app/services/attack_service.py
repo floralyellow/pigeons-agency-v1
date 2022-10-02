@@ -1,11 +1,50 @@
 import random
 from datetime import datetime, timedelta, timezone
+from typing import Any, Tuple
 
 from django.db import transaction
 from pigeon_app.models.attack import AttackSerializer
 
 from ..exceptions.custom_exceptions import ServiceException
 from ..models import Attack, AttackPigeon, Pigeon, Player
+
+
+def _handle_attack_logic(
+    pigeons: Any, current_attack: Attack, opposing_team_sum_shield_value: int, is_attacker: bool
+) -> Tuple[int, int, int]:
+    """
+    Handle main attack loop
+
+    Args:
+        pigeons: queryset of pigeons
+        current_attack: used for reference
+        opposing_team_sum_shield_value: shield value, added for each incoming physical attack
+        is_attacker:
+
+    Returns:
+        Totals of physical & magical attack, + opposing team shield
+    """
+    VARIANCE = 15
+    for p in pigeons:
+        bonus_phys_atk = round(random.randint(-VARIANCE, VARIANCE) * p.phys_atk / 100)
+        bonus_magic_atk = round(random.randint(-VARIANCE, VARIANCE) * p.magic_atk / 100)
+
+        if p.phys_atk > 0:
+            total_phys += p.phys_atk + bonus_phys_atk
+            total_shield_opposing_team += opposing_team_sum_shield_value
+
+        total_magic += p.magic_atk + bonus_magic_atk
+
+        attack_pigeon = AttackPigeon(
+            attack=current_attack,
+            pigeon=p,
+            is_attacker=is_attacker,
+            phys_atk_bonus=bonus_phys_atk,
+            magic_atk_bonus=bonus_magic_atk,
+        )
+        attack_pigeon.save()
+
+        return total_phys, total_magic, total_shield_opposing_team
 
 
 def attack_player(user, target_id, attack_team):
@@ -52,43 +91,15 @@ def attack_player(user, target_id, attack_team):
         current_attack = Attack(attacker=user.player, defender=defender)
         current_attack.save()
 
-        for p in attacking_pigeons:
-            bonus_phys_atk = round(random.randint(-15, 15) * p.phys_atk / 100)
-            bonus_magic_atk = round(random.randint(-15, 15) * p.magic_atk / 100)
+        # scores for attackers
+        total_phys_atk, total_magic_atk, total_shield_def = _handle_attack_logic(
+            attacking_pigeons, current_attack, sum_shield_value_def, True
+        )
 
-            if p.phys_atk > 0:
-                total_phys_atk += p.phys_atk + bonus_phys_atk
-                total_shield_def += sum_shield_value_def
-
-            total_magic_atk += p.magic_atk + bonus_magic_atk
-
-            attack_pigeon = AttackPigeon(
-                attack=current_attack,
-                pigeon=p,
-                is_attacker=True,
-                phys_atk_bonus=bonus_phys_atk,
-                magic_atk_bonus=bonus_magic_atk,
-            )
-            attack_pigeon.save()
-
-        for p in defending_pigeons:
-            bonus_phys_atk = round(random.randint(-15, 15) * p.phys_atk / 100)
-            bonus_magic_atk = round(random.randint(-15, 15) * p.magic_atk / 100)
-
-            if p.phys_atk > 0:
-                total_phys_def += p.phys_atk + bonus_phys_atk
-                total_shield_atk += sum_shield_value_atk
-
-            total_magic_def += +p.magic_atk + bonus_magic_atk
-
-            attack_pigeon = AttackPigeon(
-                attack=current_attack,
-                pigeon=p,
-                is_attacker=False,
-                phys_atk_bonus=bonus_phys_atk,
-                magic_atk_bonus=bonus_magic_atk,
-            )
-            attack_pigeon.save()
+        # scores for defenders
+        total_phys_def, total_magic_def, total_shield_atk = _handle_attack_logic(
+            defending_pigeons, current_attack, sum_shield_value_atk, False
+        )
 
         total_attacker = total_phys_atk + total_magic_atk - total_shield_def
         total_defender = total_phys_def + total_magic_def - total_shield_atk
