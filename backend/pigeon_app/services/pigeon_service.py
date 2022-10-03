@@ -65,15 +65,15 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
     """
     p = TR_Pigeon.objects.filter(lvl_expedition=expedition.lvl, pigeon_type=pigeon_type)[0]
 
-    phys_atk = int(luck_value / 100 * (p.max_phys_atk - p.min_phys_atk)) + p.min_phys_atk
-    magic_atk = int(luck_value / 100 * (p.max_magic_atk - p.min_magic_atk)) + p.min_magic_atk
-    shield = int(luck_value / 100 * (p.max_shield - p.min_shield)) + p.min_shield
+    phys_atk = round(luck_value / 100 * (p.max_phys_atk - p.min_phys_atk)) + p.min_phys_atk
+    magic_atk = round(luck_value / 100 * (p.max_magic_atk - p.min_magic_atk)) + p.min_magic_atk
+    shield = round(luck_value / 100 * (p.max_shield - p.min_shield)) + p.min_shield
     drop_min = (
-        int(luck_value / 100 * (expedition.max_drop_minute - expedition.min_drop_minute))
+        round(luck_value / 100 * (expedition.max_drop_minute - expedition.min_drop_minute))
         + expedition.min_drop_minute
     )
     feathers = (
-        int(luck_value / 100 * (expedition.max_feathers - expedition.min_feathers))
+        round(luck_value / 100 * (expedition.max_feathers - expedition.min_feathers))
         + expedition.min_feathers
     )
 

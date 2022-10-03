@@ -29,18 +29,18 @@ class Command(BaseCommand):
                         )[0]
 
                         phys_atk = (
-                            int(luck_value / 100 * (p.max_phys_atk - p.min_phys_atk))
+                            round(luck_value / 100 * (p.max_phys_atk - p.min_phys_atk))
                             + p.min_phys_atk
                         )
                         magic_atk = (
-                            int(luck_value / 100 * (p.max_magic_atk - p.min_magic_atk))
+                            round(luck_value / 100 * (p.max_magic_atk - p.min_magic_atk))
                             + p.min_magic_atk
                         )
                         shield = (
-                            int(luck_value / 100 * (p.max_shield - p.min_shield)) + p.min_shield
+                            round(luck_value / 100 * (p.max_shield - p.min_shield)) + p.min_shield
                         )
                         drop_min = (
-                            int(
+                            round(
                                 luck_value
                                 / 100
                                 * (expedition.max_drop_minute - expedition.min_drop_minute)
@@ -48,7 +48,7 @@ class Command(BaseCommand):
                             + expedition.min_drop_minute
                         )
                         feathers = (
-                            int(
+                            round(
                                 luck_value
                                 / 100
                                 * (expedition.max_feathers - expedition.min_feathers)
