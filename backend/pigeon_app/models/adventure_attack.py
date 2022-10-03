@@ -12,7 +12,7 @@ class AdventureAttack(AbstractAttack):
     is_victory = models.BooleanField(default=False)
 
 
-class AttackSerializer(serializers.ModelSerializer):
+class AdventureAttackSerializer(serializers.ModelSerializer):
     class Meta:
         model = AdventureAttack
         fields = "__all__"

@@ -10,11 +10,13 @@ class AbstractAttack(models.Model):
     atk_tot_score = models.IntegerField(default=0)
     atk_tot_phys = models.IntegerField(default=0)
     atk_tot_magic = models.IntegerField(default=0)
-    atk_tot_shield = models.IntegerField(default=0)
+    atk_shield_value = models.IntegerField(default=0)
+    atk_shield_blocs = models.IntegerField(default=0)
     def_tot_score = models.IntegerField(default=0)
     def_tot_phys = models.IntegerField(default=0)
     def_tot_magic = models.IntegerField(default=0)
-    def_tot_shield = models.IntegerField(default=0)
+    def_shield_value = models.IntegerField(default=0)
+    def_shield_blocs = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
