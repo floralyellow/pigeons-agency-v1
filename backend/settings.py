@@ -88,6 +88,8 @@ DATABASES = {
         'HOST': '172.17.0.1',
         #'HOST': '127.0.0.1',
         'PORT': '5435',
+        'AUTO_CREATE': False, # set to True to create DB
+        'AUTO_DROP_BEFORE_CREATE': False, # set to True for dev to DROP DB -- needs auto_create at True
     }
 }
 
