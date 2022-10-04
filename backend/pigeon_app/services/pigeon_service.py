@@ -187,6 +187,8 @@ def sell_pigeon(user, pigeon_id):
         user.player.feathers = min(feathers_to_apply, max_feathers)
 
         pigeon_to_sell.is_sold = True
+        pigeon_to_sell.is_in_team_A = False
+        pigeon_to_sell.is_in_team_B = False
 
         pigeon_to_sell.save()
         user.player.save()
