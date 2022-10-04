@@ -98,8 +98,16 @@ def attack_player(user, target_id, attack_team):
             defending_pigeons, current_attack, False
         )
 
-        total_attacker = total_phys_atk + total_magic_atk - (sum_shield_value_def * total_blocs_def)
-        total_defender = total_phys_def + total_magic_def - (sum_shield_value_atk * total_blocs_atk)
+        total_attacker = (
+            total_phys_atk
+            + total_magic_atk
+            - min((sum_shield_value_def * total_blocs_def), total_phys_atk)
+        )
+        total_defender = (
+            total_phys_def
+            + total_magic_def
+            - min((sum_shield_value_atk * total_blocs_atk), total_phys_def)
+        )
 
         winner_id = user.id if total_attacker > total_defender else target_id
 

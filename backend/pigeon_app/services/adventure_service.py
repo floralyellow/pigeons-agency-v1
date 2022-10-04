@@ -196,8 +196,16 @@ def try_adventure(user, attack_team: str):
             defending_pigeons
         )
 
-        total_attacker = total_phys_atk + total_magic_atk - (sum_shield_value_def * total_blocs_def)
-        total_defender = total_phys_def + total_magic_def - (sum_shield_value_atk * total_blocs_atk)
+        total_attacker = (
+            total_phys_atk
+            + total_magic_atk
+            - min((sum_shield_value_def * total_blocs_def), total_phys_atk)
+        )
+        total_defender = (
+            total_phys_def
+            + total_magic_def
+            - min((sum_shield_value_atk * total_blocs_atk), total_phys_def)
+        )
 
         is_victory: bool = total_attacker > total_defender
 
