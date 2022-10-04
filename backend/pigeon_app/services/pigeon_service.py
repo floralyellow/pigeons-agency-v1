@@ -65,15 +65,15 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
     """
     p = TR_Pigeon.objects.filter(lvl_expedition=expedition.lvl, pigeon_type=pigeon_type)[0]
 
-    phys_atk = int(luck_value / 100 * (p.max_phys_atk - p.min_phys_atk)) + p.min_phys_atk
-    magic_atk = int(luck_value / 100 * (p.max_magic_atk - p.min_magic_atk)) + p.min_magic_atk
-    shield = int(luck_value / 100 * (p.max_shield - p.min_shield)) + p.min_shield
+    phys_atk = round(luck_value / 100 * (p.max_phys_atk - p.min_phys_atk)) + p.min_phys_atk
+    magic_atk = round(luck_value / 100 * (p.max_magic_atk - p.min_magic_atk)) + p.min_magic_atk
+    shield = round(luck_value / 100 * (p.max_shield - p.min_shield)) + p.min_shield
     drop_min = (
-        int(luck_value / 100 * (expedition.max_drop_minute - expedition.min_drop_minute))
+        round(luck_value / 100 * (expedition.max_drop_minute - expedition.min_drop_minute))
         + expedition.min_drop_minute
     )
     feathers = (
-        int(luck_value / 100 * (expedition.max_feathers - expedition.min_feathers))
+        round(luck_value / 100 * (expedition.max_feathers - expedition.min_feathers))
         + expedition.min_feathers
     )
 
@@ -107,7 +107,6 @@ def set_in_team_A(user, pigeon_id):
         pigeons = Pigeon.objects.select_for_update().filter(
             player_id=user.id, is_sold=False, is_open=True
         )
-        logging.debug("------" + str(pigeons))
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
             raise ServiceException("Error: wrong id !")
@@ -132,7 +131,6 @@ def set_in_team_B(user, pigeon_id):
         pigeons = Pigeon.objects.select_for_update().filter(
             player_id=user.id, is_sold=False, is_open=True
         )
-        logging.debug("------" + str(pigeons))
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
             raise ServiceException("Error: wrong id !")
@@ -189,6 +187,8 @@ def sell_pigeon(user, pigeon_id):
         user.player.feathers = min(feathers_to_apply, max_feathers)
 
         pigeon_to_sell.is_sold = True
+        pigeon_to_sell.is_in_team_A = False
+        pigeon_to_sell.is_in_team_B = False
 
         pigeon_to_sell.save()
         user.player.save()
