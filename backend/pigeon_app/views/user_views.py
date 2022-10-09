@@ -3,10 +3,10 @@ import logging
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from pigeon_app.models.player import UserSerializer
 from rest_framework import viewsets
 
 from ..models import Player
+from ..models.player import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

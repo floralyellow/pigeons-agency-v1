@@ -1,10 +1,10 @@
 from django.db import transaction
 from django.http import JsonResponse
-from pigeon_app.models.player import UserSerializer
 from rest_framework.views import APIView
 
 from ..exceptions.custom_exceptions import ServiceException
 from ..models import TR_Lvl_info
+from ..models.player import UserSerializer
 from ..services import pigeon_service, update_service
 
 

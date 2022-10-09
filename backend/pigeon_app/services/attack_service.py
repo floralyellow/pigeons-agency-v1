@@ -3,10 +3,11 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Tuple
 
 from django.db import transaction
-from pigeon_app.models.attack import AttackSerializer
 
 from ..exceptions.custom_exceptions import ServiceException
 from ..models import Attack, AttackPigeon, Pigeon, Player
+from ..models.attack import AttackSerializer
+from ..utils.commons import ATTACK_VARIANCE, DELAY_SECONDS_BETWEEN_ATTACKS
 
 
 def _handle_attack_logic(
@@ -23,14 +24,15 @@ def _handle_attack_logic(
     Returns:
         Totals of physical & magical attack, + opposing team shield blocs
     """
-    VARIANCE = 15
     # init
     total_phys = 0
     total_magic = 0
     total_shield_blocs_opposing_team = 0
     for p in pigeons:
-        bonus_phys_atk = round(random.randint(-VARIANCE, VARIANCE) * p.phys_atk / 100)
-        bonus_magic_atk = round(random.randint(-VARIANCE, VARIANCE) * p.magic_atk / 100)
+        bonus_phys_atk = round(random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.phys_atk / 100)
+        bonus_magic_atk = round(
+            random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.magic_atk / 100
+        )
 
         if p.phys_atk > 0:
             total_phys += p.phys_atk + bonus_phys_atk
@@ -52,8 +54,6 @@ def _handle_attack_logic(
 
 def attack_player(user, target_id, attack_team):
 
-    SECONDS_NEXT_ATTACK = 2 * 60  # 2 minutes
-
     with transaction.atomic():
         target = Player.objects.filter(id=target_id)
 
@@ -63,9 +63,9 @@ def attack_player(user, target_id, attack_team):
         if target_id == user.player.last_attacked:
             raise ServiceException("Error: Cant attack same player twice !")
 
-        if user.player.time_last_attack + timedelta(seconds=SECONDS_NEXT_ATTACK) > datetime.now(
-            timezone.utc
-        ):
+        if user.player.time_last_attack + timedelta(
+            seconds=DELAY_SECONDS_BETWEEN_ATTACKS
+        ) > datetime.now(timezone.utc):
             raise ServiceException("Error: Cant attack yet !")
 
         if attack_team == "A":

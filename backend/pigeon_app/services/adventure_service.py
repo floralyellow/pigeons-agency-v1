@@ -5,6 +5,7 @@ from typing import Any, Tuple
 from django.db import transaction
 
 from ..models import Adventure, AdventureAttack, Pigeon, PvePigeon, TR_Lvl_info
+from ..utils.commons import ADVENTURE_RATIO_REWARDS, ATTACK_VARIANCE
 
 
 def get_adventure(user):
@@ -28,7 +29,6 @@ def _create_adventure(user, last_adventure):
     """
     create new adventure
     """
-    RATIO_REWARDS = 0.4
     lvl_info = TR_Lvl_info.objects.get(lvl=user.player.lvl)
 
     new_adventure = Adventure(
@@ -37,7 +37,7 @@ def _create_adventure(user, last_adventure):
         encounter=last_adventure.encounter + 1 if last_adventure else 1,
         nb_tries=0,
         is_success=False,
-        reward_droppings=int(lvl_info.max_droppings * RATIO_REWARDS),
+        reward_droppings=int(lvl_info.max_droppings * ADVENTURE_RATIO_REWARDS),
     )
     new_adventure.save()
 
@@ -151,14 +151,15 @@ def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
     Returns:
         Totals of physical & magical attack, + opposing team shield blocs
     """
-    VARIANCE = 15
     # init
     total_phys = 0
     total_magic = 0
     total_shield_blocs_opposing_team = 0
     for p in pigeons:
-        bonus_phys_atk = round(random.randint(-VARIANCE, VARIANCE) * p.phys_atk / 100)
-        bonus_magic_atk = round(random.randint(-VARIANCE, VARIANCE) * p.magic_atk / 100)
+        bonus_phys_atk = round(random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.phys_atk / 100)
+        bonus_magic_atk = round(
+            random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.magic_atk / 100
+        )
 
         if p.phys_atk > 0:
             total_phys += p.phys_atk + bonus_phys_atk

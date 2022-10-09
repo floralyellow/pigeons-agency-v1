@@ -1,10 +1,10 @@
 from django.http import JsonResponse
-from pigeon_app.models.adventure import AdventureSerializer
-from pigeon_app.models.adventure_attack import AdventureAttackSerializer
-from pigeon_app.models.player import UserSerializer
-from pigeon_app.models.pve_pigeon import PvePigeonSerializer
 from rest_framework.views import APIView
 
+from ..models.adventure import AdventureSerializer
+from ..models.adventure_attack import AdventureAttackSerializer
+from ..models.player import UserSerializer
+from ..models.pve_pigeon import PvePigeonSerializer
 from ..services import adventure_service, update_service
 from ..utils.validators import InputValidator
 
