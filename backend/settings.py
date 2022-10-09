@@ -21,10 +21,10 @@ print(BASE_DIR)
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')fn0bm*y%k_@^%k4ofkg01#c-8renvy_uts7lsb@m!z6d9g(8^'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG'))
 
 ALLOWED_HOSTS = '*'
 CORS_ORIGIN_ALLOW_ALL = True
@@ -82,12 +82,11 @@ WSGI_APPLICATION = 'wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pigeon',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': '172.17.0.1',
-        #'HOST': '127.0.0.1',
-        'PORT': '5435',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
         'AUTO_CREATE': False, # set to True to create DB
         'AUTO_DROP_BEFORE_CREATE': False, # set to True for dev to DROP DB -- needs auto_create at True
     }
