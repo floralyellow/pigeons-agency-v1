@@ -5,7 +5,12 @@ from typing import Any, Tuple
 from django.db import transaction
 
 from ..models import Adventure, AdventureAttack, Pigeon, PvePigeon, TR_Lvl_info
-from ..utils.commons import ADVENTURE_RATIO_REWARDS, ATTACK_VARIANCE
+from ..utils.commons import (
+    ADVENTURE_RATIO_REWARDS,
+    ATTACK_VARIANCE,
+    get_pigeon_team,
+    get_total_score,
+)
 
 
 def get_adventure(user):
@@ -172,10 +177,7 @@ def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
 
 def try_adventure(user, attack_team: str):
     with transaction.atomic():
-        if attack_team == "A":
-            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_A=True)
-        elif attack_team == "B":
-            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_B=True)
+        attacking_pigeons = get_pigeon_team(user.id, attack_team)
 
         current_adventure = get_adventure(user)
 
@@ -183,7 +185,7 @@ def try_adventure(user, attack_team: str):
             current_adventure.lvl, current_adventure.encounter
         )
 
-        # sum shields needed before loop
+        # sum shields
         sum_shield_value_atk = sum([i.shield for i in attacking_pigeons])
         sum_shield_value_def = sum([i.shield for i in defending_pigeons])
 
@@ -197,15 +199,11 @@ def try_adventure(user, attack_team: str):
             defending_pigeons
         )
 
-        total_attacker = (
-            total_phys_atk
-            + total_magic_atk
-            - min((sum_shield_value_def * total_blocs_def), total_phys_atk)
+        total_attacker = get_total_score(
+            total_phys_atk, total_magic_atk, sum_shield_value_def, total_blocs_def
         )
-        total_defender = (
-            total_phys_def
-            + total_magic_def
-            - min((sum_shield_value_atk * total_blocs_atk), total_phys_def)
+        total_defender = get_total_score(
+            total_phys_def, total_magic_def, sum_shield_value_atk, total_blocs_atk
         )
 
         is_victory: bool = total_attacker > total_defender
