@@ -1,7 +1,13 @@
+from datetime import datetime, timedelta, timezone
+
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db import models
 from rest_framework import serializers
+
+
+def default_protected_time():
+    return datetime.now(timezone.utc) + timedelta(minutes=30)
 
 
 class Player(models.Model):
@@ -12,6 +18,7 @@ class Player(models.Model):
     military_score = models.IntegerField(default=0)
     last_attacked = models.IntegerField(default=-1)
     time_last_attack = models.DateTimeField(auto_now_add=True, null=True)
+    protected_until = models.DateTimeField(default=default_protected_time)
     defense_team = models.CharField(max_length=1, default="A")
     last_connected_at = models.DateTimeField(auto_now_add=True, null=True)  # unused, to remove ?
     last_updated_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -30,6 +37,7 @@ class PlayerSerializer(serializers.ModelSerializer):
             "military_score",
             "last_attacked",
             "time_last_attack",
+            "protected_until",
             "defense_team",
         ]
 

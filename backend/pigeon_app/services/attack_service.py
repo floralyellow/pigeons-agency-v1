@@ -12,6 +12,7 @@ from ..services import update_service
 from ..utils.commons import (
     ATTACK_VARIANCE,
     DELAY_SECONDS_BETWEEN_ATTACKS,
+    PROTECTED_UNTIL_MINUTES,
     get_pigeon_team,
     get_total_score,
 )
@@ -87,14 +88,21 @@ def attack_player(user, target_id, attack_team):
         if target_id == user.player.last_attacked:
             raise ServiceException("Error: Cant attack same player twice !")
 
-        if user.player.time_last_attack + timedelta(
-            seconds=DELAY_SECONDS_BETWEEN_ATTACKS
-        ) > datetime.now(timezone.utc):
+        attack_datetime = datetime.now(timezone.utc)
+
+        if (
+            user.player.time_last_attack + timedelta(seconds=DELAY_SECONDS_BETWEEN_ATTACKS)
+            > attack_datetime
+        ):
             raise ServiceException("Error: Cant attack yet !")
+
+        defender = target[0]
+
+        if defender.protected_until > attack_datetime:
+            raise ServiceException("Error: Cant attack this user yet !")
 
         attacking_pigeons = get_pigeon_team(user.id, attack_team)
 
-        defender = target[0]
         defend_team = defender.defense_team
         defending_pigeons = get_pigeon_team(target_id, defend_team)
 
@@ -156,13 +164,14 @@ def attack_player(user, target_id, attack_team):
         )
         defender.droppings = max(min(defender.droppings - stolen_droppings, def_max_droppings), 0)
 
-        user.player.time_last_attack = datetime.now(timezone.utc)
+        user.player.time_last_attack = attack_datetime
         user.player.last_attacked = target_id
+
+        user.player.protected_until = attack_datetime
+        defender.protected_until = attack_datetime + timedelta(minutes=PROTECTED_UNTIL_MINUTES)
 
         user.player.save()
         defender.save()
-
-        # TODO protecteduntil (with model)
 
         current_attack.winner_id = winner_id
         current_attack.atk_tot_score = total_attacker
