@@ -13,7 +13,7 @@ class Player(models.Model):
     last_attacked = models.IntegerField(default=-1)
     time_last_attack = models.DateTimeField(auto_now_add=True, null=True)
     defense_team = models.CharField(max_length=1, default="A")
-    last_connected_at = models.DateTimeField(auto_now_add=True, null=True)
+    last_connected_at = models.DateTimeField(auto_now_add=True, null=True)  # unused, to remove ?
     last_updated_at = models.DateTimeField(auto_now_add=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
