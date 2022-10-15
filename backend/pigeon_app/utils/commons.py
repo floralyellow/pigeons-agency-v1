@@ -6,6 +6,8 @@ DELAY_SECONDS_BETWEEN_ATTACKS = 2 * 60  # 2 min
 
 ADVENTURE_RATIO_REWARDS = 0.4
 
+PROTECTED_UNTIL_MINUTES = 20
+
 
 def get_total_score(
     total_phys: int, total_magic: int, sum_shield_opponent: int, total_blocs_opponent: int
