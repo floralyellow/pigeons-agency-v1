@@ -12,13 +12,16 @@ import {
   AviaryComponent,
   LeaderboardComponent,
   UpgradeComponent,
-  DashboardComponent
+  DashboardComponent,
+  AdventureComponent
 } from './components/';
 import {
   ExpeditionsService,
   LeaderboardService,
   UpgradeService,
-  PlayerService
+  PlayerService,
+  PigeonsService,
+  AdventureService
 } from '../core/services';
 
 @NgModule({
@@ -28,6 +31,7 @@ import {
     ExpeditionsComponent,
     AviaryComponent,
     LeaderboardComponent,
+    AdventureComponent,
     UpgradeComponent
   ],
   imports: [
@@ -43,6 +47,8 @@ import {
     ExpeditionsService,
     UpgradeService,
     LeaderboardService,
+    PigeonsService,
+    AdventureService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: []

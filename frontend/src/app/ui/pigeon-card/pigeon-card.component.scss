@@ -1,14 +1,3 @@
-$beige: #feffdb;
-$light-orange: #ffc60b;
-$orange: #ff8b00;
-$grey: #444444;
-$blue: #209cee;
-$green: #23ce78;
-$red: #f14438;
-$purple: #900edb;
-$solidgold:#F9A602;
-$lightgreen:#23ce7938;
-
 .element{
     border: 2px solid darkgray;
     border-radius: 50%;
@@ -88,28 +77,4 @@ h1{
     cursor: pointer;
     color: #4a4a4a;
     transition: box-shadow 0.3s;
-}
-.legendary{
-    box-shadow: 0 0.5em 1em -0.125em $light-orange, 0 0px 0 1px $light-orange !important;
-    .stars {
-        color :$light-orange;
-    }
-}
-.epic{
-    box-shadow: 0 0.5em 1em -0.125em $purple, 0 0px 0 1px $purple !important;
-    .stars {
-        color :$purple;
-    }
-}
-.rare{
-    box-shadow: 0 0.5em 1em -0.125em $blue, 0 0px 0 1px $blue !important;
-    .stars {
-        color :$blue;
-    }
-}
-.uncommon{
-    box-shadow: 0 0.5em 1em -0.125em $green, 0 0px 0 1px $green !important;
-    .stars {
-        color :$green;
-    }
 }

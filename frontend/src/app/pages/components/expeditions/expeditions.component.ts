@@ -1,14 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Level, Player } from 'src/app/core/models';
-import { Expedition } from 'src/app/core/models/expedition';
-import { Pigeon } from 'src/app/core/models/pigeon';
+import { Expedition, Pigeon } from 'src/app/core/models';
 import { ExpeditionsService } from 'src/app/core/services';
 import * as expeditionInfo from 'src/assets/jsons/tr_expedition.json';
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
-import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
-import { faQuestion } from '@fortawesome/free-solid-svg-icons';
-import { faShieldAlt } from '@fortawesome/free-solid-svg-icons';
-import { faFistRaised } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHatWizard,
+  faQuestion,
+  faShieldAlt,
+  faFistRaised,
+  faSeedling
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-expeditions',
@@ -19,18 +21,19 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
   faHatWizard = faHatWizard;
   faShieldAlt = faShieldAlt;
   faFistRaised = faFistRaised;
+  faSeedling = faSeedling;
   faQuestion = faQuestion;
-  expeditionList:Expedition[] = (expeditionInfo as any).default;
+  expeditionList: Expedition[] = (expeditionInfo as any).default;
   levelList: Level[] = (lvlInfo as any).default;
   expeditions: Pigeon[];
   info: Expedition;
   player: Player;
-  level:Level;
-  seeds:number;
+  level: Level;
+  seeds: number;
   timeout;
-  pigeonType = [faFistRaised,faHatWizard,faShieldAlt,faQuestion]
-  constructor(private expeditionService : ExpeditionsService) {
-    expeditionService.getExpeditionInfo().then((value : Expedition) => {
+  pigeonType = [faFistRaised, faHatWizard, faShieldAlt, faQuestion]
+  constructor(private expeditionService: ExpeditionsService) {
+    expeditionService.getExpeditionInfo().then((value: Expedition) => {
       this.expeditions = value.expeditions;
       this.info = value;
       this.player = value.user.player;
@@ -40,14 +43,14 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
   }
-  ngOnDestroy(): void { 
+  ngOnDestroy(): void {
   }
 
-  buyPigeon(level : number, type: number){
-    this.expeditionService.postBuyPigeon(level, type).then((value : Expedition) => {
-      if (typeof(value.expeditions) !== 'string') {
+  buyPigeon(level: number, type: number) {
+    this.expeditionService.postBuyPigeon(level, type).then((value: Expedition) => {
+      if (typeof (value.expeditions) !== 'string') {
         this.expeditions.push(value.expeditions[value.expeditions.length - 1]);
         this.player = value.user.player;
         this.level = this.levelList[this.player.lvl - 1];
@@ -56,15 +59,15 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
       }
     })
   }
-  getCurrentSeeds(){
-    (this.timeout !== undefined)?clearTimeout(this.timeout):null;
-    if(this.seeds < this.level.max_seeds){
-      this.timeout = setTimeout(()=>{
+  getCurrentSeeds() {
+    (this.timeout !== undefined) ? clearTimeout(this.timeout) : null;
+    if (this.seeds < this.level.max_seeds) {
+      this.timeout = setTimeout(() => {
         this.seeds = Math.min(
           this.seeds + Math.round(this.level.seeds_minute / 60),
           this.level.max_seeds);
         this.getCurrentSeeds()
-      },1000);
+      }, 1000);
     }
   }
 }

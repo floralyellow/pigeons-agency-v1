@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="is-multiline columns">
+    <app-adventure-card
+      class="column is-full-mobile is-one-fifth-tablet"
+      *ngFor="let pigeon of adventurePigeons"
+      [pigeon] = "pigeon"
+    ></app-adventure-card>
+    
+    <div class="column is-full buttons-tablet columns">
+      <div class="column is-half">
+        <button class="button is-danger">Fight with team A</button>
+      </div>
+      <div class="column is-half">
+        <button class="button is-danger">Fight with team B</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="buttons-mobile columns">
+  <div class="column is-full">
+    <button class="button is-danger column is-full">Fight with team A</button>
+  </div>
+  <div class="column is-full">
+    <button class="button is-danger column is-full">Fight with team B</button>
+  </div>
+</div>

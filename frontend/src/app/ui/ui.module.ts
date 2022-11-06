@@ -6,10 +6,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ExpeditionCooldownComponent } from './expedition-cooldown/';
 import { ExpeditionCardComponent } from './expedition-card/';
 import { DashboardCardComponent } from './dashboard-card/';
-import { HeaderComponent } from './header/header.component';
-import { PigeonCardComponent } from './pigeon-card/pigeon-card.component';
+import { HeaderComponent } from './header/';
+import { AdventureCardComponent } from './adventure-card/';
+import { PigeonCardComponent } from './pigeon-card/';
 
 import { PipesModule } from '../pipes/pipes.module';
+import { PigeonCardHeaderComponent } from './pigeon-card-header/pigeon-card-header.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { PipesModule } from '../pipes/pipes.module';
     ExpeditionCooldownComponent,
     ExpeditionCardComponent,
     DashboardCardComponent,
-    PigeonCardComponent
+    PigeonCardComponent,
+    AdventureCardComponent,
+    PigeonCardHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,9 @@ import { PipesModule } from '../pipes/pipes.module';
     ExpeditionCooldownComponent,
     ExpeditionCardComponent,
     DashboardCardComponent,
-    PigeonCardComponent
+    PigeonCardComponent,
+    AdventureCardComponent,
+    PigeonCardHeaderComponent
   ],
 })
 export class UiModule { }

@@ -1,0 +1,35 @@
+.box {
+  margin: auto;
+  padding: 10px 0px;
+  text-align: center;
+  height: -webkit-max-content;
+  height: max-content;
+}
+span{
+  ::ng-deep{
+    .svg-inline--fa{
+      width:0.75rem;
+    }
+  }
+}
+.columns{
+  margin: 0;
+}
+.columns.is-mobile.m-auto{
+  width: 100%;
+}
+.pigeon-name
+{
+  display: block;
+  width: 100%;
+  span{
+    float: right;
+  }
+}
+.card{
+  padding: 0;
+}
+.is-31 {
+  width: 31%;
+  flex: none;
+}
