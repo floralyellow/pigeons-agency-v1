@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { Pigeon } from 'src/app/core/models/pigeon';
+import { PigeonsService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-pigeon-card',
@@ -32,37 +33,21 @@ export class PigeonCardComponent implements OnInit {
   faHandPointer = faHandPointer;
   faEgg = faEgg;
   faPoop = faPoop;
-  luckStar: number;
   secondLeft: number;
   maxSecondLeft: number;
-  pigeonType;
-  classToApply: string;
-  constructor() { }
+  classToApply: "legendary" | "epic" | "rare" | "uncommon" | ""
+  
+  constructor(private pigeonService : PigeonsService) { }
 
   ngOnInit(): void {
-    this.getPigeonType();
-    this.luckStar = this.getStars();
     const activationDate = new Date(this.pigeon.active_time).getTime();
     const now = new Date().getTime();
     const creationTime = new Date(this.pigeon.creation_time).getTime();
+    this.classToApply = this.pigeonService.getClassToApply(this.pigeon)
     if (activationDate > now) {
       this.secondLeft = Math.ceil((activationDate - now) / 1000);
       this.maxSecondLeft = Math.ceil((activationDate - creationTime) / 1000);
       this.getTimeLeftBeforeActivation();
-    }
-  }
-
-  getPigeonType() {
-    switch (this.pigeon.pigeon_type) {
-      case 1:
-        this.pigeonType = faFistRaised;
-        break;
-      case 2:
-        this.pigeonType = faHatWizard;
-        break;
-      case 3:
-        this.pigeonType = faShieldAlt;
-        break;
     }
   }
 
@@ -71,23 +56,6 @@ export class PigeonCardComponent implements OnInit {
   }
   openCard() {
     this.openCardEvent.emit(this.pigeon);
-  }
-  getStars() {
-    if (this.pigeon.luck > 93) {
-      this.classToApply = 'legendary'
-      return 5;
-    } else if (this.pigeon.luck > 78) {
-      this.classToApply = 'epic'
-      return 4;
-    } else if (this.pigeon.luck > 48) {
-      this.classToApply = 'rare'
-      return 3;
-    } else if (this.pigeon.luck > 18) {
-      this.classToApply = 'uncommon'
-      return 2;
-    } else {
-      return 1;
-    }
   }
 
   getTimeLeftBeforeActivation() {

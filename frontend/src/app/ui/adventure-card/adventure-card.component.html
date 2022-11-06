@@ -1,0 +1,31 @@
+<div class="card" [ngClass]="classToApply">
+  <div class="card-header px-3 py-2" >
+    <div class="mv-auto mx-1 pigeon-name">
+      <app-pigeon-card-header [pigeon]="pigeon"></app-pigeon-card-header>
+      <span class="is-hidden-tablet">{{pigeon.name}}</span>
+    </div>
+  </div>
+  <div class="card-content p-0">
+    <div class="columns is-multiline is-mobile">
+      <div class="card-image column is-one-quarters-mobile is-full-tablet">
+        <figure class="image is-square">
+          <img [src]="'assets/pigeons/'+pigeon.src" alt="Placeholder image" />
+        </figure>
+        <p class="is-hidden-mobile is-block-tablet has-text-centered">
+          {{pigeon.name}}
+        </p>
+      </div>
+      <div class="column is-three-quarters-mobile is-full-tablet columns is-vcentered is-mobile">
+        <div class="box column is-31 has-background-danger has-text-white">
+          <span>{{pigeon.phys_atk}} <fa-icon [icon]="faFistRaised"></fa-icon></span>
+        </div>
+        <div class="box column is-31 has-background-primary has-text-white">
+          <span>{{pigeon.magic_atk}} <fa-icon [icon]="faHatWizard"></fa-icon></span>
+        </div>
+        <div class="box column is-31 has-background-info has-text-white">
+          <span>{{pigeon.shield}} <fa-icon [icon]="faShieldAlt"></fa-icon></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

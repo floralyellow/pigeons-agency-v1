@@ -1,3 +1,4 @@
+<!-- EGG -->
 <div
   class="card flip-card-front d-flex clickable"
   *ngIf="
@@ -10,6 +11,8 @@
     Open <fa-icon [icon]="faHandPointer"></fa-icon>
   </p>
 </div>
+
+<!-- PIGEON-->
 <div
   class="card flip-card-front d-flex"
   *ngIf="pigeon.is_open === false && !!secondLeft"
@@ -23,21 +26,15 @@
     ></progress>
   </p>
 </div>
+
 <div
-  class="card"
-  [ngClass]="classToApply"
+  class="card" [ngClass]="classToApply"
   *ngIf="pigeon.is_sold === false && pigeon.is_open"
 >
   <div class="card-header px-3 py-2">
     <div class="elem-n-rarety d-flex">
       <div class="mv-auto d-flex mx-1">
-        <fa-icon class="mv-auto icon-pigeon-type" [icon]="pigeonType"></fa-icon
-        >&nbsp;
-        <fa-icon
-          class="mv-auto stars"
-          [icon]="faStar"
-          *ngFor="let star of luckStar | numberToArray"
-        ></fa-icon>
+        <app-pigeon-card-header [pigeon]="pigeon"></app-pigeon-card-header>
       </div>
     </div>
     <button class="absolute button is-danger p-2" (click)="sellPigeon()">

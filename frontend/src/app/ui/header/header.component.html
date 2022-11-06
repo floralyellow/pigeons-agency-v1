@@ -1,7 +1,7 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand d-flex">
     <a class="navbar-item" [routerLink]="['index']">
-      <img src="assets/pigeons/furegeon.png" />
+      <img src="assets/pigeons/firegeon.png" />
       <span> Pigeon Agency</span>
     </a>
     <a
@@ -37,7 +37,7 @@
           <a class="navbar-item" (click)="toggle()">
             Event&nbsp;<fa-icon [icon]="faCalendarDay"></fa-icon>
           </a>
-          <a class="navbar-item" (click)="toggle()">
+          <a [routerLink]="['adventure']" class="navbar-item" (click)="toggle()">
             Adventure&nbsp;<fa-icon [icon]="faRoute"></fa-icon>
           </a>
           <a

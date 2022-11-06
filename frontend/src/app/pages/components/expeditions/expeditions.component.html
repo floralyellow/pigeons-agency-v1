@@ -28,21 +28,18 @@
                 *ngFor="let expedition of expeditionList; let index = index" 
                 [info]="expedition">
                 <div class="column">
-                    <div class="columns">
+                    <div class="columns is-mobile">
                         <button 
                             *ngFor="let type of pigeonType; let indexType = index"
                             (click)="buyPigeon(index + 1, indexType + 1)" 
-                            class="column 
-                                is-three-quarters-mobile 
-                                is-two-thirds-tablet
-                                is-one-fifth 
+                            class="column is-one-quarter
                                 m-auto button "
                             [class.is-primary]="player.lvl >= (index + 1)"
                             [class.is-danger]="player.lvl < (index + 1)"
                             [disabled]="player.lvl < (index + 1) ||
                                 seeds < expedition.seeds ||
                                 (expeditions.length + info.nb_pigeons) === level.max_pigeons">
-                            Launch <fa-icon [icon]="type"></fa-icon><br>{{expedition.seeds}}
+                            Launch <fa-icon [icon]="type"></fa-icon><br>{{expedition.seeds}} <fa-icon [icon]="faSeedling"></fa-icon>
                         </button>
                     </div>
                 </div>

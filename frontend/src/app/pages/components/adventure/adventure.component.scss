@@ -1,0 +1,28 @@
+.buttons-mobile{
+  display: none;
+    button{
+      width:100%
+    }
+}
+.buttons-tablet{
+  display: flex;
+  margin: auto;
+    button{
+      width:100%
+    }
+}
+@media (max-width : 768px) {
+  .is-multiline{
+    margin-bottom: 50px;
+  }
+  .buttons-mobile{
+    display: flex;
+    position: fixed;
+    width: 90%;
+    bottom: 20px;
+    margin-left: 5%;
+  }
+  .buttons-tablet{
+    display: none;
+  }
+}

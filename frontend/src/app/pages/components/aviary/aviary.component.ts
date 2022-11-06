@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {  Player } from 'src/app/core/models';
 import { Aviary } from 'src/app/core/models/aviary';
 import { Pigeon } from 'src/app/core/models/pigeon';
