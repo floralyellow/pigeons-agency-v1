@@ -27,8 +27,7 @@ const routes: Routes = [
     RouterModule.forRoot(
       routes,
       {
-    enableTracing: false,
-    relativeLinkResolution: 'legacy'
+    enableTracing: false
 }
     )
   ],
