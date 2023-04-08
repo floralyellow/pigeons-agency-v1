@@ -63,7 +63,7 @@ body.dark, body.dark > * {
         color: gray;
     }
     .card{
-        box-shadow: 0 0.5em 2em -0.125em rgb(255 255 255 / 33%), 0 0px 0 1px rgb(255 255 255 / 14%);
+        box-shadow: 0 0.5em 2em -0.125em rgba(255, 255, 255, 0.33) 0 0px 0 1px rgba(255, 255, 255, 0.14);
     }
     .navbar-menu, .navbar-menu > *{
         background: inherit;

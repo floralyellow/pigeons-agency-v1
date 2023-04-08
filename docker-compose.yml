@@ -19,7 +19,7 @@ services:
     env_file:
       - .db.env
   frontend:
-    image: node:14.15.1
+    image: node:18.15.0
     command: sh entrypoint.sh
     working_dir: /frontend/
     volumes:
