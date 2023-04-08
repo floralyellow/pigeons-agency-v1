@@ -1,5 +1,7 @@
 *.env
 .vscode
+.history
+.idea
 
 __pycache__
 

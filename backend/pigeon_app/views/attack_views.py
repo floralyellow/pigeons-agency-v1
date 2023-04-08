@@ -1,8 +1,8 @@
 from django.http import JsonResponse
-from pigeon_app.models.attack_pigeon import AttackPigeonSerializer
-from pigeon_app.models.player import UserSerializer
 from rest_framework.views import APIView
 
+from ..models.attack_pigeon import AttackPigeonSerializer
+from ..models.player import UserSerializer
 from ..services import attack_service, update_service
 from ..utils.validators import InputValidator
 

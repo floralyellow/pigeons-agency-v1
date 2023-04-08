@@ -5,6 +5,12 @@ from typing import Any, Tuple
 from django.db import transaction
 
 from ..models import Adventure, AdventureAttack, Pigeon, PvePigeon, TR_Lvl_info
+from ..utils.commons import (
+    ADVENTURE_RATIO_REWARDS,
+    ATTACK_VARIANCE,
+    get_pigeon_team,
+    get_total_score,
+)
 
 
 def get_adventure(user):
@@ -28,7 +34,6 @@ def _create_adventure(user, last_adventure):
     """
     create new adventure
     """
-    RATIO_REWARDS = 0.4
     lvl_info = TR_Lvl_info.objects.get(lvl=user.player.lvl)
 
     new_adventure = Adventure(
@@ -37,7 +42,7 @@ def _create_adventure(user, last_adventure):
         encounter=last_adventure.encounter + 1 if last_adventure else 1,
         nb_tries=0,
         is_success=False,
-        reward_droppings=int(lvl_info.max_droppings * RATIO_REWARDS),
+        reward_droppings=int(lvl_info.max_droppings * ADVENTURE_RATIO_REWARDS),
     )
     new_adventure.save()
 
@@ -151,14 +156,15 @@ def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
     Returns:
         Totals of physical & magical attack, + opposing team shield blocs
     """
-    VARIANCE = 15
     # init
     total_phys = 0
     total_magic = 0
     total_shield_blocs_opposing_team = 0
     for p in pigeons:
-        bonus_phys_atk = round(random.randint(-VARIANCE, VARIANCE) * p.phys_atk / 100)
-        bonus_magic_atk = round(random.randint(-VARIANCE, VARIANCE) * p.magic_atk / 100)
+        bonus_phys_atk = round(random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.phys_atk / 100)
+        bonus_magic_atk = round(
+            random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.magic_atk / 100
+        )
 
         if p.phys_atk > 0:
             total_phys += p.phys_atk + bonus_phys_atk
@@ -171,10 +177,7 @@ def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
 
 def try_adventure(user, attack_team: str):
     with transaction.atomic():
-        if attack_team == "A":
-            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_A=True)
-        elif attack_team == "B":
-            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_B=True)
+        attacking_pigeons = get_pigeon_team(user.id, attack_team)
 
         current_adventure = get_adventure(user)
 
@@ -182,7 +185,7 @@ def try_adventure(user, attack_team: str):
             current_adventure.lvl, current_adventure.encounter
         )
 
-        # sum shields needed before loop
+        # sum shields
         sum_shield_value_atk = sum([i.shield for i in attacking_pigeons])
         sum_shield_value_def = sum([i.shield for i in defending_pigeons])
 
@@ -196,15 +199,11 @@ def try_adventure(user, attack_team: str):
             defending_pigeons
         )
 
-        total_attacker = (
-            total_phys_atk
-            + total_magic_atk
-            - min((sum_shield_value_def * total_blocs_def), total_phys_atk)
+        total_attacker = get_total_score(
+            total_phys_atk, total_magic_atk, sum_shield_value_def, total_blocs_def
         )
-        total_defender = (
-            total_phys_def
-            + total_magic_def
-            - min((sum_shield_value_atk * total_blocs_atk), total_phys_def)
+        total_defender = get_total_score(
+            total_phys_def, total_magic_def, sum_shield_value_atk, total_blocs_atk
         )
 
         is_victory: bool = total_attacker > total_defender

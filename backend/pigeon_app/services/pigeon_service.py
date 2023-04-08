@@ -1,13 +1,12 @@
-import logging
 import random
 from datetime import timedelta
 
 from django.db import transaction
 from django.utils import timezone
-from pigeon_app.models.pigeon import PigeonSerializer
 
 from ..exceptions.custom_exceptions import ServiceException
 from ..models import Pigeon, TR_Expedition, TR_Lvl_info, TR_Pigeon
+from ..models.pigeon import PigeonSerializer
 
 
 def get_global_pigeon_info(user):

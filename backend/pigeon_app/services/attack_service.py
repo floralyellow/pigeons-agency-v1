@@ -3,10 +3,36 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Tuple
 
 from django.db import transaction
-from pigeon_app.models.attack import AttackSerializer
 
 from ..exceptions.custom_exceptions import ServiceException
-from ..models import Attack, AttackPigeon, Pigeon, Player
+from ..models import Attack, AttackPigeon, Player
+from ..models.attack import AttackSerializer
+from ..models.tr_lvl_info import TR_Lvl_info
+from ..services import update_service
+from ..utils.commons import (
+    ATTACK_VARIANCE,
+    DELAY_SECONDS_BETWEEN_ATTACKS,
+    PROTECTED_UNTIL_MINUTES,
+    get_pigeon_team,
+    get_total_score,
+)
+
+
+def _calculate_won_military_score(difference_scores: int, max_value: int, soft_coef: int) -> int:
+    return max(min(max_value - round(difference_scores / soft_coef), max_value), 0)
+
+
+def _get_won_military_scores(
+    attacker_is_winner: bool, atk_military_score: int, def_military_score: int
+) -> Tuple[int, int]:
+    diff_scores = atk_military_score - def_military_score
+    if attacker_is_winner:
+        attacker_won_score = +(_calculate_won_military_score(diff_scores, 7, 5))
+        defender_won_score = -(_calculate_won_military_score(diff_scores, 6, 5))
+    else:
+        attacker_won_score = -(_calculate_won_military_score(-diff_scores, 5, 6))
+        defender_won_score = +(_calculate_won_military_score(-diff_scores, 6, 6))
+    return attacker_won_score, defender_won_score
 
 
 def _handle_attack_logic(
@@ -23,14 +49,15 @@ def _handle_attack_logic(
     Returns:
         Totals of physical & magical attack, + opposing team shield blocs
     """
-    VARIANCE = 15
     # init
     total_phys = 0
     total_magic = 0
     total_shield_blocs_opposing_team = 0
     for p in pigeons:
-        bonus_phys_atk = round(random.randint(-VARIANCE, VARIANCE) * p.phys_atk / 100)
-        bonus_magic_atk = round(random.randint(-VARIANCE, VARIANCE) * p.magic_atk / 100)
+        bonus_phys_atk = round(random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.phys_atk / 100)
+        bonus_magic_atk = round(
+            random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.magic_atk / 100
+        )
 
         if p.phys_atk > 0:
             total_phys += p.phys_atk + bonus_phys_atk
@@ -52,8 +79,6 @@ def _handle_attack_logic(
 
 def attack_player(user, target_id, attack_team):
 
-    SECONDS_NEXT_ATTACK = 2 * 60  # 2 minutes
-
     with transaction.atomic():
         target = Player.objects.filter(id=target_id)
 
@@ -63,25 +88,25 @@ def attack_player(user, target_id, attack_team):
         if target_id == user.player.last_attacked:
             raise ServiceException("Error: Cant attack same player twice !")
 
-        if user.player.time_last_attack + timedelta(seconds=SECONDS_NEXT_ATTACK) > datetime.now(
-            timezone.utc
+        attack_datetime = datetime.now(timezone.utc)
+
+        if (
+            user.player.time_last_attack + timedelta(seconds=DELAY_SECONDS_BETWEEN_ATTACKS)
+            > attack_datetime
         ):
             raise ServiceException("Error: Cant attack yet !")
 
-        if attack_team == "A":
-            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_A=True)
-        elif attack_team == "B":
-            attacking_pigeons = Pigeon.objects.filter(player_id=user.id, is_in_team_B=True)
-
         defender = target[0]
 
-        defend_team = defender.defense_team
-        if defend_team == "A":
-            defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team_A=True)
-        elif defend_team == "B":
-            defending_pigeons = Pigeon.objects.filter(player_id=target_id, is_in_team_B=True)
+        if defender.protected_until > attack_datetime:
+            raise ServiceException("Error: Cant attack this user yet !")
 
-        # sum shields needed before loop
+        attacking_pigeons = get_pigeon_team(user.id, attack_team)
+
+        defend_team = defender.defense_team
+        defending_pigeons = get_pigeon_team(target_id, defend_team)
+
+        # sum shield
         sum_shield_value_atk = sum([i.shield for i in attacking_pigeons])
         sum_shield_value_def = sum([i.shield for i in defending_pigeons])
 
@@ -98,26 +123,55 @@ def attack_player(user, target_id, attack_team):
             defending_pigeons, current_attack, False
         )
 
-        total_attacker = (
-            total_phys_atk
-            + total_magic_atk
-            - min((sum_shield_value_def * total_blocs_def), total_phys_atk)
+        total_attacker = get_total_score(
+            total_phys_atk, total_magic_atk, sum_shield_value_def, total_blocs_def
         )
-        total_defender = (
-            total_phys_def
-            + total_magic_def
-            - min((sum_shield_value_atk * total_blocs_atk), total_phys_def)
+        total_defender = get_total_score(
+            total_phys_def, total_magic_def, sum_shield_value_atk, total_blocs_atk
         )
 
         winner_id = user.id if total_attacker > total_defender else target_id
+        attacker_is_winner = winner_id == user.id
 
-        # TODO stolen droppings
+        attacker_won_score, defender_won_score = _get_won_military_scores(
+            attacker_is_winner, user.player.military_score, defender.military_score
+        )
+        # rewards
+        update_service.update_user_values(defender.user)
 
-        # TODO militaryscore
+        atk_max_droppings = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_droppings
+        def_max_droppings = TR_Lvl_info.objects.get(lvl=defender.lvl).max_droppings
 
-        # TODO timetonextattack & last attack id
+        current_attack.atk_old_military_score = user.player.military_score
+        current_attack.def_old_military_score = defender.military_score
 
-        # TODO protecteduntil (with model)
+        if attacker_is_winner:
+            stolen_droppings = int(
+                min((def_max_droppings + defender.droppings) / 2 * 0.2, defender.droppings)
+            )
+        else:
+            stolen_droppings = int(
+                -min((atk_max_droppings + user.player.droppings) / 2 * 0.2, user.player.droppings)
+            )
+
+        # update values for both players
+
+        user.player.military_score = max(user.player.military_score + attacker_won_score, 0)
+        defender.military_score = max(defender.military_score + defender_won_score, 0)
+
+        user.player.droppings = max(
+            min(user.player.droppings + stolen_droppings, atk_max_droppings), 0
+        )
+        defender.droppings = max(min(defender.droppings - stolen_droppings, def_max_droppings), 0)
+
+        user.player.time_last_attack = attack_datetime
+        user.player.last_attacked = target_id
+
+        user.player.protected_until = attack_datetime
+        defender.protected_until = attack_datetime + timedelta(minutes=PROTECTED_UNTIL_MINUTES)
+
+        user.player.save()
+        defender.save()
 
         current_attack.winner_id = winner_id
         current_attack.atk_tot_score = total_attacker
@@ -132,11 +186,9 @@ def attack_player(user, target_id, attack_team):
         current_attack.def_shield_value = sum_shield_value_def
         current_attack.def_shield_blocs = total_blocs_def
 
-        current_attack.stolen_droppings = 0
-        current_attack.atk_old_military_score = 0
-        current_attack.atk_new_military_score = 0
-        current_attack.def_old_military_score = 0
-        current_attack.def_new_military_score = 0
+        current_attack.stolen_droppings = stolen_droppings
+        current_attack.atk_new_military_score = user.player.military_score
+        current_attack.def_new_military_score = defender.military_score
         current_attack.save()
 
         fighting_pigeons = AttackPigeon.objects.filter(attack=current_attack)
