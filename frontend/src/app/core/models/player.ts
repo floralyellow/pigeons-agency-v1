@@ -7,5 +7,6 @@ export class Player {
   last_attacked: number
   time_last_attack: Date
   defense_team: 'A' | 'B'
+  protected_until: Date
 }
 
