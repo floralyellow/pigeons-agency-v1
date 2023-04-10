@@ -37,9 +37,9 @@
                 <button 
                     (click)="exchangeDroppingsWithSeeds()"
                     class="button is-primary" 
-                    [disabled]="playerInfo.user.player.droppings < level.max_droppings">
+                    [disabled]="playerInfo.user.player.droppings < droppings_needed_to_buy_bucket">
                     Exchange<br>
-                    {{level.max_droppings}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>
+                    {{droppings_needed_to_buy_bucket}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>
                 </button>
             </div>
         </div>

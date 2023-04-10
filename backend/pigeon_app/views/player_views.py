@@ -6,6 +6,7 @@ from ..exceptions.custom_exceptions import ServiceException
 from ..models import TR_Lvl_info
 from ..models.player import UserSerializer
 from ..services import pigeon_service, update_service
+from ..utils.commons import NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO
 
 
 class PlayerView(APIView):
@@ -69,7 +70,6 @@ class PlayerUseBucketView(APIView):
 
     # use bucket
     def post(self, request):
-        NEEDED_DROPPINGS_RATIO = 0.25
 
         update_service.update_user_values(request.user)
 
@@ -78,7 +78,7 @@ class PlayerUseBucketView(APIView):
 
             lvl_info = TR_Lvl_info.objects.filter(lvl=player.lvl)[0]
 
-            cost_droppings = int(lvl_info.max_droppings * NEEDED_DROPPINGS_RATIO)
+            cost_droppings = int(lvl_info.max_droppings * NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO)
 
             if cost_droppings > player.droppings:
                 raise ServiceException("Error: Not enough droppings !")
