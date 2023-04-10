@@ -237,4 +237,4 @@ def try_adventure(user, attack_team: str):
             user.player.save()
         current_adventure.save()
 
-        return adventure_attack
+        return adventure_attack, current_adventure
