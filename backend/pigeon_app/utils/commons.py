@@ -8,6 +8,8 @@ ADVENTURE_RATIO_REWARDS = 0.4
 
 PROTECTED_UNTIL_MINUTES = 20
 
+NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO = 0.25
+
 
 def get_total_score(
     total_phys: int, total_magic: int, sum_shield_opponent: int, total_blocs_opponent: int

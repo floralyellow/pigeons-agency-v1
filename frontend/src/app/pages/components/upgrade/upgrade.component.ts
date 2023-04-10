@@ -6,6 +6,8 @@ import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
 import { faPoop } from '@fortawesome/free-solid-svg-icons';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 
+const NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO : number = 0.25;
+
 @Component({
   selector: 'app-upgrade',
   templateUrl: './upgrade.component.html',
@@ -20,12 +22,15 @@ export class UpgradeComponent implements OnInit {
   timeout;
   seeds : number;
   droppings : number;
+  droppings_neeed_to_buy_bucket : number;
+
   constructor(private playerService : PlayerService, private upgradeService : UpgradeService) {
     this.playerService.getPlayerInfo().then(data => {
       this.playerInfo = data;
       this.level = this.levelList[this.playerInfo.user.player.lvl - 1]
       this.seeds = data.user.player.seeds;
       this.droppings = data.user.player.droppings;
+      this.droppings_neeed_to_buy_bucket = Math.trunc(this.level.max_droppings * NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO)
       this.getCurrentSeedsAndDroppings();
     })
   }
@@ -33,7 +38,7 @@ export class UpgradeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  exchangeDroppingsWithSeeds(){
+  exchangeDroppingsWithSeeds(){  
     this.upgradeService.postSwapDroppingsWithSeeds().then(data => {
       this.playerInfo = data;
       this.seeds = data.user.player.seeds;
@@ -48,6 +53,7 @@ export class UpgradeComponent implements OnInit {
       this.level = this.levelList[this.playerInfo.user.player.lvl - 1]
       this.seeds = data.user.player.seeds;
       this.droppings = data.user.player.droppings;
+      this.droppings_neeed_to_buy_bucket = Math.trunc(this.level.max_droppings * NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO)
       this.getCurrentSeedsAndDroppings();
     })
   }
