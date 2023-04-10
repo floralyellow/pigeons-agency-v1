@@ -22,7 +22,7 @@ export class UpgradeComponent implements OnInit {
   timeout;
   seeds : number;
   droppings : number;
-  droppings_neeed_to_buy_bucket : number;
+  droppings_needed_to_buy_bucket : number;
 
   constructor(private playerService : PlayerService, private upgradeService : UpgradeService) {
     this.playerService.getPlayerInfo().then(data => {
@@ -30,7 +30,7 @@ export class UpgradeComponent implements OnInit {
       this.level = this.levelList[this.playerInfo.user.player.lvl - 1]
       this.seeds = data.user.player.seeds;
       this.droppings = data.user.player.droppings;
-      this.droppings_neeed_to_buy_bucket = Math.trunc(this.level.max_droppings * NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO)
+      this.droppings_needed_to_buy_bucket = Math.trunc(this.level.max_droppings * NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO)
       this.getCurrentSeedsAndDroppings();
     })
   }
@@ -38,7 +38,7 @@ export class UpgradeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  exchangeDroppingsWithSeeds(){  
+  exchangeDroppingsWithSeeds(){
     this.upgradeService.postSwapDroppingsWithSeeds().then(data => {
       this.playerInfo = data;
       this.seeds = data.user.player.seeds;
@@ -53,7 +53,7 @@ export class UpgradeComponent implements OnInit {
       this.level = this.levelList[this.playerInfo.user.player.lvl - 1]
       this.seeds = data.user.player.seeds;
       this.droppings = data.user.player.droppings;
-      this.droppings_neeed_to_buy_bucket = Math.trunc(this.level.max_droppings * NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO)
+      this.droppings_needed_to_buy_bucket = Math.trunc(this.level.max_droppings * NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO)
       this.getCurrentSeedsAndDroppings();
     })
   }
