@@ -12,6 +12,7 @@ import { PigeonCardComponent } from './pigeon-card/';
 
 import { PipesModule } from '../pipes/pipes.module';
 import { PigeonCardHeaderComponent } from './pigeon-card-header/pigeon-card-header.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PigeonCardHeaderComponent } from './pigeon-card-header/pigeon-card-head
     DashboardCardComponent,
     PigeonCardComponent,
     AdventureCardComponent,
-    PigeonCardHeaderComponent
+    PigeonCardHeaderComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { PigeonCardHeaderComponent } from './pigeon-card-header/pigeon-card-head
     DashboardCardComponent,
     PigeonCardComponent,
     AdventureCardComponent,
-    PigeonCardHeaderComponent
+    PigeonCardHeaderComponent,
+    ModalComponent
   ],
 })
 export class UiModule { }

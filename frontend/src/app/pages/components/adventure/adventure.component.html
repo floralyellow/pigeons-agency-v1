@@ -1,4 +1,12 @@
 <div class="container">
+  <div>
+    Droppings : {{user.player.droppings}}/{{levelList[(user.player.lvl - 1)].max_droppings}}
+    <progress
+      class="progress is-primary"
+      [value]="user.player.droppings"
+      [max]="levelList[(user.player.lvl - 1)].max_droppings"
+    ></progress>
+  </div>
   <div class="is-multiline columns">
     <app-adventure-card
       class="column is-full-mobile is-one-fifth-tablet"
@@ -8,10 +16,10 @@
     
     <div class="column is-full buttons-tablet columns">
       <div class="column is-half">
-        <button class="button is-danger">Fight with team A</button>
+        <button class="button is-danger" (click)="attackWithTeam('A')">Fight with team A</button>
       </div>
       <div class="column is-half">
-        <button class="button is-danger">Fight with team B</button>
+        <button class="button is-danger" (click)="attackWithTeam('B')">Fight with team B</button>
       </div>
     </div>
   </div>
@@ -19,9 +27,50 @@
 
 <div class="buttons-mobile columns">
   <div class="column is-full">
-    <button class="button is-danger column is-full">Fight with team A</button>
+    <button class="button is-danger column is-full" (click)="attackWithTeam('A')">Fight with team A</button>
   </div>
   <div class="column is-full">
-    <button class="button is-danger column is-full">Fight with team B</button>
+    <button class="button is-danger column is-full" (click)="attackWithTeam('B')">Fight with team B</button>
   </div>
 </div>
+<app-modal
+  [title]="modalTitle"
+  [headerBackground]="modalHeaderBackground">
+  <div *ngIf="modal && adventureAttack">
+    <p class="is-size-4 has-text-centered">
+      {{adventureAttack.atk_tot_score}} VS {{adventureAttack.def_tot_score}}
+    </p>
+  </div>
+  <div class="columns is-multiline has-text-centered" *ngIf="modal && adventureAttack">
+    <div class="column is-half">
+      You
+    </div>
+    <div class="column is-half">
+      Enemies
+    </div>
+    <div class="column is-half">
+      <fa-icon [icon]="faFistRaised"></fa-icon>
+      {{adventureAttack.atk_tot_phys}}
+    </div>
+    <div class="column is-half">
+      <fa-icon [icon]="faFistRaised"></fa-icon>
+      {{adventureAttack.def_tot_phys}}
+    </div>
+    <div class="column is-half">
+      <fa-icon [icon]="faHatWizard"></fa-icon>
+      {{adventureAttack.atk_tot_magic}}
+    </div>
+    <div class="column is-half">
+      <fa-icon [icon]="faHatWizard"></fa-icon>
+      {{adventureAttack.def_tot_magic}}
+    </div>
+    <div class="column is-half">
+      <fa-icon [icon]="faShieldAlt"></fa-icon>
+      {{attackerBlocked}}
+    </div>
+    <div class="column is-half">
+      <fa-icon [icon]="faShieldAlt"></fa-icon>
+      {{pveBlocked}}
+    </div>
+  </div>
+</app-modal>

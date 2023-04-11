@@ -9,7 +9,16 @@
                         [value]="seeds" 
                         [max]="level.max_seeds">
                     </progress>
-                    <p>Aviary : ({{(info.nb_pigeons)}} + {{expeditions.length}})/{{level.max_pigeons}}</p>
+                    <p>Aviary : 
+                        <span [class.has-text-danger]="info.nb_pigeons + expeditions.length === level.max_pigeons">
+                            <fa-icon 
+                                [icon]="faExclamationTriangle" 
+                                *ngIf="info.nb_pigeons + expeditions.length === level.max_pigeons">
+                            </fa-icon>
+                            (
+                                {{(info.nb_pigeons)}} <fa-icon [icon]="faBird"></fa-icon>
+                                + {{expeditions.length}} <fa-icon [icon]="faEgg"></fa-icon>
+                            )/{{level.max_pigeons}}</span></p>
                     <progress 
                         class="progress is-primary" 
                         [value]="(info.nb_pigeons + expeditions.length)" 
