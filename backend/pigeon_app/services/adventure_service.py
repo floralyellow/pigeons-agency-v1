@@ -4,13 +4,15 @@ from typing import Any, Tuple
 
 from django.db import transaction
 
-from ..models import Adventure, AdventureAttack, Pigeon, PvePigeon, TR_Lvl_info
+from ..models import Adventure, AdventureAttack, PvePigeon, TR_Lvl_info
 from ..utils.commons import (
     ADVENTURE_RATIO_REWARDS,
     ATTACK_VARIANCE,
+    LOST_DROPPINGS_ADVENTURE_RATIO,
     get_pigeon_team,
     get_total_score,
 )
+from ..utils.pve_pigeons import pve_pigeons_list
 
 
 def get_adventure(user):
@@ -50,98 +52,20 @@ def _create_adventure(user, last_adventure):
 
 
 def get_adventure_pigeons(lvl, encounter):
+    MAX_ENCOUNTER_LEVEL = 13
     pve_pigeons = None
-    if encounter == 1:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=20)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=20)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=20)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=20)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=20)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 2:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=20)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=20)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=20)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=20)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=20)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 3:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=20)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=40)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=20)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=40)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=40)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 4:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=40)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=40)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=40)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=40)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=40)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 5:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=40)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=40)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=60)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=40)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=60)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 6:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=60)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=60)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=60)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=60)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=40)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 7:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=60)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=60)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=60)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=80)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=80)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 8:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=80)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=80)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=80)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=80)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=80)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 9:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=80)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=80)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=80)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=80)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=90)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 10:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=80)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=90)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=90)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=80)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=90)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 11:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=90)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=90)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=95)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=90)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=90)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter == 12:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=95)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=95)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=95)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=95)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=95)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
-    elif encounter >= 13:
-        p1 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=95)
-        p2 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=1, luck=95)
-        p3 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=95)
-        p4 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=2, luck=95)
-        p5 = PvePigeon.objects.filter(lvl=lvl, pigeon_type=3, luck=95)
-        pve_pigeons = p1.union(p2, p3, p4, p5, all=True)
+    encounter_level = min(encounter, MAX_ENCOUNTER_LEVEL)
+
+    pve_pigeons_stats = pve_pigeons_list.get(encounter_level)
+
+    pigeon_qs_list = []
+    for pigeon_stat in pve_pigeons_stats:
+        pigeon_qs = PvePigeon.objects.filter(
+            lvl=lvl, pigeon_type=pigeon_stat["pigeon_type"], luck=pigeon_stat["luck"]
+        )
+        pigeon_qs_list.append(pigeon_qs)
+
+    pve_pigeons = pigeon_qs_list[0].union(*pigeon_qs_list[1:], all=True)
 
     return pve_pigeons
 
@@ -227,14 +151,21 @@ def try_adventure(user, attack_team: str):
         adventure_attack.save()
 
         current_adventure.nb_tries += 1
+        max_droppings = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_droppings
+
         if is_victory:
             current_adventure.is_success = True
             current_adventure.completed_at = datetime.now(timezone.utc)
-            max_droppings = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_droppings
             user.player.droppings = min(
                 user.player.droppings + current_adventure.reward_droppings, max_droppings
             )
-            user.player.save()
+        else:
+            user.player.droppings = max(
+                user.player.droppings
+                - int(current_adventure.reward_droppings * LOST_DROPPINGS_ADVENTURE_RATIO),
+                0,
+            )
+        user.player.save()
         current_adventure.save()
 
         return adventure_attack, current_adventure

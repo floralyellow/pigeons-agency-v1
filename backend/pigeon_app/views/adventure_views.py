@@ -34,6 +34,12 @@ class AdventureView(APIView):
         )
 
     def post(self, request):
+        """
+        try pve adventure.
+        expected post keys
+            a_team : team of pigeons (A or B)
+
+        """
         update_service.update_user_values(request.user)
 
         attack_team = InputValidator.get_key(request, "a_team")
