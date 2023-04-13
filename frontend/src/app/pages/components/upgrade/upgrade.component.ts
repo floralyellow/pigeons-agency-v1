@@ -6,7 +6,7 @@ import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
 import { faPoop } from '@fortawesome/free-solid-svg-icons';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 
-const NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO : number = 0.25;
+const NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO : number = 0.5;
 
 @Component({
   selector: 'app-upgrade',
