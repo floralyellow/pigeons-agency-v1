@@ -58,6 +58,7 @@ h1{
     }
 }
 .flip-card-front{
+    box-shadow: 0 1em 2em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.1) !important;
     height: 100%;
     color: lightgrey;
     .image{
@@ -70,7 +71,7 @@ h1{
     }
 }
 .flip-card-front.clickable:hover{
-    box-shadow: 0 0.5em 1em -0.125em grey, 0 0px 0 1px grey !important;
+    box-shadow: 0 1em 2em -0.125em grey, 0 0px 0 1px grey !important;
     transition: box-shadow 0.3s;
 }
 .flip-card-front.clickable{
