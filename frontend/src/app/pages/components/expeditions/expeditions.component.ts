@@ -9,6 +9,9 @@ import {
   faQuestion,
   faShieldAlt,
   faFistRaised,
+  faEgg,
+  faCrow,
+  faExclamationTriangle,
   faSeedling
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,6 +26,9 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
   faFistRaised = faFistRaised;
   faSeedling = faSeedling;
   faQuestion = faQuestion;
+  faEgg = faEgg;
+  faBird = faCrow;
+  faExclamationTriangle = faExclamationTriangle;
   expeditionList: Expedition[] = (expeditionInfo as any).default;
   levelList: Level[] = (lvlInfo as any).default;
   expeditions: Pigeon[];

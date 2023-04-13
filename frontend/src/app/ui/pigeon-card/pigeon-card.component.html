@@ -37,7 +37,7 @@
         <app-pigeon-card-header [pigeon]="pigeon"></app-pigeon-card-header>
       </div>
     </div>
-    <button class="absolute button is-danger p-2" (click)="sellPigeon()">
+    <button class="absolute button is-danger p-2"[disabled]="pigeon.is_in_team_A || pigeon.is_in_team_B" (click)="sellPigeon()">
       Sell {{ pigeon.feathers }} <fa-icon [icon]="faFeatherAlt"></fa-icon>
     </button>
   </div>
