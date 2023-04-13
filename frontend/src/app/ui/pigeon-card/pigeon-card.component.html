@@ -1,6 +1,6 @@
 <!-- EGG -->
 <div
-  class="card flip-card-front d-flex clickable"
+  class="card flip-card-front d-flex clickable pigeon-card-default"
   *ngIf="
     pigeon.is_open === false && (secondLeft === undefined || secondLeft === 0)
   "
@@ -14,7 +14,7 @@
 
 <!-- PIGEON-->
 <div
-  class="card flip-card-front d-flex"
+  class="card flip-card-front d-flex pigeon-card-default"
   *ngIf="pigeon.is_open === false && !!secondLeft"
 >
   <p class="m-auto image">
@@ -28,7 +28,7 @@
 </div>
 
 <div
-  class="card" [ngClass]="classToApply"
+  class="card pigeon-card-default" [ngClass]="classToApply"
   *ngIf="pigeon.is_sold === false && pigeon.is_open"
 >
   <div class="card-header px-3 py-2">

@@ -4,6 +4,7 @@ import { Aviary } from 'src/app/core/models/aviary';
 import { Pigeon } from 'src/app/core/models/pigeon';
 import { ExpeditionsService } from 'src/app/core/services';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { SortEnum } from 'src/app/core/models/sort-enum';
 
 @Component({
   selector: 'app-aviary',
@@ -17,6 +18,9 @@ export class AviaryComponent implements OnInit {
   player: Player;
   nbInTeamA = 0;
   nbInTeamB = 0;
+  possibleEnum = SortEnum;
+  sortBy : SortEnum
+
   constructor(private pigeonService: ExpeditionsService) {
     pigeonService.getAviary().then((value : Aviary) => {
       this.pigeons = value.pigeons.sort((a,b)=>b.id - a.id);
@@ -41,6 +45,10 @@ export class AviaryComponent implements OnInit {
       const index = this.pigeons.indexOf(pigeon);
       this.pigeons[index] = value
     })
+  }
+
+  selectFilter(value: string){
+    this.sortBy = SortEnum[value]
   }
 
   toggleTeam(pigeon : Pigeon, team: 'A'|'B'){

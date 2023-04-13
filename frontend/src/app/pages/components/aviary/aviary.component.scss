@@ -1,0 +1,18 @@
+.grid-columns{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
+    grid-gap: 20px;
+}
+
+@media (max-width : 1023px) {
+    .grid-columns{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width : 768px) {
+    .grid-columns{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
