@@ -20,7 +20,8 @@
                                 + {{expeditions.length}} <fa-icon [icon]="faEgg"></fa-icon>
                             )/{{level.max_pigeons}}</span></p>
                     <progress 
-                        class="progress is-primary" 
+                        class="progress" 
+                        [ngClass]="info.nb_pigeons + expeditions.length <  level.max_pigeons ? 'is-primary': 'is-danger'"
                         [value]="(info.nb_pigeons + expeditions.length)" 
                         [max]="level.max_pigeons">
                     </progress>

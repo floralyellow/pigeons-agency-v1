@@ -31,6 +31,7 @@ export class AdventureComponent implements OnInit {
   user: User;
   levelList: Level[] = (lvlInfo as any).default;
   timeout;
+  currentDroppingsMinute = 0
   currentDroppings = 0
   level : Level
   playerInfo : GlobalInfo;
@@ -43,7 +44,8 @@ export class AdventureComponent implements OnInit {
       this.adventurePigeons = result.adventure_pigeons
       this.user = result.user
       this.level = this.levelList[(this.user.player.lvl - 1)]
-      //this.getCurrentDroppings()
+      this.currentDroppingsMinute = result.droppings_minute
+      this.getCurrentDroppings()
     })
   }
 
@@ -64,17 +66,18 @@ export class AdventureComponent implements OnInit {
         (this.adventureAttack.def_shield_value * this.adventureAttack.def_shield_blocs),
         this.adventureAttack.atk_tot_phys 
       )
-      this.user = result.user
-      //this.getCurrentDroppings()
+      this.user = result.globalInfo.user
+      this.currentDroppingsMinute = result.globalInfo.droppings_minute
+      this.getCurrentDroppings()
     })
   }
 
   getCurrentDroppings() {
     (this.timeout !== undefined) ? clearTimeout(this.timeout) : null;
-    if (this.currentDroppings < this.user.player.droppings) {
+    if (this.user.player.droppings < this.level.max_droppings) {
       this.timeout = setTimeout(() => {
         this.currentDroppings = Math.min(
-          //this.currentDroppings + Math.round(this.user.player. / 60), //missing dropping minute in data
+          this.user.player.droppings + Math.round(this.currentDroppingsMinute / 60), //missing dropping minute in data
           this.level.max_droppings);
         this.getCurrentDroppings()
       }, 1000);
