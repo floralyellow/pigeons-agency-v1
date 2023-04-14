@@ -60,7 +60,7 @@ export class AdventureComponent implements OnInit {
         'has-background-success' : 'has-background-danger';
       this.attackerBlocked = Math.min(
         (this.adventureAttack.atk_shield_value * this.adventureAttack.atk_shield_blocs),
-        this.adventureAttack.def_tot_score
+        this.adventureAttack.def_tot_phys
       )
       this.pveBlocked = Math.min(
         (this.adventureAttack.def_shield_value * this.adventureAttack.def_shield_blocs),
