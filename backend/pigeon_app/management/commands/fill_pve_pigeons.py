@@ -13,14 +13,17 @@ class Command(BaseCommand):
         parser.add_argument("--force_recreate", type=str)
 
     def handle(self, *args, **kwargs):
+        LVL_RANGE = range(1, 30 + 1)
+        PIGEON_TYPES_RANGE = range(1, 3 + 1)
+        LUCK_VALUES_RANGE = [20, 40, 60, 80, 90, 95]
 
         if PvePigeon.objects.count() == 0 or kwargs["force_recreate"] == "TRUE":
 
             PvePigeon.objects.all().delete()
 
-            for lvl in range(1, 30 + 1):
-                for pigeon_type in range(1, 3 + 1):
-                    for luck_value in [20, 40, 60, 80, 90, 95]:
+            for lvl in LVL_RANGE:
+                for pigeon_type in PIGEON_TYPES_RANGE:
+                    for luck_value in LUCK_VALUES_RANGE:
 
                         expedition = TR_Expedition.objects.filter(lvl=lvl)[0]
 
