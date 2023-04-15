@@ -2,7 +2,7 @@ from django.db import transaction
 from django.http import JsonResponse
 from rest_framework.views import APIView
 
-from ..exceptions.custom_exceptions import ServiceException
+from ..exceptions.custom_exceptions import BackendException, ServiceException
 from ..models import TR_Lvl_info
 from ..models.player import UserSerializer
 from ..services import pigeon_service, update_service
@@ -98,3 +98,24 @@ class PlayerUseBucketView(APIView):
                 }
             }
         )
+
+
+class PlayerChangeDefenseTeamView(APIView):
+    def post(self, request):
+        """
+        update defense team used in pvp attacks
+        """
+
+        update_service.update_user_values(request.user)
+        player = request.user.player
+
+        if player.defense_team == "A":
+            player.defense_team = "B"
+        elif player.defense_team == "B":
+            player.defense_team = "A"
+        else:
+            raise BackendException("Error: Unexpected defense team !")
+
+        player.save()
+
+        return JsonResponse({"message": {"user": UserSerializer(request.user).data}})

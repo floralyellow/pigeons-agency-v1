@@ -13,3 +13,10 @@ class ServiceException(APIException):
 
     def __init__(self, detail):
         self.detail = {"message": detail}
+
+
+class BackendException(APIException):
+    status_code = 500
+
+    def __init__(self, detail):
+        self.detail = {"message": detail}

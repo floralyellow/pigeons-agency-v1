@@ -116,6 +116,6 @@ class PigeonSellView(APIView):
 
         InputValidator.validate_is_int(pigeon_id)
 
-        message = pigeon_service.sell_pigeon(request.user, pigeon_id)
+        sold_pigeon = pigeon_service.sell_pigeon(request.user, pigeon_id)
 
-        return JsonResponse({"message": message})
+        return JsonResponse({"user": UserSerializer(request.user).data, "sold_pigeon": sold_pigeon})
