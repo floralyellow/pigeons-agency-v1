@@ -1,19 +1,16 @@
 from ..models import Pigeon
 
-ATTACK_VARIANCE = 15
+ATTACK_VARIANCE = 7
 
 DELAY_SECONDS_BETWEEN_ATTACKS = 2 * 60  # 2 min
 
 PROTECTED_UNTIL_MINUTES = 20  # 20 min
 
 # Ratio of droppings needed to use bucket (compared to max droppings)
-NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO = 0.5
+NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO = 0.25
 
 # Ratio of droppings won in an adventure (compared to max droppings)
-ADVENTURE_RATIO_REWARDS = 0.3
-
-# ratio of droppings you lose in an adventure (compared to amount won)
-LOST_DROPPINGS_ADVENTURE_RATIO = 0.25
+ADVENTURE_RATIO_REWARDS = 0.25
 
 
 def get_total_score(

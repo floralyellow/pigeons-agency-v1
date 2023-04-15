@@ -3,180 +3,180 @@
     "lvl": 1,
     "seeds": 10,
     "duration": 8,
-    "name": "Expedition1"
+    "name": "The Eiffel Tower"
   },
   {
     "lvl": 2,
     "seeds": 20,
     "duration": 12,
-    "name": "Expedition2"
+    "name": "Buckingham Palace"
   },
   {
     "lvl": 3,
     "seeds": 40,
     "duration": 16,
-    "name": "Expedition3"
+    "name": "Mount Rushmore"
   },
   {
     "lvl": 4,
     "seeds": 80,
     "duration": 19,
-    "name": "Expedition4"
+    "name": "Sydney Opera House"
   },
   {
     "lvl": 5,
     "seeds": 150,
     "duration": 26,
-    "name": "Expedition5"
+    "name": "Golden Gate Bridge"
   },
   {
     "lvl": 6,
     "seeds": 270,
     "duration": 36,
-    "name": "Expedition6"
+    "name": "Taj Mahal"
   },
   {
     "lvl": 7,
     "seeds": 450,
     "duration": 49,
-    "name": "Expedition7"
+    "name": "Mont Saint-Michel"
   },
   {
     "lvl": 8,
     "seeds": 700,
     "duration": 65,
-    "name": "Expedition8"
+    "name": "La Sagrada Familia"
   },
   {
     "lvl": 9,
     "seeds": 1100,
     "duration": 88,
-    "name": "Expedition9"
+    "name": "Machu Picchu"
   },
   {
     "lvl": 10,
     "seeds": 1600,
     "duration": 113,
-    "name": "Expedition10"
+    "name": "The Great Wall of China"
   },
   {
     "lvl": 11,
     "seeds": 2200,
     "duration": 139,
-    "name": "Expedition11"
+    "name": "The Acropolis"
   },
   {
     "lvl": 12,
     "seeds": 2850,
     "duration": 163,
-    "name": "Expedition12"
+    "name": "The Brandenburg Gate"
   },
   {
     "lvl": 13,
     "seeds": 3500,
     "duration": 183,
-    "name": "Expedition13"
+    "name": "The Great Pyramid of Giza"
   },
   {
     "lvl": 14,
     "seeds": 4250,
     "duration": 204,
-    "name": "Expedition14"
+    "name": "Leaning Tower of Pisa"
   },
   {
     "lvl": 15,
     "seeds": 5000,
     "duration": 222,
-    "name": "Expedition15"
+    "name": "Victoria Falls"
   },
   {
     "lvl": 16,
     "seeds": 6000,
     "duration": 248,
-    "name": "Expedition16"
+    "name": "Blue Domes of Oia"
   },
   {
     "lvl": 17,
     "seeds": 7000,
     "duration": 271,
-    "name": "Expedition17"
+    "name": "Blue Mosque"
   },
   {
     "lvl": 18,
     "seeds": 8000,
     "duration": 291,
-    "name": "Expedition18"
+    "name": "The Colosseum"
   },
   {
     "lvl": 19,
     "seeds": 9000,
     "duration": 309,
-    "name": "Expedition19"
+    "name": "Easter Island"
   },
   {
     "lvl": 20,
     "seeds": 10000,
     "duration": 324,
-    "name": "Expedition20"
+    "name": "Angkor Wat"
   },
   {
     "lvl": 21,
     "seeds": 12000,
     "duration": 369,
-    "name": "Expedition21"
+    "name": "The Western Wall"
   },
   {
     "lvl": 22,
     "seeds": 14000,
     "duration": 410,
-    "name": "Expedition22"
+    "name": "Giant's Causeway"
   },
   {
     "lvl": 23,
     "seeds": 16000,
     "duration": 447,
-    "name": "Expedition23"
+    "name": "The Grand Palace"
   },
   {
     "lvl": 24,
     "seeds": 18000,
     "duration": 480,
-    "name": "Expedition24"
+    "name": "Neuschwanstein Castle"
   },
   {
     "lvl": 25,
     "seeds": 20000,
     "duration": 511,
-    "name": "Expedition25"
+    "name": "Statue of Liberty"
   },
   {
     "lvl": 26,
     "seeds": 24000,
     "duration": 588,
-    "name": "Expedition26"
+    "name": "Ha Long Bay"
   },
   {
     "lvl": 27,
     "seeds": 28000,
     "duration": 659,
-    "name": "Expedition27"
+    "name": "Stonehenge"
   },
   {
     "lvl": 28,
     "seeds": 32000,
     "duration": 725,
-    "name": "Expedition28"
+    "name": "Mount Fuji"
   },
   {
     "lvl": 29,
     "seeds": 36000,
     "duration": 785,
-    "name": "Expedition29"
+    "name": "Petra"
   },
   {
     "lvl": 30,
     "seeds": 40000,
     "duration": 842,
-    "name": "Expedition30"
+    "name": "Kiribati"
   }
 ]

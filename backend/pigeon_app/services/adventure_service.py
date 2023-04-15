@@ -7,8 +7,6 @@ from django.db import transaction
 from ..models import Adventure, AdventureAttack, PvePigeon, TR_Lvl_info
 from ..utils.commons import (
     ADVENTURE_RATIO_REWARDS,
-    ATTACK_VARIANCE,
-    LOST_DROPPINGS_ADVENTURE_RATIO,
     get_pigeon_team,
     get_total_score,
 )
@@ -81,13 +79,14 @@ def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
         Totals of physical & magical attack, + opposing team shield blocs
     """
     # init
+    # TODO refacto
     total_phys = 0
     total_magic = 0
     total_shield_blocs_opposing_team = 0
     for p in pigeons:
-        bonus_phys_atk = round(random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.phys_atk / 100)
+        bonus_phys_atk = round(random.randint(-0, 0) * p.phys_atk / 100)
         bonus_magic_atk = round(
-            random.randint(-ATTACK_VARIANCE, ATTACK_VARIANCE) * p.magic_atk / 100
+            random.randint(-0, 0) * p.magic_atk / 100
         )
 
         if p.phys_atk > 0:
@@ -151,20 +150,15 @@ def try_adventure(user, attack_team: str):
         adventure_attack.save()
 
         current_adventure.nb_tries += 1
-        max_droppings = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_droppings
 
         if is_victory:
+            max_droppings = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_droppings
             current_adventure.is_success = True
             current_adventure.completed_at = datetime.now(timezone.utc)
             user.player.droppings = min(
                 user.player.droppings + current_adventure.reward_droppings, max_droppings
             )
-        else:
-            user.player.droppings = max(
-                user.player.droppings
-                - int(current_adventure.reward_droppings * LOST_DROPPINGS_ADVENTURE_RATIO),
-                0,
-            )
+
         user.player.save()
         current_adventure.save()
 
