@@ -14,7 +14,12 @@ from .views.pigeons_views import (
     PigeonTeamBView,
     PigeonView,
 )
-from .views.player_views import PlayerLvlupView, PlayerUseBucketView, PlayerView
+from .views.player_views import (
+    PlayerChangeDefenseTeamView,
+    PlayerLvlupView,
+    PlayerUseBucketView,
+    PlayerView,
+)
 from .views.user_views import UserViewSet
 
 router = routers.SimpleRouter()
@@ -34,6 +39,11 @@ urlpatterns = [
     path(r"api/attack", AttackView.as_view(), name="attack"),
     path(r"api/player/", PlayerView.as_view(), name="player"),
     path(r"api/player/lvlup", PlayerLvlupView.as_view(), name="lvl_up"),
+    path(
+        r"api/player/changedefenseteam",
+        PlayerChangeDefenseTeamView.as_view(),
+        name="change_defense_team",
+    ),
     path(r"api/player/usebucket", PlayerUseBucketView.as_view(), name="usebucket"),
     path(r"api/leaderboard", AllPlayersView.as_view(), name="leaderboard"),
     path(r"api/attacklist", AllPlayersForAttackView.as_view(), name="attacklist"),

@@ -101,6 +101,12 @@ export class AviaryComponent implements OnInit {
       this.sumTeamBShield = this.sumValueOfPigeons(this.teamBPigeons, 'shield')
     })
   }
+  setDefenseTeam(){
+    this.pigeonService.postSetDefenseTeam().then((response)=>{
+      console.log(response)
+      this.player = response.player
+    })
+  }
 
   sumValueOfPigeons(pigeonList: Pigeon[], valueToSum: string){
     const defaultValue = 0
@@ -113,7 +119,8 @@ export class AviaryComponent implements OnInit {
   }
 
   sellPigeon(pigeon: Pigeon) {
-    this.pigeonService.postSellPigeon(pigeon.id).then(() => {
+    this.pigeonService.postSellPigeon(pigeon.id).then((response) => {
+      this.player = response.user.player
       const index = this.pigeons.indexOf(pigeon);
       this.pigeons.splice(index, 1)
     })

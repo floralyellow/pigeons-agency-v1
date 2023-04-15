@@ -34,7 +34,7 @@
       <div class="toggle-defense-team">PVP defense team :
         <label class="switch">
           <input
-            type="checkbox"
+            type="checkbox" (click)="setDefenseTeam()" [checked]="player.defense_team === 'B'"
           />
           <span class="slider round has-background-primary"> </span>
         </label>
