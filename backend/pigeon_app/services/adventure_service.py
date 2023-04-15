@@ -8,7 +8,6 @@ from ..models import Adventure, AdventureAttack, PvePigeon, TR_Lvl_info
 from ..utils.commons import (
     ADVENTURE_RATIO_REWARDS,
     ATTACK_VARIANCE,
-    LOST_DROPPINGS_ADVENTURE_RATIO,
     get_pigeon_team,
     get_total_score,
 )
@@ -151,20 +150,15 @@ def try_adventure(user, attack_team: str):
         adventure_attack.save()
 
         current_adventure.nb_tries += 1
-        max_droppings = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_droppings
 
         if is_victory:
+            max_droppings = TR_Lvl_info.objects.get(lvl=user.player.lvl).max_droppings
             current_adventure.is_success = True
             current_adventure.completed_at = datetime.now(timezone.utc)
             user.player.droppings = min(
                 user.player.droppings + current_adventure.reward_droppings, max_droppings
             )
-        else:
-            user.player.droppings = max(
-                user.player.droppings
-                - int(current_adventure.reward_droppings * LOST_DROPPINGS_ADVENTURE_RATIO),
-                0,
-            )
+
         user.player.save()
         current_adventure.save()
 
