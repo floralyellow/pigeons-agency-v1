@@ -1,15 +1,46 @@
-<div class="container">
-  <div class="select">
-    <select (change)="selectFilter($event.target.value)">
-      <<ng-container 
-      *ngFor="let sortValue of possibleEnum | keyvalue" >
-        <option 
-        [selected]="sortValue.value === 'default'"
-        [value]="sortValue.key">
-          Sort by {{sortValue.value}}
-        </option>
-      </ng-container>
-    </select>
+<div class="container" *ngIf="player">
+  <div class="columns">
+    <div class="column">
+      Current <fa-icon [icon]="faFeatherAlt"></fa-icon> : 
+      {{player.feathers}}/{{level.max_feathers}}<br>
+      <progress
+        [ngClass]="player.feathers <  level.max_feathers ? 'is-primary': 'is-danger'"
+        class="progress"
+        [value]="player.feathers"
+        [max]="level.max_feathers"
+      ></progress>
+      Team A : 
+        {{sumTeamAAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
+        {{sumTeamAMagic}} <fa-icon [icon]="faHatWizard"></fa-icon> 
+        {{sumTeamAShield}} <fa-icon [icon]="faShieldAlt"></fa-icon> <br>
+      Team B : 
+      {{sumTeamBAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
+      {{sumTeamBMagic}} <fa-icon [icon]="faHatWizard"></fa-icon> 
+      {{sumTeamBShield}} <fa-icon [icon]="faShieldAlt"></fa-icon>
+    </div>
+    <div class="column">
+      <div class="select">
+        <select (change)="selectFilter($event.target.value)">
+          <ng-container 
+          *ngFor="let sortValue of selectOrderValues" >
+            <option 
+            [selected]="sortValue.key === 'default'"
+            [value]="sortValue.key">
+              {{sortValue.value}}
+            </option>
+          </ng-container>
+        </select>
+      </div><br><br>
+      <div class="toggle-defense-team">PVP defense team :
+        <label class="switch">
+          <input
+            type="checkbox"
+          />
+          <span class="slider round has-background-primary"> </span>
+        </label>
+        
+      </div>
+    </div>
   </div>
   <div class="grid-columns" *ngIf="pigeons">
     <app-pigeon-card *ngFor="let pigeon of pigeons | aviarySort:sortBy" [pigeon]="pigeon" (sellPigeonEvent)="sellPigeon($event)"

@@ -1,10 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {  Player } from 'src/app/core/models';
+import { Level, Player } from 'src/app/core/models';
 import { Aviary } from 'src/app/core/models/aviary';
 import { Pigeon } from 'src/app/core/models/pigeon';
 import { ExpeditionsService } from 'src/app/core/services';
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faPlus, 
+  faMinus, 
+  faHatWizard,
+  faFeatherAlt,
+  faShieldAlt,
+  faFistRaised
+} from '@fortawesome/free-solid-svg-icons';
 import { SortEnum } from 'src/app/core/models/sort-enum';
+import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-aviary',
@@ -14,63 +23,141 @@ import { SortEnum } from 'src/app/core/models/sort-enum';
 export class AviaryComponent implements OnInit {
   faPlus = faPlus
   faMinus = faMinus
+  faHatWizard = faHatWizard
+  faShieldAlt = faShieldAlt
+  faFistRaised = faFistRaised
+  faFeatherAlt = faFeatherAlt;
   pigeons: Pigeon[];
+  teamAPigeons: Pigeon[];
+  teamBPigeons: Pigeon[];
   player: Player;
   nbInTeamA = 0;
   nbInTeamB = 0;
-  possibleEnum = SortEnum;
-  sortBy : SortEnum
+  sumTeamAAttack : number = 0;
+  sumTeamBAttack : number = 0;
+  sumTeamAMagic : number = 0;
+  sumTeamBMagic : number = 0;
+  sumTeamAShield : number = 0;
+  sumTeamBShield : number = 0;
+  selectOrderValues = [
+    {
+      key : 'default',
+      value : SortEnum.default
+    },
+    {
+      key : 'luckAndLevel',
+      value : SortEnum.luckAndLevel
+    },
+    {
+      key : 'attack',
+      value : SortEnum.attack
+    },
+    {
+      key : 'magic',
+      value : SortEnum.magic
+    },
+    {
+      key : 'shield',
+      value : SortEnum.shield
+    },
+    {
+      key : 'feathers',
+      value : SortEnum.feathers
+    },
+    {
+      key : 'team_a',
+      value : SortEnum.team_a
+    },
+    {
+      key : 'team_b',
+      value : SortEnum.team_b
+    },
+    {
+      key : 'droppings',
+      value : SortEnum.droppings
+    }
+  ]
+  sortBy: SortEnum
+  levelList: Level[] = (lvlInfo as any).default;
+  level : Level;
 
   constructor(private pigeonService: ExpeditionsService) {
-    pigeonService.getAviary().then((value : Aviary) => {
-      this.pigeons = value.pigeons.sort((a,b)=>b.id - a.id);
-      this.player = value.user.player;
-      this.nbInTeamA = this.pigeons.filter((pigeonInTab)=>pigeonInTab.is_in_team_A === true).length;
-      this.nbInTeamB = this.pigeons.filter((pigeonInTab)=>pigeonInTab.is_in_team_B === true).length;
-    })
-   }
+  }
 
   ngOnInit(): void {
-  }
-
-  sellPigeon(pigeon : Pigeon){
-    this.pigeonService.postSellPigeon(pigeon.id).then((value : Pigeon) => {
-      const index = this.pigeons.indexOf(pigeon);
-      this.pigeons.splice(index,1)
+    this.pigeonService.getAviary().then((value: Aviary) => {
+      this.pigeons = value.pigeons.sort((a, b) => b.id - a.id);
+      this.player = value.user.player;
+      this.level = this.levelList[this.player.lvl - 1]
+      this.teamAPigeons = this.pigeons.filter((pigeonInTab) => pigeonInTab.is_in_team_A)
+      this.teamBPigeons = this.pigeons.filter((pigeonInTab) => pigeonInTab.is_in_team_B)
+      this.nbInTeamA = this.teamAPigeons.length;
+      this.nbInTeamB = this.teamBPigeons.length;
+      this.sumTeamAAttack = this.sumValueOfPigeons(this.teamAPigeons, 'phys_atk')
+      this.sumTeamBAttack = this.sumValueOfPigeons(this.teamBPigeons, 'phys_atk')
+      this.sumTeamAMagic = this.sumValueOfPigeons(this.teamAPigeons, 'magic_atk')
+      this.sumTeamBMagic = this.sumValueOfPigeons(this.teamBPigeons, 'magic_atk')
+      this.sumTeamAShield = this.sumValueOfPigeons(this.teamAPigeons, 'shield')
+      this.sumTeamBShield = this.sumValueOfPigeons(this.teamBPigeons, 'shield')
     })
   }
 
-  openCard(pigeon : Pigeon){
-    this.pigeonService.postOpenCard(pigeon.id).then((value : Pigeon) => {
+  sumValueOfPigeons(pigeonList: Pigeon[], valueToSum: string){
+    const defaultValue = 0
+    return pigeonList
+    .map(pigeons=>pigeons[valueToSum])
+    .reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      defaultValue
+    );
+  }
+
+  sellPigeon(pigeon: Pigeon) {
+    this.pigeonService.postSellPigeon(pigeon.id).then(() => {
+      const index = this.pigeons.indexOf(pigeon);
+      this.pigeons.splice(index, 1)
+    })
+  }
+
+  openCard(pigeon: Pigeon) {
+    this.pigeonService.postOpenCard(pigeon.id).then((value: Pigeon) => {
       const index = this.pigeons.indexOf(pigeon);
       this.pigeons[index] = value
     })
   }
 
-  selectFilter(value: string){
+  selectFilter(value: string) {
     this.sortBy = SortEnum[value]
   }
 
-  toggleTeam(pigeon : Pigeon, team: 'A'|'B'){
+  toggleTeam(pigeon: Pigeon, team: 'A' | 'B') {
     const index = this.pigeons.indexOf(pigeon);
-    if(team === 'A') {
-      this.pigeonService.toggleTeam(pigeon.id,'A').then((value : Pigeon) => {
+    if (team === 'A') {
+      this.pigeonService.toggleTeam(pigeon.id, 'A').then((value: Pigeon) => {
         this.pigeons[index] = value;
-        if(value.is_in_team_A){
-          this.nbInTeamA ++;
+        if (value.is_in_team_A) {
+          this.nbInTeamA++;
         } else {
-          this.nbInTeamA --;
+          this.nbInTeamA--;
         }
+       this.teamAPigeons = this.pigeons.filter((pigeonInTab) => pigeonInTab.is_in_team_A)
+       this.sumTeamAAttack = this.sumValueOfPigeons(this.teamAPigeons, 'phys_atk')
+       this.sumTeamAMagic = this.sumValueOfPigeons(this.teamAPigeons, 'magic_atk')
+       this.sumTeamAShield = this.sumValueOfPigeons(this.teamAPigeons, 'shield')
       })
     }
-    else{
-      this.pigeonService.toggleTeam(pigeon.id,'B').then((value : Pigeon) => {
+    else {
+      this.pigeonService.toggleTeam(pigeon.id, 'B').then((value: Pigeon) => {
         this.pigeons[index] = value;
-        if(value.is_in_team_B){
-          this.nbInTeamB ++;
+        if (value.is_in_team_B) {
+          this.nbInTeamB++;
         } else {
-          this.nbInTeamB --;
+          this.nbInTeamB--;
         }
+        this.teamBPigeons = this.pigeons.filter((pigeonInTab) => pigeonInTab.is_in_team_B)
+        this.sumTeamBAttack = this.sumValueOfPigeons(this.teamBPigeons, 'phys_atk')
+        this.sumTeamBMagic = this.sumValueOfPigeons(this.teamBPigeons, 'magic_atk')
+        this.sumTeamBShield = this.sumValueOfPigeons(this.teamBPigeons, 'shield')
       })
     }
   }

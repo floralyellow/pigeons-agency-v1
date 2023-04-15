@@ -9,7 +9,7 @@ import { GlobalInfo } from 'src/app/core/models/global-info';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  player : GlobalInfo; 
+  globalInfo : GlobalInfo; 
   levelList: Level[] = (lvlInfo as any).default;
   level:Level;
   timeout;
@@ -17,8 +17,8 @@ export class DashboardComponent implements OnInit {
   droppings : number;
   constructor(playerService : PlayerService ) {
     playerService.getPlayerInfo().then((value : GlobalInfo) => {
-      this.player = value;
-      this.level = this.levelList[this.player.user.player.lvl - 1]
+      this.globalInfo = value;
+      this.level = this.levelList[this.globalInfo.user.player.lvl - 1]
       this.seeds = value.user.player.seeds;
       this.droppings = value.user.player.droppings;
       this.getCurrentSeedsAndDroppings()
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
         }
         if (this.droppings < this.level.max_droppings) {
           this.droppings = Math.min(
-            this.droppings + Math.ceil(this.player.droppings_minute / 60),
+            this.droppings + Math.ceil(this.globalInfo.droppings_minute / 60),
             this.level.max_droppings);
         }
         this.getCurrentSeedsAndDroppings()
