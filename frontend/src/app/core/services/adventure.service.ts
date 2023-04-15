@@ -22,20 +22,24 @@ export class AdventureService {
   }
 
   postAttackCurrentAdventure(team : 'A'|'B'): Promise<{ 
-    globalInfo: GlobalInfo, 
+    droppings_minute: number, 
+    nb_pigeons: number, 
     adventure_attack: AdventureAttack,
     current_adventure: Adventure,
     next_adventure: Adventure,
-    next_adventure_pigeons: Pigeon[]
+    next_adventure_pigeons: Pigeon[],
+    user: User
   }> {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiBaseUrl + '/adventure', `a_team=${team}`)
         .subscribe((res: { 'message': { 
-          globalInfo: GlobalInfo, 
+          droppings_minute: number, 
+          nb_pigeons: number, 
           adventure_attack: AdventureAttack,
           current_adventure: Adventure,
           next_adventure: Adventure,
-          next_adventure_pigeons: Pigeon[]
+          next_adventure_pigeons: Pigeon[],
+          user: User, 
         }}) => {
           resolve(res.message)
         }, err => {

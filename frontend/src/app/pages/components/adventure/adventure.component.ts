@@ -58,7 +58,7 @@ export class AdventureComponent implements OnInit {
       this.adventureAttack = result.adventure_attack
       this.modalTitle = (result.adventure_attack.is_victory === true)? 
         `Victory ! You won ${this.currentAdventure.reward_droppings} droppings !` : 
-        'Defeat ! You lost ${this.currentAdventure.reward_droppings} droppings !'
+        `Defeat ! You lost ${this.currentAdventure.reward_droppings} droppings !`
       this.modalHeaderBackground = (result.adventure_attack.is_victory === true)? 
         'has-background-success' : 'has-background-danger';
       this.attackerBlocked = Math.min(
@@ -69,10 +69,7 @@ export class AdventureComponent implements OnInit {
         (this.adventureAttack.def_shield_value * this.adventureAttack.def_shield_blocs),
         this.adventureAttack.atk_tot_phys 
       )
-      this.user = result.globalInfo.user
-      this.currentDroppingsMinute = result.globalInfo.droppings_minute
-      this.currentDroppings = this.user.player.droppings
-      this.getCurrentDroppings()
+      this.user = result.user
     })
   }
 
