@@ -1,11 +1,11 @@
 <div class="container" *ngIf="user">
   <div class="show-droppings">
     <p>Level {{currentAdventure.lvl}} part {{currentAdventure.encounter}}</p>
-    Droppings : {{user.player.droppings}}/{{levelList[(user.player.lvl - 1)].max_droppings}}
+    Droppings : {{currentDroppings}}/{{levelList[(user.player.lvl - 1)].max_droppings}}
     <progress
-      [ngClass]="user.player.droppings <  levelList[(user.player.lvl - 1)].max_droppings ? 'is-primary': 'is-danger'"
+      [ngClass]="currentDroppings <  levelList[(user.player.lvl - 1)].max_droppings ? 'is-primary': 'is-danger'"
       class="progress "
-      [value]="user.player.droppings"
+      [value]="currentDroppings"
       [max]="levelList[(user.player.lvl - 1)].max_droppings"
     ></progress>
   </div>

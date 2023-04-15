@@ -45,6 +45,7 @@ export class AdventureComponent implements OnInit {
       this.user = result.user
       this.level = this.levelList[(this.user.player.lvl - 1)]
       this.currentDroppingsMinute = result.droppings_minute
+      this.currentDroppings = this.user.player.droppings
       this.getCurrentDroppings()
     })
   }
@@ -55,7 +56,9 @@ export class AdventureComponent implements OnInit {
       this.adventurePigeons = result.next_adventure_pigeons
       this.modal.toggleModal()
       this.adventureAttack = result.adventure_attack
-      this.modalTitle = (result.adventure_attack.is_victory === true)? 'Victory !' : 'Defeat !'
+      this.modalTitle = (result.adventure_attack.is_victory === true)? 
+        `Victory ! You won ${this.currentAdventure.reward_droppings} droppings !` : 
+        'Defeat ! You lost ${this.currentAdventure.reward_droppings} droppings !'
       this.modalHeaderBackground = (result.adventure_attack.is_victory === true)? 
         'has-background-success' : 'has-background-danger';
       this.attackerBlocked = Math.min(
@@ -68,16 +71,17 @@ export class AdventureComponent implements OnInit {
       )
       this.user = result.globalInfo.user
       this.currentDroppingsMinute = result.globalInfo.droppings_minute
+      this.currentDroppings = this.user.player.droppings
       this.getCurrentDroppings()
     })
   }
 
   getCurrentDroppings() {
     (this.timeout !== undefined) ? clearTimeout(this.timeout) : null;
-    if (this.user.player.droppings < this.level.max_droppings) {
+    if (this.currentDroppings < this.level.max_droppings) {
       this.timeout = setTimeout(() => {
         this.currentDroppings = Math.min(
-          this.user.player.droppings + Math.round(this.currentDroppingsMinute / 60), //missing dropping minute in data
+          (this.currentDroppings + Math.round(this.currentDroppingsMinute / 60)),
           this.level.max_droppings);
         this.getCurrentDroppings()
       }, 1000);

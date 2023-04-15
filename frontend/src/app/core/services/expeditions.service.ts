@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Expedition } from '../models';
+import { Expedition, User } from '../models';
 import { Aviary } from '../models/aviary';
 import { Pigeon } from '../models/pigeon';
 
@@ -41,11 +41,21 @@ export class ExpeditionsService {
         });
     });
   }
-  postSellPigeon(pigeonId: number): Promise<Pigeon> {
+  postSellPigeon(pigeonId: number): Promise<{user :User, pigeon :Pigeon}> {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiBaseUrl + '/pigeons/sell', `p_id=${pigeonId}`)
-        .subscribe((res: { 'message': Pigeon }) => {
-          resolve(res.message)
+        .subscribe((res: {user : User,pigeon: Pigeon }) => {
+          resolve(res)
+        }, err => {
+          reject(err);
+        });
+    });
+  }
+  postSetDefenseTeam(): Promise<User> {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.apiBaseUrl + '/player/changedefenseteam', ``)
+        .subscribe((res: {'message' : {user :User} }) => {
+          resolve(res.message.user)
         }, err => {
           reject(err);
         });
