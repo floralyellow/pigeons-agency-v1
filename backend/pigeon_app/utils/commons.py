@@ -1,13 +1,13 @@
 from ..models import Pigeon
 
-ATTACK_VARIANCE = 7
+ATTACK_VARIANCE = 6
 
 DELAY_SECONDS_BETWEEN_ATTACKS = 2 * 60  # 2 min
 
 PROTECTED_UNTIL_MINUTES = 20  # 20 min
 
 # Ratio of droppings needed to use bucket (compared to max droppings)
-NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO = 0.25
+NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO = 0.26
 
 # Ratio of droppings won in an adventure (compared to max droppings)
 ADVENTURE_RATIO_REWARDS = 0.14
