@@ -2,10 +2,11 @@ import random
 from datetime import datetime, timedelta, timezone
 from typing import Any, Tuple
 
+from django.contrib.auth.models import User
 from django.db import transaction
 
 from ..exceptions.custom_exceptions import ServiceException
-from ..models import Attack, AttackPigeon, Player
+from ..models import Attack, AttackPigeon
 from ..models.attack import AttackSerializer
 from ..models.tr_lvl_info import TR_Lvl_info
 from ..services import update_service
@@ -80,9 +81,9 @@ def _handle_attack_logic(
 def attack_player(user, target_id, attack_team):
 
     with transaction.atomic():
-        target = Player.objects.filter(id=target_id)
+        user_target = User.objects.filter(id=target_id)
 
-        if len(target) != 1 or target_id == user.id:
+        if len(user_target) != 1 or target_id == user.id:
             raise ServiceException("Error: Invalid id")
 
         if target_id == user.player.last_attacked:
@@ -96,7 +97,7 @@ def attack_player(user, target_id, attack_team):
         ):
             raise ServiceException("Error: Cant attack yet !")
 
-        defender = target[0]
+        defender = user_target[0].player
 
         if defender.protected_until > attack_datetime:
             raise ServiceException("Error: Cant attack this user yet !")
@@ -191,6 +192,9 @@ def attack_player(user, target_id, attack_team):
         current_attack.def_new_military_score = defender.military_score
         current_attack.save()
 
-        fighting_pigeons = AttackPigeon.objects.filter(attack=current_attack)
-
-    return AttackSerializer(current_attack).data, fighting_pigeons
+    return (
+        AttackSerializer(current_attack).data,
+        attacking_pigeons,
+        defending_pigeons,
+        user_target[0],
+    )
