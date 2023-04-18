@@ -10,7 +10,9 @@ PROTECTED_UNTIL_MINUTES = 20  # 20 min
 NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO = 0.25
 
 # Ratio of droppings won in an adventure (compared to max droppings)
-ADVENTURE_RATIO_REWARDS = 0.25
+ADVENTURE_RATIO_REWARDS = 0.14
+
+MAX_ADVENTURE_ENCOUNTER = 15
 
 
 def get_total_score(

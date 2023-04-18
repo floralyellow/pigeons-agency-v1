@@ -4,9 +4,11 @@ from typing import Any, Tuple
 
 from django.db import transaction
 
+from ..exceptions.custom_exceptions import ServiceException
 from ..models import Adventure, AdventureAttack, PvePigeon, TR_Lvl_info
 from ..utils.commons import (
     ADVENTURE_RATIO_REWARDS,
+    MAX_ADVENTURE_ENCOUNTER,
     get_pigeon_team,
     get_total_score,
 )
@@ -22,7 +24,9 @@ def get_adventure(user):
             .first()
         )
 
-        if last_adventure is None or last_adventure.is_success:
+        if last_adventure is None or (
+            last_adventure.is_success and last_adventure.encounter < MAX_ADVENTURE_ENCOUNTER
+        ):
             adventure = _create_adventure(user, last_adventure)
         else:
             adventure = last_adventure
@@ -50,11 +54,9 @@ def _create_adventure(user, last_adventure):
 
 
 def get_adventure_pigeons(lvl, encounter):
-    MAX_ENCOUNTER_LEVEL = 13
     pve_pigeons = None
-    encounter_level = min(encounter, MAX_ENCOUNTER_LEVEL)
 
-    pve_pigeons_stats = pve_pigeons_list.get(encounter_level)
+    pve_pigeons_stats = pve_pigeons_list.get(encounter)
 
     pigeon_qs_list = []
     for pigeon_stat in pve_pigeons_stats:
@@ -70,7 +72,8 @@ def get_adventure_pigeons(lvl, encounter):
 
 def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
     """
-    Handle main attack loop
+    Handle main attack loop.
+    No random for adventures
 
     Args:
         pigeons: queryset of pigeons
@@ -78,22 +81,10 @@ def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
     Returns:
         Totals of physical & magical attack, + opposing team shield blocs
     """
-    # init
-    # TODO refacto
-    total_phys = 0
-    total_magic = 0
-    total_shield_blocs_opposing_team = 0
-    for p in pigeons:
-        bonus_phys_atk = round(random.randint(-0, 0) * p.phys_atk / 100)
-        bonus_magic_atk = round(
-            random.randint(-0, 0) * p.magic_atk / 100
-        )
 
-        if p.phys_atk > 0:
-            total_phys += p.phys_atk + bonus_phys_atk
-            total_shield_blocs_opposing_team += 1
-
-        total_magic += p.magic_atk + bonus_magic_atk
+    total_phys = sum([p.phys_atk for p in pigeons])
+    total_magic = sum([p.magic_atk for p in pigeons])
+    total_shield_blocs_opposing_team = sum([1 if p.phys_atk > 0 else 0 for p in pigeons])
 
     return total_phys, total_magic, total_shield_blocs_opposing_team
 
@@ -103,6 +94,9 @@ def try_adventure(user, attack_team: str):
         attacking_pigeons = get_pigeon_team(user.id, attack_team)
 
         current_adventure = get_adventure(user)
+
+        if current_adventure.is_success:
+            raise ServiceException("Error: No more adventures for this level !")
 
         defending_pigeons = get_adventure_pigeons(
             current_adventure.lvl, current_adventure.encounter
