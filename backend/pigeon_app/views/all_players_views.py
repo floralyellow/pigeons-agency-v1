@@ -37,8 +37,6 @@ class AllPlayersForAttackView(APIView):
         update_service.update_user_values(request.user)
 
         users = attack_service.get_ordered_attack_list(request.user)
-        import logging
-        logging.info(users)
 
         return JsonResponse(
             {"message": {"user": UserSerializer(request.user).data, "users": users}}
