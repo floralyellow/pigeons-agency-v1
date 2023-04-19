@@ -8,6 +8,7 @@ from django.db import transaction
 from ..exceptions.custom_exceptions import ServiceException
 from ..models import Attack, AttackPigeon
 from ..models.attack import AttackSerializer
+from ..models.player import UserSerializer
 from ..models.tr_lvl_info import TR_Lvl_info
 from ..services import update_service
 from ..utils.commons import (
@@ -198,3 +199,28 @@ def attack_player(user, target_id, attack_team):
         defending_pigeons,
         user_target[0],
     )
+
+
+def get_ordered_attack_list(user):
+    """
+    return list of users in order :
+    - difference in lvl
+    - lvl desc
+    - difference in military score
+    - military score desc
+    """
+    users = UserSerializer(
+        User.objects.select_related("player")
+        .extra(
+            select={"offset_military": "abs(pigeon_app_player.military_score - %s)"},
+            select_params=(user.player.military_score,),
+        )
+        .extra(
+            select={"offset_lvl": "abs(pigeon_app_player.lvl - %s)"},
+            select_params=(user.player.lvl,),
+        )
+        .order_by("offset_lvl", "-player__lvl", "offset_military", "-player__military_score"),
+        many=True,
+    ).data
+
+    return users
