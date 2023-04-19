@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 
 from ..models.player import UserSerializer
-from ..services import update_service
+from ..services import attack_service, update_service
 
 
 class AllPlayersView(APIView):
@@ -36,19 +36,9 @@ class AllPlayersForAttackView(APIView):
 
         update_service.update_user_values(request.user)
 
-        users = UserSerializer(
-            User.objects.select_related("player")
-            .extra(
-                select={"offset_military": "abs(pigeon_app_player.military_score - %s)"},
-                select_params=(request.user.player.military_score,),
-            )
-            .extra(
-                select={"offset_lvl": "abs(pigeon_app_player.lvl - %s)"},
-                select_params=(request.user.player.lvl,),
-            )
-            .order_by("offset_lvl", "-player__lvl", "offset_military", "-player__military_score"),
-            many=True,
-        ).data
+        users = attack_service.get_ordered_attack_list(request.user)
+        import logging
+        logging.info(users)
 
         return JsonResponse(
             {"message": {"user": UserSerializer(request.user).data, "users": users}}

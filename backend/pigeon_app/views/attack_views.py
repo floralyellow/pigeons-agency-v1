@@ -20,12 +20,15 @@ class AttackView(APIView):
             request.user, int(target_id), attack_team
         )
 
+        users = attack_service.get_ordered_attack_list(request.user)
+
         message = {
             "user": UserSerializer(request.user).data,
             "attack": attack,
             "attack_pigeons": list(attack_pigeons.values()),
             "defend_pigeons": list(defend_pigeons.values()),
             "defender": UserSerializer(defender).data,
+            "users": users,
         }
 
         return JsonResponse({"message": message})
