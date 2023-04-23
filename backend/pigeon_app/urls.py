@@ -15,7 +15,9 @@ from .views.pigeons_views import (
     PigeonView,
 )
 from .views.player_views import (
+    PlayerChangeDarkModeView,
     PlayerChangeDefenseTeamView,
+    PlayerDoneTutorialView,
     PlayerLvlupView,
     PlayerUseBucketView,
     PlayerView,
@@ -44,6 +46,8 @@ urlpatterns = [
         PlayerChangeDefenseTeamView.as_view(),
         name="change_defense_team",
     ),
+    path(r"api/player/changedarkmode", PlayerChangeDarkModeView.as_view(), name="changedarkmode"),
+    path(r"api/player/dotutorial", PlayerDoneTutorialView.as_view(), name="dotutorial"),
     path(r"api/player/usebucket", PlayerUseBucketView.as_view(), name="usebucket"),
     path(r"api/leaderboard", AllPlayersView.as_view(), name="leaderboard"),
     path(r"api/attacklist", AllPlayersForAttackView.as_view(), name="attacklist"),

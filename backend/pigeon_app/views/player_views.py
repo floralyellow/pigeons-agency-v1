@@ -119,3 +119,29 @@ class PlayerChangeDefenseTeamView(APIView):
         player.save()
 
         return JsonResponse({"message": {"user": UserSerializer(request.user).data}})
+
+
+class PlayerChangeDarkModeView(APIView):
+    def post(self, request):
+        """ """
+
+        update_service.update_user_values(request.user)
+        player = request.user.player
+
+        player.is_dark_mode = not player.is_dark_mode
+        player.save()
+
+        return JsonResponse({"message": {"user": UserSerializer(request.user).data}})
+
+
+class PlayerDoneTutorialView(APIView):
+    def post(self, request):
+        """ """
+
+        update_service.update_user_values(request.user)
+        player = request.user.player
+
+        player.is_tutorial_done = True
+        player.save()
+
+        return JsonResponse({"message": {"user": UserSerializer(request.user).data}})

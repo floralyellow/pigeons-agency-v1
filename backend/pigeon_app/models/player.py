@@ -20,6 +20,8 @@ class Player(models.Model):
     time_last_attack = models.DateTimeField(auto_now_add=True, null=True)
     protected_until = models.DateTimeField(default=default_protected_time)
     defense_team = models.CharField(max_length=1, default="A")
+    is_dark_mode = models.BooleanField(default=False)
+    is_tutorial_done = models.BooleanField(default=False)
     last_connected_at = models.DateTimeField(auto_now_add=True, null=True)  # unused, to remove ?
     last_updated_at = models.DateTimeField(auto_now_add=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -39,6 +41,8 @@ class PlayerSerializer(serializers.ModelSerializer):
             "time_last_attack",
             "protected_until",
             "defense_team",
+            "is_dark_mode",
+            "is_tutorial_done",
         ]
 
 
