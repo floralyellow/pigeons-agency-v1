@@ -72,4 +72,8 @@
             </app-card>
         </div>
     </div>
+    <div class="notification is-danger" *ngIf="errorMessage">
+        <button class="delete"></button>
+        {{errorMessage}}
+    </div>
 </div>
