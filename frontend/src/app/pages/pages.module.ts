@@ -13,7 +13,8 @@ import {
   LeaderboardComponent,
   UpgradeComponent,
   DashboardComponent,
-  AdventureComponent
+  AdventureComponent,
+  AttackComponent
 } from './components/';
 import {
   ExpeditionsService,
@@ -21,7 +22,8 @@ import {
   UpgradeService,
   PlayerService,
   PigeonsService,
-  AdventureService
+  AdventureService,
+  AttackService
 } from '../core/services';
 
 @NgModule({
@@ -32,7 +34,8 @@ import {
     AviaryComponent,
     LeaderboardComponent,
     AdventureComponent,
-    UpgradeComponent
+    UpgradeComponent,
+    AttackComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +52,7 @@ import {
     LeaderboardService,
     PigeonsService,
     AdventureService,
+    AttackService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: []
