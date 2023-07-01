@@ -16,6 +16,7 @@ export class AuthentificationComponent implements OnInit {
     username:"",
     password:""
   }
+  errorMessage
   constructor(private authService : AuthService) { }
 
   ngOnInit(): void {
@@ -32,6 +33,8 @@ export class AuthentificationComponent implements OnInit {
       ({
         username : this.login.username,
         password : this.login.password
+      }).catch(e =>{
+        this.errorMessage = e.error.detail
       })
 
     }
