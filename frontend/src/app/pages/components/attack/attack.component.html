@@ -1,22 +1,66 @@
-<div class="container">
+<div class="container" *ngIf="users">
     <table class="table">
         <thead>
             <tr>
-                <td>Rank</td>
                 <td>Username</td>
                 <td>Level</td>
                 <td>Military score</td>
+                <td>Attack with</td>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let user of users; let index = index" [ngClass]="{
                 'has-background-primary-light': user.id === currentUser.id
             }">
-                <td>{{ index + 1}}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.player.lvl}}</td>
                 <td>{{user.player.military_score}}</td>
+                <td>
+                    <button class="button" *ngIf="user && user.id !== currentUser.id" (click)="attackButtonAction('A',user.id)">Team A</button>
+                    <button class="button" *ngIf="user && user.id !== currentUser.id" (click)="attackButtonAction('B',user.id)">Team B</button>
+                </td>
             </tr>
         </tbody>
     </table>
+    <app-modal
+      [title]="modalTitle"
+      [headerBackground]="modalHeaderBackground">
+      <div *ngIf="modal && attackResult">
+        <p class="is-size-4 has-text-centered">
+          {{attackResult.atk_tot_score}} VS {{attackResult.def_tot_score}}
+        </p>
+      </div>
+      <div class="columns is-multiline has-text-centered" *ngIf="modal && attackResult">
+        <div class="column is-half">
+          You
+        </div>
+        <div class="column is-half">
+          Target
+        </div>
+        <div class="column is-half">
+          <fa-icon [icon]="faFistRaised"></fa-icon>
+          {{attackResult.atk_tot_phys}}
+        </div>
+        <div class="column is-half">
+          <fa-icon [icon]="faFistRaised"></fa-icon>
+          {{attackResult.def_tot_phys}}
+        </div>
+        <div class="column is-half">
+          <fa-icon [icon]="faHatWizard"></fa-icon>
+          {{attackResult.atk_tot_magic}}
+        </div>
+        <div class="column is-half">
+          <fa-icon [icon]="faHatWizard"></fa-icon>
+          {{attackResult.def_tot_magic}}
+        </div>
+        <div class="column is-half">
+          <fa-icon [icon]="faShieldAlt"></fa-icon>
+          ({{attackResult.atk_shield_blocs}} block<span *ngIf="attackResult.atk_shield_blocs > 1">s</span>)
+        </div>
+        <div class="column is-half">
+          <fa-icon [icon]="faShieldAlt"></fa-icon>
+          ({{attackResult.def_shield_blocs}} block<span *ngIf="attackResult.def_shield_blocs > 1">s</span>)
+        </div>
+      </div>
+    </app-modal>
 </div>
