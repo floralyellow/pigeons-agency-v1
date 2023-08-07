@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Adventure, AdventureAttack, Level, Pigeon, User } from 'src/app/core/models';
 import { AdventureService } from 'src/app/core/services';
 import { ModalComponent } from 'src/app/ui';
@@ -15,7 +15,7 @@ import { GlobalInfo } from 'src/app/core/models/global-info';
   templateUrl: './adventure.component.html',
   styleUrls: ['./adventure.component.scss']
 })
-export class AdventureComponent implements OnInit {
+export class AdventureComponent implements OnInit , OnDestroy{
   faHatWizard = faHatWizard;
   faFistRaised = faFistRaised;
   faShieldAlt = faShieldAlt;
@@ -50,6 +50,10 @@ export class AdventureComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    clearTimeout(this.timeout)
+  }
+
   attackWithTeam(team : 'A'|'B') {
     this.adventureService.postAttackCurrentAdventure(team).then(result => {
       this.currentAdventure = result.next_adventure
@@ -77,7 +81,6 @@ export class AdventureComponent implements OnInit {
   }
 
   getCurrentDroppings() {
-    (this.timeout !== undefined) ? clearTimeout(this.timeout) : null;
     if (this.currentDroppings < this.level.max_droppings) {
       this.timeout = setTimeout(() => {
         this.currentDroppings = Math.min(

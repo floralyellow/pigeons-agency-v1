@@ -52,6 +52,7 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
   ngOnDestroy(): void {
+    clearTimeout(this.timeout)
   }
 
   buyPigeon(level: number, type: number) {
