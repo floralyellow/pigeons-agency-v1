@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .views.adventure_views import AdventureView
 from .views.all_players_views import AllPlayersForAttackView, AllPlayersView
-from .views.attack_views import AttackView
+from .views.attack_views import AttackView,AttackMessagesView
 from .views.pigeons_views import (
     ExpeditionView,
     PigeonActivateView,
@@ -39,6 +39,8 @@ urlpatterns = [
     path(r"api/pigeons/teama", PigeonTeamAView.as_view(), name="set_in_team_A"),
     path(r"api/pigeons/teamb", PigeonTeamBView.as_view(), name="set_in_team_B"),
     path(r"api/attack", AttackView.as_view(), name="attack"),
+    path(r"api/attackmessages", AttackMessagesView.as_view(), name="attackmessages"),
+
     path(r"api/player/", PlayerView.as_view(), name="player"),
     path(r"api/player/lvlup", PlayerLvlupView.as_view(), name="lvl_up"),
     path(
