@@ -1,11 +1,50 @@
-:host{
-    ::ng-deep{
+:host {
+    ::ng-deep {
         .columns:last-child {
-            margin-bottom: 0!important;
+            margin-bottom: 0 !important;
         }
     }
 }
-.columns.is-mobile .is-one-quarter{
+
+.columns.is-mobile .is-one-quarter {
     padding: 10px 5px;
     width: 24%;
+}
+
+#grow {
+    -moz-transition: height .5s;
+    -ms-transition: height .5s;
+    -o-transition: height .5s;
+    -webkit-transition: height .5s;
+    transition: height .5s;
+    height: 0;
+    overflow: hidden;
+}
+
+.card {
+    padding: 10px;
+    p{
+        font-weight: bold;
+        cursor: pointer;
+    }
+    p::after{
+        border: 3px solid black;
+        border-radius: 2px;
+        border-right: 0;
+        border-top: 0;
+        content: " ";
+        display: block;
+        height: 0.625em;
+        margin-top: -0.4375em;
+        pointer-events: none;
+        position: absolute;
+        top: 25px;
+        right: 20px;
+        transform: rotate(-45deg);
+        transform-origin: center;
+        width: 0.625em;
+    }
+    .measuringWrapper{
+        padding: 0px 10px;
+    }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -15,14 +15,14 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-import { AuthService } from 'src/app/core/services';
+import { AuthService, PlayerService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent {
   darkMode = false;
   faCrow = faCrow;
   faSignOutAlt = faSignOutAlt;
@@ -35,12 +35,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   faArrowAltCircleUp = faArrowAltCircleUp;
   faEllipsisH = faEllipsisH;
   faUserAlt = faUserAlt;
-  constructor(private authService: AuthService, public router: Router) { }
+  constructor(private authService: AuthService, public router: Router, private playerService : PlayerService) { }
 
-  ngOnInit(): void {
-  }
-  ngAfterViewInit() {
-  }
   changeStyleMode(isDarkMode: any) {
     this.darkMode = isDarkMode;
     const body = document.getElementById('body');

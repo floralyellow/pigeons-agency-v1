@@ -4,6 +4,7 @@ import { Expedition, Pigeon } from 'src/app/core/models';
 import { ExpeditionsService } from 'src/app/core/services';
 import * as expeditionInfo from 'src/assets/jsons/tr_expedition.json';
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
+
 import {
   faHatWizard,
   faQuestion,
@@ -38,19 +39,29 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
   seeds: number;
   timeout;
   pigeonType = [faFistRaised, faHatWizard, faShieldAlt, faQuestion]
+  top : number
+  check = 1
+  listBelowPlayerLevel
+  listHigherThanPlayerLevel
+  visible = false
   constructor(private expeditionService: ExpeditionsService) {
-    expeditionService.getExpeditionInfo().then((value: Expedition) => {
-      this.expeditions = value.expeditions;
-      this.info = value;
-      this.player = value.user.player;
-      this.level = this.levelList[this.player.lvl - 1]
-      this.seeds = this.player.seeds;
-      this.getCurrentSeeds();
+   
+  }
+  async ngOnInit() {
+    this.info = await this.expeditionService.getExpeditionInfo();
+    this.expeditions = this.info.expeditions;
+    this.player = this.info.user.player;
+    this.level = this.levelList[this.player.lvl - 1]
+    this.seeds = this.player.seeds;
+    this.getCurrentSeeds();
+    this.listBelowPlayerLevel = this.expeditionList.filter((x,index)=>{
+      return index < (this.player.lvl - 1)
+    })
+    this.listHigherThanPlayerLevel = this.expeditionList.filter((x,index)=>{
+      return index >= (this.player.lvl - 1)
     })
   }
 
-  ngOnInit(): void {
-  }
   ngOnDestroy(): void {
     clearTimeout(this.timeout)
   }
@@ -66,6 +77,16 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
       }
     })
   }
+  growDiv() {
+    let growDiv = document.getElementById('grow');
+    if (growDiv.clientHeight) {
+      growDiv.style.height = '0';
+    } else {
+      var wrapper = document.querySelector('.measuringWrapper');
+      growDiv.style.height = (wrapper.clientHeight + 20) + "px";
+    }
+  }
+
   getCurrentSeeds() {
     (this.timeout !== undefined) ? clearTimeout(this.timeout) : null;
     if (this.seeds < this.level.max_seeds) {
