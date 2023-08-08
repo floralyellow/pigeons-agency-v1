@@ -30,19 +30,18 @@
         <!--  expedition list  -->
         <div class="column">
 
-            <div class="card">
+            <div class="card" *ngIf="player.lvl > 1">
                 <p (click)="growDiv()" id="more-button">
                     Previous expeditions
                 </p>
-
-                <div id='grow' *ngIf="player.lvl > 1">
+                <div id="grow">
                     <div class='measuringWrapper'>
-                        <app-expedition-card *ngFor="let expedition of listBelowPlayerLevel; let index = index" [info]="expedition">
+                        <app-expedition-card *ngFor="let expedition of listBelowPlayerLevel;" [info]="expedition">
                             <div class="column">
                                 <div class="columns is-mobile">
                                     <button *ngFor="let type of pigeonType; let indexType = index"
-                                        (click)="buyPigeon(index + 1, indexType + 1)" class="column is-one-quarter
-                                            m-auto button " [class.is-primary]="player.lvl >= (index + 1)"
+                                        (click)="buyPigeon(expedition.lvl, indexType + 1)" class="column is-one-quarter
+                                            m-auto button " [class.is-primary]="player.lvl >= expedition.lvl"
                                         [class.is-danger]="player.lvl < (expedition.lvl)" [disabled]="player.lvl < (expedition.lvl) ||
                                             seeds < expedition.seeds ||
                                             (expeditions.length + info.nb_pigeons) === level.max_pigeons">
@@ -57,12 +56,12 @@
             </div>
 
 
-            <app-expedition-card *ngFor="let expedition of listHigherThanPlayerLevel; let index = index" [info]="expedition">
+            <app-expedition-card *ngFor="let expedition of listHigherThanPlayerLevel" [info]="expedition">
                 <div class="column">
                     <div class="columns is-mobile">
                         <button *ngFor="let type of pigeonType; let indexType = index"
-                            (click)="buyPigeon(index + 1, indexType + 1)" class="column is-one-quarter
-                                m-auto button " [class.is-primary]="player.lvl >= (index + 1)"
+                            (click)="buyPigeon(expedition.lvl, indexType + 1)" class="column is-one-quarter
+                                m-auto button " [class.is-primary]="player.lvl >= expedition.lvl"
                             [class.is-danger]="player.lvl < (expedition.lvl)" [disabled]="player.lvl < (expedition.lvl) ||
                                 seeds < expedition.seeds ||
                                 (expeditions.length + info.nb_pigeons) === level.max_pigeons">
