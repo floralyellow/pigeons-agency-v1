@@ -1,0 +1,1 @@
+export {AttackComponent} from './attack.component'

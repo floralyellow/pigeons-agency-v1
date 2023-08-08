@@ -8,5 +8,7 @@ export class Player {
   time_last_attack: Date
   defense_team: 'A' | 'B'
   protected_until: Date
+  is_dark_mode :boolean
+  is_tutorial_done : boolean
 }
 

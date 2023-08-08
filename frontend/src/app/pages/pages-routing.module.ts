@@ -6,7 +6,8 @@ import {
   AviaryComponent,
   DashboardComponent,
   LeaderboardComponent,
-  UpgradeComponent
+  UpgradeComponent,
+  AttackComponent
 } from './components';
 import { PagesComponent } from './pages.component';
 
@@ -29,6 +30,10 @@ const routes: Routes = [
           {
             path: 'adventure',
             component: AdventureComponent,
+          },
+          {
+            path: 'attack',
+            component: AttackComponent,
           },
           {
             path: 'aviary',

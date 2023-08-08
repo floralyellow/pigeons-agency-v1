@@ -1,0 +1,1 @@
+export {AttackPigeonComponent} from './attack-pigeon.component'

@@ -1,55 +1,73 @@
 <div class="container" *ngIf="player && info">
     <div class="columns">
+        <!--  expedition cooldowns  -->
         <div class="column is-one-third">
             <div class="box my-2">
                 <article>
                     <p>Seeds : {{seeds}}/{{level.max_seeds}}</p>
-                    <progress 
-                        class="progress is-primary" 
-                        [value]="seeds" 
-                        [max]="level.max_seeds">
+                    <progress class="progress is-primary" [value]="seeds" [max]="level.max_seeds">
                     </progress>
-                    <p>Aviary : 
+                    <p>Aviary :
                         <span [class.has-text-danger]="info.nb_pigeons + expeditions.length === level.max_pigeons">
-                            <fa-icon 
-                                [icon]="faExclamationTriangle" 
+                            <fa-icon [icon]="faExclamationTriangle"
                                 *ngIf="info.nb_pigeons + expeditions.length === level.max_pigeons">
                             </fa-icon>
                             (
-                                {{(info.nb_pigeons)}} <fa-icon [icon]="faBird"></fa-icon>
-                                + {{expeditions.length}} <fa-icon [icon]="faEgg"></fa-icon>
-                            )/{{level.max_pigeons}}</span></p>
-                    <progress 
-                        class="progress" 
+                            {{(info.nb_pigeons)}} <fa-icon [icon]="faBird"></fa-icon>
+                            + {{expeditions.length}} <fa-icon [icon]="faEgg"></fa-icon>
+                            )/{{level.max_pigeons}}</span>
+                    </p>
+                    <progress class="progress"
                         [ngClass]="info.nb_pigeons + expeditions.length <  level.max_pigeons ? 'is-primary': 'is-danger'"
-                        [value]="(info.nb_pigeons + expeditions.length)" 
-                        [max]="level.max_pigeons">
+                        [value]="(info.nb_pigeons + expeditions.length)" [max]="level.max_pigeons">
                     </progress>
                 </article>
             </div>
             <p>Current Expedition(s) :</p>
-            <app-expedition-cooldown 
-                *ngFor="let pigeon of expeditions" 
-                [pigeon]="pigeon">
+            <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon">
             </app-expedition-cooldown>
         </div>
+        <!--  expedition list  -->
         <div class="column">
-            <app-expedition-card 
-                *ngFor="let expedition of expeditionList; let index = index" 
-                [info]="expedition">
+
+            <div class="card">
+                <p (click)="growDiv()" id="more-button">
+                    Previous expeditions
+                </p>
+
+                <div id='grow' *ngIf="player.lvl > 1">
+                    <div class='measuringWrapper'>
+                        <app-expedition-card *ngFor="let expedition of listBelowPlayerLevel; let index = index" [info]="expedition">
+                            <div class="column">
+                                <div class="columns is-mobile">
+                                    <button *ngFor="let type of pigeonType; let indexType = index"
+                                        (click)="buyPigeon(index + 1, indexType + 1)" class="column is-one-quarter
+                                            m-auto button " [class.is-primary]="player.lvl >= (index + 1)"
+                                        [class.is-danger]="player.lvl < (expedition.lvl)" [disabled]="player.lvl < (expedition.lvl) ||
+                                            seeds < expedition.seeds ||
+                                            (expeditions.length + info.nb_pigeons) === level.max_pigeons">
+                                        Launch <fa-icon [icon]="type"></fa-icon><br>{{expedition.seeds}} <fa-icon
+                                            [icon]="faSeedling"></fa-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </app-expedition-card>
+                    </div>
+                </div>
+            </div>
+
+
+            <app-expedition-card *ngFor="let expedition of listHigherThanPlayerLevel; let index = index" [info]="expedition">
                 <div class="column">
                     <div class="columns is-mobile">
-                        <button 
-                            *ngFor="let type of pigeonType; let indexType = index"
-                            (click)="buyPigeon(index + 1, indexType + 1)" 
-                            class="column is-one-quarter
-                                m-auto button "
-                            [class.is-primary]="player.lvl >= (index + 1)"
-                            [class.is-danger]="player.lvl < (index + 1)"
-                            [disabled]="player.lvl < (index + 1) ||
+                        <button *ngFor="let type of pigeonType; let indexType = index"
+                            (click)="buyPigeon(index + 1, indexType + 1)" class="column is-one-quarter
+                                m-auto button " [class.is-primary]="player.lvl >= (index + 1)"
+                            [class.is-danger]="player.lvl < (expedition.lvl)" [disabled]="player.lvl < (expedition.lvl) ||
                                 seeds < expedition.seeds ||
                                 (expeditions.length + info.nb_pigeons) === level.max_pigeons">
-                            Launch <fa-icon [icon]="type"></fa-icon><br>{{expedition.seeds}} <fa-icon [icon]="faSeedling"></fa-icon>
+                            Launch <fa-icon [icon]="type"></fa-icon><br>{{expedition.seeds}} <fa-icon
+                                [icon]="faSeedling"></fa-icon>
                         </button>
                     </div>
                 </div>
@@ -57,4 +75,3 @@
         </div>
     </div>
 </div>
-    

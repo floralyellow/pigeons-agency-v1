@@ -3,6 +3,7 @@ import { NumberToArrayPipe, SecondToMinPipe, ShortNumberPipe } from '.';
 import { CommonModule } from '@angular/common';
 import { FilterNotSoldPigeonPipe } from './filter-not-sold-pigeon.pipe';
 import { AviarySortPipe } from './aviary-sort.pipe';
+import { DateToTimestampPipe } from './date-to-timestamp.pipe';
 @NgModule({
   declarations: [
     SecondToMinPipe,
@@ -10,6 +11,7 @@ import { AviarySortPipe } from './aviary-sort.pipe';
     ShortNumberPipe,
     FilterNotSoldPigeonPipe,
     AviarySortPipe,
+    DateToTimestampPipe,
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { AviarySortPipe } from './aviary-sort.pipe';
     ShortNumberPipe,
     FilterNotSoldPigeonPipe,
     AviarySortPipe,
+    DateToTimestampPipe,
   ],
 })
 export class PipesModule { }

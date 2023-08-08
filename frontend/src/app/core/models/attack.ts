@@ -1,0 +1,22 @@
+export interface Attack {
+    atk_new_military_score:number
+    atk_old_military_score:number
+    atk_shield_blocs:number
+    atk_shield_value:number
+    atk_tot_magic:number
+    atk_tot_phys:number
+    atk_tot_score:number
+    attacker:number
+    created_at:Date
+    def_new_military_score:number
+    def_old_military_score:number
+    def_shield_blocs:number
+    def_shield_value:number
+    def_tot_magic:number
+    def_tot_phys:number
+    def_tot_score:number
+    defender:number
+    id:number
+    stolen_droppings:number
+    winner_id:number
+}

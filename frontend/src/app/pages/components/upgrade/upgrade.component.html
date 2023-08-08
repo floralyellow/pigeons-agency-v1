@@ -4,9 +4,9 @@
             Level : {{playerInfo.user.player.lvl}}
         </h1>
     </div>
-    <div class="columns percent80">
+    <div class="columns percent80 has-text-centered">
         <div class="column">
-            Seeds : {{seeds|number: '1.0-0'}}/{{level.max_seeds}}<br>
+            Seeds ({{level.seeds_minute}}/min) : <br> {{seeds|number: '1.0-0'}}/{{level.max_seeds}}<br>
             <progress 
                 class="progress is-primary" 
                 [value]="seeds" 
@@ -14,7 +14,7 @@
             </progress>
         </div>
         <div class="column">
-            Droppings : {{droppings|number: '1.0-0'}}/{{level.max_droppings}}<br>
+            Droppings ({{playerInfo.droppings_minute}}/min) : <br> {{droppings|number: '1.0-0'}}/{{level.max_droppings}}<br>
             <progress 
                 class="progress is-primary" 
                 [value]="droppings" 
@@ -22,7 +22,7 @@
             </progress>
         </div>
         <div class="column">
-            Feathers : {{playerInfo.user.player.feathers}}/{{level.max_feathers}}<br>
+            Feathers : <br> {{playerInfo.user.player.feathers}}/{{level.max_feathers}}<br>
             <progress 
                 class="progress is-primary" 
                 [value]="playerInfo.user.player.feathers" 

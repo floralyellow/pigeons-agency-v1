@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {PlayerService} from 'src/app/core/services/player.service'
 import {Level} from 'src/app/core/models/level'
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
@@ -8,7 +8,7 @@ import { GlobalInfo } from 'src/app/core/models/global-info';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements  OnDestroy {
   globalInfo : GlobalInfo; 
   levelList: Level[] = (lvlInfo as any).default;
   level:Level;
@@ -25,12 +25,11 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  
+  ngOnDestroy(): void {
+    clearTimeout(this.timeout)
   }
 
   getCurrentSeedsAndDroppings(){
-    (this.timeout !== undefined)?clearTimeout(this.timeout):null;
     if(this.seeds < this.level.max_seeds || this.droppings < this.level.max_droppings){
       this.timeout = setTimeout(()=>{
         if (this.seeds < this.level.max_seeds) {

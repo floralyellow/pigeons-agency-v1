@@ -25,7 +25,7 @@
       <a [routerLink]="['expeditions']" class="navbar-item" (click)="toggle()">
         <span><fa-icon [icon]="faMapSigns"></fa-icon> Expeditions</span>
       </a>
-      <a class="navbar-item" (click)="toggle()">
+      <a [routerLink]="['attack']" class="navbar-item" (click)="toggle()">
         <span><fa-icon [icon]="faSkullCrossbones"></fa-icon> Attacks</span>
       </a>
       <a [routerLink]="['upgrade']" class="navbar-item" (click)="toggle()">

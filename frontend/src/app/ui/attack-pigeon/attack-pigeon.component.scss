@@ -1,0 +1,15 @@
+figure{
+    float: left;
+    overflow: hidden;
+    border-radius: 100px;
+    justify-self: center;
+    align-self: center;
+    img{
+        background-color: antiquewhite;
+        transform: scale(1.5) translate(-5px,5px);
+    }
+}
+app-pigeon-card-header{
+    justify-self: center;
+    align-self: center;
+}
