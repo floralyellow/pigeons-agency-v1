@@ -24,7 +24,7 @@
                 </article>
             </div>
             <p>Current Expedition(s) :</p>
-            <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon">
+            <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon" [expedition]="expeditionList[pigeon.lvl - 1]">
             </app-expedition-cooldown>
         </div>
         <!--  expedition list  -->
