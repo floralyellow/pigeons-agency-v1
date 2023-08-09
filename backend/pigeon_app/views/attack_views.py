@@ -1,12 +1,16 @@
 from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
+
 from rest_framework.views import APIView
 
-from ..models.player import UserSerializer
+from ..models.player import UserSerializer, User
 from ..models.attack import Attack, AttackSerializer
+from ..models.pigeon import Pigeon, PigeonSerializer
+
 
 from ..services import attack_service, update_service
 from ..utils.validators import InputValidator
-import logging
+from ..exceptions.custom_exceptions import ServiceException
 
 
 class AttackView(APIView):
@@ -36,22 +40,67 @@ class AttackView(APIView):
 
         return JsonResponse({"message": message})
     
+
 class AttackMessagesView(APIView):
     """
     Returns all attacks and defenses in which a player has been
     """
+
     def get(self, request):
         update_service.update_user_values(request.user)
 
         player = request.user.player
 
-        all_attacks = Attack.objects.filter(attacker_id=player.id) | Attack.objects.filter(defender_id=player.id)
+        all_attacks = Attack.objects.filter(attacker_id=player.id) | Attack.objects.filter(
+            defender_id=player.id
+        )
 
-        ordered_attacks = all_attacks.order_by('-created_at')
+        ordered_attacks = all_attacks.order_by("-created_at")
 
-        message = {
-            "attacks": AttackSerializer(ordered_attacks, many=True).data,
-        }
+        message = {"attacks": AttackSerializer(ordered_attacks, many=True).data}
 
         return JsonResponse({"message": message})
 
+
+class AttackMessageDetailsView(APIView):
+    """
+    Returns details for an attack or defense
+    """
+
+    def post(self, request):
+        update_service.update_user_values(request.user)
+
+        attack_id = InputValidator.get_key(request, "a_id")
+
+        player = request.user.player
+
+        all_player_attacks = Attack.objects.filter(attacker_id=player.id) | Attack.objects.filter(
+            defender_id=player.id
+        )
+
+        try:
+            selected_attack = all_player_attacks.get(id=attack_id)
+        except ObjectDoesNotExist:
+            raise ServiceException("Error: Invalid id !")
+
+        if selected_attack.attacker_id == player.id:
+            defender = User.objects.get(id=selected_attack.defender_id)
+        else:
+            defender = User.objects.get(id=selected_attack.attacker_id)
+
+        attack_pigeons = Pigeon.objects.filter(
+            attackpigeon__attack_id=selected_attack.id, attackpigeon__is_attacker=True
+        )
+        defend_pigeons = Pigeon.objects.filter(
+            attackpigeon__attack_id=selected_attack.id, attackpigeon__is_attacker=False
+        )
+
+        message = {
+            "user": UserSerializer(request.user).data,
+            "attack": AttackSerializer(selected_attack).data,
+            "attack_pigeons": PigeonSerializer(attack_pigeons, many=True).data,
+            "defend_pigeons": PigeonSerializer(defend_pigeons, many=True).data,
+            "defender": UserSerializer(defender).data,
+        }
+
+        return JsonResponse({"message": message})
