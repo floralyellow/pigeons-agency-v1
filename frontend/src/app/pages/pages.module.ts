@@ -14,7 +14,10 @@ import {
   UpgradeComponent,
   DashboardComponent,
   AdventureComponent,
-  AttackComponent
+  AttackComponent,
+  GlobalTutorialComponent,
+  ExpeditionAviaryTutorialComponent,
+  AttackTutorialComponent
 } from './components/';
 import {
   ExpeditionsService,
@@ -35,7 +38,10 @@ import {
     LeaderboardComponent,
     AdventureComponent,
     UpgradeComponent,
-    AttackComponent
+    AttackComponent,
+    GlobalTutorialComponent,
+    ExpeditionAviaryTutorialComponent,
+    AttackTutorialComponent
   ],
   imports: [
     CommonModule,
