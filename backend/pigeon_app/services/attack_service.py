@@ -220,10 +220,11 @@ def get_ordered_attack_list(user):
             select_params=(user.player.lvl,),
         )
         .extra(
-            select={"id_diff": "abs(pigeon_app_player.id - %s)"},
-            select_params=(user.player.id,),
+            select={"id_diff": "abs(pigeon_app_player.id - %s)"}, select_params=(user.player.id,)
         )
-        .order_by("offset_lvl", "-player__lvl", "offset_military", "-player__military_score","id_diff"),
+        .order_by(
+            "offset_lvl", "-player__lvl", "offset_military", "-player__military_score", "id_diff"
+        ),
         many=True,
     ).data
 
