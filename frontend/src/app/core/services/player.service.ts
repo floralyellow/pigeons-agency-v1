@@ -18,4 +18,24 @@ export class PlayerService {
         });
     });
   }
+  setDarkMode(): Promise<GlobalInfo> {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.apiBaseUrl + '/player/changedarkmode', ``)
+        .subscribe((res: { 'message': GlobalInfo }) => {
+          resolve(res.message)
+        }, err => {
+          reject(err);
+        });
+    });
+  }
+  isTutorialDone(): Promise<GlobalInfo> {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.apiBaseUrl + '/player/dotutorial', ``)
+        .subscribe((res: { 'message': GlobalInfo }) => {
+          resolve(res.message)
+        }, err => {
+          reject(err);
+        });
+    });
+  }
 }

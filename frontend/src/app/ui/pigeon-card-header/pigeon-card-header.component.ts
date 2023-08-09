@@ -19,6 +19,7 @@ import {
 })
 export class PigeonCardHeaderComponent implements OnInit {
   @Input() pigeon: Pigeon;
+  @Input() size: string;
 
   faStar = faStar;
 

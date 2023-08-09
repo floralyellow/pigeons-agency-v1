@@ -5,8 +5,8 @@
 >
   <div *ngIf="timeLeft > 0; else completed">
     <p>
-      Name<br />
-      Time left : {{ timeLeft }}/{{ duration }}
+      <span class="has-text-weight-bold">{{expedition.name}}</span><br />
+      Time left : {{ timeLeft|secondToMin }}/{{ duration|secondToMin }}
     </p>
     <progress
       class="progress is-primary"

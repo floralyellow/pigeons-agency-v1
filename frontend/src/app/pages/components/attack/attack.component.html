@@ -42,7 +42,7 @@
     <app-modal
       [title]="modalTitle"
       [headerBackground]="modalHeaderBackground">
-      <div class="columns is-multiline has-text-centered" *ngIf="modal && attackResult">
+      <div class="columns is-multiline is-mobile has-text-centered" *ngIf="modal && attackResult">
         <div class="column is-two-fifths pigeons">
           You <br>
           <app-attack-pigeon *ngFor="let attackPigeon of attackPigeons" [pigeon]="attackPigeon"></app-attack-pigeon>

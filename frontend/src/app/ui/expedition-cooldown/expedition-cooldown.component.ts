@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Expedition } from 'src/app/core/models';
 import { Pigeon } from 'src/app/core/models/pigeon';
 
 @Component({
@@ -8,6 +9,7 @@ import { Pigeon } from 'src/app/core/models/pigeon';
 })
 export class ExpeditionCooldownComponent implements OnInit, OnDestroy {
   @Input() pigeon: Pigeon;
+  @Input() expedition : Expedition;
   constructor() { }
   duration: number;
   timeLeft: number;

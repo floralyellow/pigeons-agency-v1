@@ -1,2 +1,7 @@
 <fa-icon class="mv-auto icon-pigeon-type" [icon]="pigeonType"></fa-icon>&nbsp;
-<fa-icon class="mv-auto stars" [icon]="faStar" *ngFor="let star of luckStar | numberToArray"></fa-icon>
+<ng-container *ngIf="size === 'small';else normal">
+    {{luckStar}} <fa-icon class="mv-auto stars" [icon]="faStar"></fa-icon>
+</ng-container>
+<ng-template #normal>
+    <fa-icon class="mv-auto stars" [icon]="faStar" *ngFor="let star of luckStar | numberToArray"></fa-icon>
+</ng-template>

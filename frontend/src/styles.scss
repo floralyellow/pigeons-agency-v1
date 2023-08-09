@@ -75,6 +75,12 @@ body.dark, body.dark > * {
     }
     background-color: $body-background-color;
     transition: background-color 0.3s ease-in-out;
+    .modal-card-head,.modal-card-foot{
+        border: 0;
+    }
+    .modal-card-body,.modal-card-foot{
+        background-color: #424242 !important;
+    }
 }
 
 body{
