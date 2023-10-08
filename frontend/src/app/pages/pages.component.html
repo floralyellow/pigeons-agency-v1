@@ -1,22 +1,21 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
-<fa-icon [icon]="faInfoCircle" (click)="openTutorial()"></fa-icon>
+<fa-icon
+  [icon]="faInfoCircle" (click)="openTutorial()"
+  [routerLink]="['',{ outlets: { tutorial: [currentPanel] } }]">
+</fa-icon>
 
 
 <app-modal
-[title]="'Hselp'"
+[title]="'Help'"
 [headerBackground]="'has-background-info'">
 <nav class="panel">
     <p class="panel-tabs">
-      <a [routerLink]="['',{ outlets: { tutorial: ['global-tutorial'] } }]" class="is-active">Global</a>
-      <a [routerLink]="['',{ outlets: { tutorial: ['expedition-aviary-tutorial'] } }]">Expedition</a>
-      <a [routerLink]="['',{ outlets: { tutorial: ['attack-tutorial'] } }]">Attack</a>
+      <a [routerLink]="['',{ outlets: { tutorial: ['global-tutorial'] } }]" [ngClass]="{'is-active' : currentPanel === 'global-tutorial'}">Global</a>
+      <a [routerLink]="['',{ outlets: { tutorial: ['expedition-aviary-tutorial'] } }]" [ngClass]="{'is-active' : currentPanel === 'expedition-aviary-tutorial'}">Expedition</a>
+      <a [routerLink]="['',{ outlets: { tutorial: ['attack-tutorial'] } }]" [ngClass]="{'is-active' : currentPanel === 'attack-tutorial'}">Attack</a>
       <a [routerLink]="['',{ outlets: { tutorial: ['expedition-aviary-tutorial'] } }]">Adventure</a>
-      <a [routerLink]="['',{ outlets: { tutorial: ['expedition-aviary-tutorial'] } }]">Event</a>
     </p>
-    <router-outlet name="tutorial">
-
-
-    </router-outlet>
+    <router-outlet name="tutorial"></router-outlet>
   </nav>
 </app-modal>

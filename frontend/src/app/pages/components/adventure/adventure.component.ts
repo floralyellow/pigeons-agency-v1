@@ -62,7 +62,7 @@ export class AdventureComponent implements OnInit , OnDestroy{
       this.adventureAttack = result.adventure_attack
       this.modalTitle = (result.adventure_attack.is_victory === true)? 
         `Victory ! You won ${this.currentAdventure.reward_droppings} droppings !` : 
-        'Defeat ! You lost ${this.currentAdventure.reward_droppings} droppings !'
+        'Defeat !'
       this.modalHeaderBackground = (result.adventure_attack.is_victory === true)? 
         'has-background-success' : 'has-background-danger';
       this.attackerBlocked = Math.min(
