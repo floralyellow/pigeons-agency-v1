@@ -76,19 +76,21 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
         + expedition.min_feathers
     )
 
-    SPECIAL_PIGEONS_MAPPING = {
-        1: {"name": "Drageon", "src": "drageon.png"},
-        2: {"name": "Firegeon", "src": "firegeon.png"},
-        3: {"name": "Pandgeon", "src": "pandgeon.png"},
-    }
-
     pigeon_name = p.name[0]  # only 1 per type/lvl now
     pigeon_src = p.src[0]
 
     # Small chance to get a custom skin for high luck pigeons
-    if luck_value >= 97:  # high legendary
-        get_special_pigeon = random.randint(1, 2) == 2  # 1 chance out of 2
-        if get_special_pigeon:
+    if expedition.lvl >= 5 and luck_value >= 98:  # high legendary
+
+        if luck_value == 98:
+            pigeon_name = "Pandgeon"
+            pigeon_src = "pandgeon.png"
+        elif luck_value > 98:
+            SPECIAL_PIGEONS_MAPPING = {
+                1: {"name": "Drageon", "src": "drageon.png"},
+                2: {"name": "Firegeon", "src": "firegeon.png"},
+                3: {"name": "Squelegeon", "src": "squelegeon.png"},
+            }
             pigeon_name = SPECIAL_PIGEONS_MAPPING[p.pigeon_type]["name"]
             pigeon_src = SPECIAL_PIGEONS_MAPPING[p.pigeon_type]["src"]
 
