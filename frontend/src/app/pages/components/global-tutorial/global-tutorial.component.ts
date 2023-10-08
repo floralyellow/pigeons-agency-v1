@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./global-tutorial.component.scss']
 })
 export class GlobalTutorialComponent {
-
+  test=[
+    {
+      src: "assets/pigeons/bombird_green.png",
+      description:"test 1"
+    },
+    {
+      src: "assets/pigeons/bombird_black.png",
+      description:"test 2"
+    }
+  ]
 }

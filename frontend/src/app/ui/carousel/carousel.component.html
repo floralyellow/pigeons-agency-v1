@@ -1,0 +1,10 @@
+<section *ngIf="listItem">
+    <div>
+        <fa-icon class="previous" [icon]="faArrowAltCircleLeft" (click)="previous()"></fa-icon>
+        <figure>
+            <img [src]="listItem[currentIndex].src">
+        </figure>
+        <p>{{listItem[currentIndex].description}}</p>
+        <fa-icon class="next" [icon]="faArrowAltCircleRight" (click)="next()"></fa-icon>
+    </div>
+</section>
