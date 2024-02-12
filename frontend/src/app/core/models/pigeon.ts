@@ -1,5 +1,5 @@
 
-export class Pigeon {
+export interface Pigeon {
   id: number
   player_id: number
   pigeon_type: number

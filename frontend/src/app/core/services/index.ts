@@ -6,3 +6,4 @@ export {LeaderboardService} from './leaderboard.service';
 export {PigeonsService} from './pigeons.service';
 export {AdventureService} from './adventure.service';
 export {AttackService} from './attack.service';
+export {MessagesService} from './messages.service';

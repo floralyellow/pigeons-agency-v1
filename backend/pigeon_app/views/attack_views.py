@@ -56,8 +56,13 @@ class AttackMessagesView(APIView):
         )
 
         ordered_attacks = all_attacks.order_by("-created_at")
+        users = attack_service.get_ordered_attack_list(request.user)
 
-        message = {"attacks": AttackSerializer(ordered_attacks, many=True).data}
+        message = {
+            "user": UserSerializer(request.user).data,
+            "users": users,
+            "attacks": AttackSerializer(ordered_attacks, many=True).data
+        }
 
         return JsonResponse({"message": message})
 

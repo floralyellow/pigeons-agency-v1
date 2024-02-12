@@ -1,7 +1,7 @@
 import { Pigeon } from "./pigeon";
 import { User } from "./user";
 
-export class Expedition {
+export interface Expedition {
   user: User
   droppings_minute?: number
   nb_pigeons?: number

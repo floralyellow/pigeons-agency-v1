@@ -13,7 +13,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { SortEnum } from 'src/app/core/models/sort-enum';
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
-import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-aviary',

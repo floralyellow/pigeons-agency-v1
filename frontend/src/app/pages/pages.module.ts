@@ -25,9 +25,12 @@ import {
   UpgradeService,
   PlayerService,
   PigeonsService,
+  AttackService,
   AdventureService,
-  AttackService
+  MessagesService,
+
 } from '../core/services';
+import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import {
     AttackComponent,
     GlobalTutorialComponent,
     ExpeditionAviaryTutorialComponent,
-    AttackTutorialComponent
+    AttackTutorialComponent,
+    MessagesComponent
   ],
   imports: [
     CommonModule,
@@ -59,6 +63,7 @@ import {
     PigeonsService,
     AdventureService,
     AttackService,
+    MessagesService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: []
