@@ -6,3 +6,4 @@ export { Pigeon } from "./pigeon";
 export { Adventure } from "./adventure";
 export { User } from "./user";
 export { AdventureAttack } from "./adventure-attack";
+export { Attack } from "./attack";

@@ -12,19 +12,16 @@
         <div class="column is-one-fifth">
             Detail
         </div>
-        <div class="column is-full card mb-3" [ngClass]="message.winner_id === user.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
+        <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
             <div class="columns m-auto">
                 <div class="column is-one-fifth">
-                    <span *ngIf="message.attacker === user.id; else attackerName">You</span>
-                    <ng-template #attackerName>{{getUser(message.attacker).username}}</ng-template>
+                    {{getUser(message.attacker)}}
                 </div>
                 <div class="column is-one-fifth">
-                    <span *ngIf="message.defender === user.id; else defenderName">You</span>
-                    <ng-template #defenderName>{{getUser(message.defender).username}}</ng-template>
+                    {{getUser(message.defender)}}
                 </div>
                 <div class="column is-two-fifths">
-                    <span *ngIf="message.winner_id === user.id; else winnerName">You won</span>
-                    <ng-template #winnerName>{{getUser(message.winner_id).username}} won</ng-template>
+                    {{getUser(message.winner_id)}} won
                 </div>
                 <div class="column is-one-fifth">
                     <fa-icon class="is-clickable" [icon]="faEye" (click)="openModal(message.id)"></fa-icon>
@@ -37,21 +34,15 @@
       [headerBackground]="modalHeaderBackground">
       <div class="columns is-multiline is-mobile has-text-centered" *ngIf="modal && attackResult">
         <div class="column is-two-fifths pigeons">
-          Attacker (
-            <span *ngIf="attackResult.attacker === user.id; else attackerName">You</span>
-            <ng-template #attackerName>{{getUser(attackResult.attacker).username}}</ng-template>
-          ) <br>
-          <app-attack-pigeon *ngFor="let attackPigeon of attackPigeons" [pigeon]="attackPigeon"></app-attack-pigeon>
+          Attacker ({{getUser(attackResult.attacker)}}) <br>
+          <app-attack-pigeon class="my-1" *ngFor="let attackPigeon of attackPigeons" [pigeon]="attackPigeon"></app-attack-pigeon>
         </div>
         <div class="column is-size-4 is-one-fifths vs">
           {{attackResult.atk_tot_score}} VS {{attackResult.def_tot_score}}
         </div>
         <div class="column is-two-fifths pigeons">
-          Defender (
-            <span *ngIf="attackResult.defender === user.id; else defenderName">You</span>
-            <ng-template #defenderName>{{getUser(attackResult.defender).username}}</ng-template>
-          ) <br>
-          <app-attack-pigeon *ngFor="let defendPigeon of defendPigeons" [pigeon]="defendPigeon"></app-attack-pigeon>
+          Defender ({{getUser(attackResult.defender)}}) <br>
+          <app-attack-pigeon class="my-1" *ngFor="let defendPigeon of defensePigeons" [pigeon]="defendPigeon"></app-attack-pigeon>
         </div>
 
         <div class="column is-half" *ngIf="attackResult">

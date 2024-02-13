@@ -6,7 +6,7 @@ import {
   faFistRaised,
   faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
-import { Attack } from 'src/app/core/models/attack';
+import { Pigeon, Attack } from 'src/app/core/models';
 import { User } from 'src/app/core/models/user';
 import { MessagesService } from 'src/app/core/services';
 import { ModalComponent } from 'src/app/ui';
@@ -20,6 +20,8 @@ export class MessagesComponent implements OnInit {
   messages: Attack[];
   user: User;
   userList: User[];
+  attackPigeons: Pigeon[];
+  defensePigeons: Pigeon[];
   attackResult:Attack;
   faEye = faEye;
   faHatWizard = faHatWizard;
@@ -42,12 +44,14 @@ export class MessagesComponent implements OnInit {
   }
 
   getUser(id: number){
-    return this.userList.filter(user=>user.id === id)[0]
+    return id === this.user.id ? 'You' : this.userList.filter(user=>user.id === id)[0].username
   }
 
   async openModal(id: number){
     this.messagesService.getHistoryDetail(id).then( res => {
       this.attackResult = res.attack;
+      this.attackPigeons = res.attack_pigeons;
+      this.defensePigeons = res.defend_pigeons;
       this.modalTitle = (res.attack.winner_id === this.user.id)? 
       `Victory ! You won ${res.attack.stolen_droppings} droppings !` : 
       `Defeat ! You lost ${res.attack.stolen_droppings} droppings !`
