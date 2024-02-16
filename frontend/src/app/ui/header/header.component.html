@@ -47,7 +47,7 @@
           >
             Leaderboard&nbsp;<fa-icon [icon]="faTrophy"></fa-icon>
           </a>
-          <a class="navbar-item" (click)="toggle()">
+          <a [routerLink]="['history']" class="navbar-item" (click)="toggle()">
             History&nbsp;<fa-icon [icon]="faScroll"></fa-icon>
           </a>
         </div>

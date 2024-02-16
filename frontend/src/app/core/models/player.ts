@@ -1,4 +1,4 @@
-export class Player {
+export interface Player {
   lvl: number
   seeds: number
   droppings: number

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Pigeon, User } from 'src/app/core/models';
 import { Attack } from 'src/app/core/models/attack';
 import { AttackService } from 'src/app/core/services/attack.service';

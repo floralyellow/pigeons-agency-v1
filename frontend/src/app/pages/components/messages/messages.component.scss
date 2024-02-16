@@ -1,0 +1,35 @@
+.table {
+    width: 100%;
+    td{
+        vertical-align: middle;
+    }
+    .attack-buttons:nth-child(+n + 1) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 5px;
+    }
+
+    @media (max-width : 1023px) {
+        .attack-buttons:nth-child(+n + 1) {
+            grid-template-columns: 1fr;
+            grid-column-gap: 0px;
+            grid-row-gap: 5px;
+        }
+    }
+}
+
+.pigeons {
+    display: inline-grid;
+
+    app-attack-pigeon {
+        display: grid;
+        grid-template-columns: 1fr 8fr;
+    }
+}
+
+.vs {
+    vertical-align: middle;
+    align-content: center;
+    justify-content: center;
+    display: grid;
+}

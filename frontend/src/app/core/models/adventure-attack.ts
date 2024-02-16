@@ -1,4 +1,4 @@
-export class AdventureAttack {
+export interface AdventureAttack {
     id: number;
     atk_tot_score: number;
     atk_tot_phys: number;

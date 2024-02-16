@@ -10,7 +10,8 @@ import {
   AttackComponent,
   AttackTutorialComponent,
   GlobalTutorialComponent,
-  ExpeditionAviaryTutorialComponent
+  ExpeditionAviaryTutorialComponent,
+  MessagesComponent
 } from './components';
 import { PagesComponent } from './pages.component';
 
@@ -41,6 +42,10 @@ const routes: Routes = [
           {
             path: 'aviary',
             component: AviaryComponent,
+          },
+          {
+            path: 'history',
+            component: MessagesComponent,
           },
           {
             path: 'leaderboard',

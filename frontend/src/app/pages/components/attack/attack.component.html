@@ -45,14 +45,14 @@
       <div class="columns is-multiline is-mobile has-text-centered" *ngIf="modal && attackResult">
         <div class="column is-two-fifths pigeons">
           You <br>
-          <app-attack-pigeon *ngFor="let attackPigeon of attackPigeons" [pigeon]="attackPigeon"></app-attack-pigeon>
+          <app-attack-pigeon class="my-1" *ngFor="let attackPigeon of attackPigeons" [pigeon]="attackPigeon"></app-attack-pigeon>
         </div>
         <div class="column is-size-4 is-one-fifths vs">
           {{attackResult.atk_tot_score}} VS {{attackResult.def_tot_score}}
         </div>
         <div class="column is-two-fifths pigeons">
           Oponent <br>
-          <app-attack-pigeon *ngFor="let defendPigeon of defendPigeons" [pigeon]="defendPigeon"></app-attack-pigeon>
+          <app-attack-pigeon class="my-1" *ngFor="let defendPigeon of defendPigeons" [pigeon]="defendPigeon"></app-attack-pigeon>
         </div>
 
         <div class="column is-half">

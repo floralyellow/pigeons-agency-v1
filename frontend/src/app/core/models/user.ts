@@ -1,6 +1,6 @@
 import { Player } from "./player"
 
-export class User {
+export interface User {
   id: number
   username: string
   player: Player
