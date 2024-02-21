@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { IsAuth } from './is-auth.guard';
 
 describe('IsAuthGuard', () => {
-  let guard: IsAuth;
+  let guard: typeof IsAuth;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

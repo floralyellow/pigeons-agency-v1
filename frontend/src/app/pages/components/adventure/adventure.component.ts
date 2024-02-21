@@ -73,8 +73,8 @@ export class AdventureComponent implements OnInit , OnDestroy{
         (this.adventureAttack.def_shield_value * this.adventureAttack.def_shield_blocs),
         this.adventureAttack.atk_tot_phys 
       )
-      this.user = result.globalInfo.user
-      this.currentDroppingsMinute = result.globalInfo.droppings_minute
+      this.user = result.user
+      this.currentDroppingsMinute = result.droppings_minute
       this.currentDroppings = this.user.player.droppings
       this.getCurrentDroppings()
     })

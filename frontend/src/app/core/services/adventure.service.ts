@@ -22,7 +22,8 @@ export class AdventureService {
   }
 
   postAttackCurrentAdventure(team : 'A'|'B'): Promise<{ 
-    globalInfo: GlobalInfo, 
+    user :User, 
+    droppings_minute :number
     adventure_attack: AdventureAttack,
     current_adventure: Adventure,
     next_adventure: Adventure,
@@ -31,7 +32,8 @@ export class AdventureService {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiBaseUrl + '/adventure', `a_team=${team}`)
         .subscribe((res: { 'message': { 
-          globalInfo: GlobalInfo, 
+          user :User, 
+          droppings_minute :number, 
           adventure_attack: AdventureAttack,
           current_adventure: Adventure,
           next_adventure: Adventure,
