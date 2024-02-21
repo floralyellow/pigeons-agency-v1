@@ -14,6 +14,7 @@ import {
   MessagesComponent
 } from './components';
 import { PagesComponent } from './pages.component';
+import { IsAuth } from '../core/guards/';
 
 const routes: Routes = [
   {
@@ -26,34 +27,42 @@ const routes: Routes = [
           {
             path: 'index',
             component: DashboardComponent,
+            canActivate: [IsAuth],
           },
           {
             path: 'expeditions',
             component: ExpeditionsComponent,
+            canActivate: [IsAuth],
           },
           {
             path: 'adventure',
             component: AdventureComponent,
+            canActivate: [IsAuth],
           },
           {
             path: 'attack',
             component: AttackComponent,
+            canActivate: [IsAuth],
           },
           {
             path: 'aviary',
             component: AviaryComponent,
+            canActivate: [IsAuth],
           },
           {
             path: 'history',
             component: MessagesComponent,
+            canActivate: [IsAuth],
           },
           {
             path: 'leaderboard',
             component: LeaderboardComponent,
+            canActivate: [IsAuth],
           },
           {
             path: 'upgrade',
             component: UpgradeComponent,
+            canActivate: [IsAuth],
           },
           {
             path: '',

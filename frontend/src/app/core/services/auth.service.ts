@@ -76,13 +76,15 @@ export class AuthService {
     }
 
     this.logout();
-    this.updateUser();
     return false;
   }
 
   logout() {
+    console.log('coucou 2')
     localStorage.removeItem('token');
     this.user = null;
+    this.router.navigate(['/authentification']);
+    this.updateUser();
     this.emitChange();
   }
 }
