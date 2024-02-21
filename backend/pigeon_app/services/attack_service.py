@@ -172,6 +172,8 @@ def attack_player(user, target_id, attack_team):
         user.player.protected_until = attack_datetime
         defender.protected_until = attack_datetime + timedelta(minutes=PROTECTED_UNTIL_MINUTES)
 
+        defender.nb_notifs += 1
+
         user.player.save()
         defender.save()
 

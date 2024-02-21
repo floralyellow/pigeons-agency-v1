@@ -8,7 +8,7 @@ from ..models.attack import Attack, AttackSerializer
 from ..models.pigeon import Pigeon, PigeonSerializer
 
 
-from ..services import attack_service, update_service
+from ..services import attack_service, update_service, notification_service
 from ..utils.validators import InputValidator
 from ..exceptions.custom_exceptions import ServiceException
 
@@ -57,6 +57,8 @@ class AttackMessagesView(APIView):
 
         ordered_attacks = all_attacks.order_by("-created_at")
         users = attack_service.get_ordered_attack_list(request.user)
+
+        notification_service.remove_notifs(player)
 
         message = {
             "user": UserSerializer(request.user).data,
