@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthentificationComponent } from './auth';
-import { IsNotAuth, IsAuth } from './core/guards/';
+import { IsAuth } from './core/guards/';
 
 const routes: Routes = [
   {
     path: "authentification",
-    component: AuthentificationComponent,
-    canActivate: [IsNotAuth]
+    component: AuthentificationComponent
   },
   {
     path: "",

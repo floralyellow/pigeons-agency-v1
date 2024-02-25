@@ -29,3 +29,18 @@
     display: none;
   }
 }
+@media (max-width : 500px) {
+  .is-multiline{
+    margin-bottom: 80px;
+  }
+  .buttons-mobile{
+    display: flex;
+    position: fixed;
+    width: 90%;
+    bottom: 0px;
+    margin-left: 5%;
+  }
+  .buttons-tablet{
+    display: none;
+  }
+}

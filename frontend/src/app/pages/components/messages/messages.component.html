@@ -1,33 +1,73 @@
 <div class="container" *ngIf="this.userList">
-    <div class="columns is-multiline">
-        <div class="column is-one-fifth">
+    <div class="columns is-hidden-mobile is-multiline">
+        <div class="column is-2">
+            
+        </div>
+        <div class="column is-2">
             Attacker
         </div>
-        <div class="column is-one-fifth">
+        <div class="column is-2">
             Defender
         </div>
-        <div class="column is-two-fifths">
+        <div class="column is-5">
             Result
         </div>
-        <div class="column is-one-fifth">
+        <div class="column is-1">
             Detail
         </div>
         <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
             <div class="columns m-auto">
-                <div class="column is-one-fifth">
+                <div class="column is-2">
+                  <fa-icon [icon]="faShieldAlt" class="has-size-2"></fa-icon>
+                </div>
+                <div class="column is-2">
                     {{getUser(message.attacker)}}
                 </div>
-                <div class="column is-one-fifth">
+                <div class="column is-2">
                     {{getUser(message.defender)}}
                 </div>
-                <div class="column is-two-fifths">
-                    {{getUser(message.winner_id)}} won
+                <div class="column is-5">
+                    {{message.winner_id === user.id? 'Victory':'Defeat'}}
                 </div>
-                <div class="column is-one-fifth">
-                    <fa-icon class="is-clickable" [icon]="faEye" (click)="openModal(message.id)"></fa-icon>
+                <div class="column is-1">
+                    <fa-icon class="is-size-4	is-clickable" [icon]="faEye" (click)="openModal(message.id)"></fa-icon>
                 </div>
             </div>
+            <div class="has-text-right is-size-7">
+                {{message.created_at|date:'medium'}}
+            </div>
         </div>
+    </div>
+    <div class="columns is-hidden-tablet is-mobile is-multiline">
+      <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
+        <div class="columns is-multiline is-mobile m-auto">
+          <div class="column d-flex is-one-quarter">
+            <fa-icon *ngIf="message.attacker === user.id;else playerWasAttaked" [icon]="faFistRaised" class="is-size-1 m-auto"></fa-icon>
+            <ng-template #playerWasAttaked>
+              <fa-icon [icon]="faShieldAlt" class="is-size-1 m-auto"></fa-icon>
+            </ng-template>
+          </div>
+          <div class="column columns is-mobile is-multiline is-three-quarters">
+            <div class="column is-half has-text-centered">
+              <span class="has-text-weight-semibold is-size-5">
+                Attacker
+              </span><br>{{getUser(message.attacker)}}
+            </div>
+            <div class="column is-half has-text-centered">
+              <span class="has-text-weight-semibold is-size-5">
+                Defender
+              </span><br>{{getUser(message.defender)}}
+            </div>
+            <div class="column is-full is-size-3 has-text-centered">
+              {{message.winner_id === user.id? 'Victory':'Defeat'}}
+            </div>
+          </div>
+          <button class="column button is-white mb-2 is-full" (click)="openModal(message.id)"> See details</button>
+        </div>
+        <div class="has-text-right is-size-7">
+            {{message.created_at|date:'medium'}}
+        </div>
+      </div>
     </div>
     <app-modal
       [title]="modalTitle"

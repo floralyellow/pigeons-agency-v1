@@ -1,22 +1,15 @@
-import { AuthService } from './../services/auth.service';
-import { Router, CanActivate } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRouteSnapshot, createUrlTreeFromSnapshot } from '@angular/router';
+import { inject } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class IsAuth implements CanActivate {
+export const IsAuth = (next: ActivatedRouteSnapshot) => {
+  const isLoggedIn = inject(AuthService).checkIfLoggedIn();
+  console.log('check loggedin : ' + isLoggedIn)
 
-  constructor(public router: Router, private AuthService: AuthService) { }
-
-  canActivate(): boolean {
-    const isLoggedIn = this.AuthService.checkIfLoggedIn();
-
-    if (!isLoggedIn) {
-      this.router.navigate(['/authentification']);
-      return false;
-    }
-
-    return true;
+  if (!isLoggedIn) {
+    createUrlTreeFromSnapshot(next, ['/','authentification'])
+    return false;
   }
-}
+
+  return true;
+};
