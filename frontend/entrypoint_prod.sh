@@ -3,4 +3,4 @@
 npm install -g npm@latest
 npm install -g @angular/cli
 npm install
-ng build --watch
+ng build --configuration production

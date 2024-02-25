@@ -102,7 +102,6 @@ export class AviaryComponent implements OnInit {
   }
   setDefenseTeam(){
     this.pigeonService.postSetDefenseTeam().then((response)=>{
-      console.log(response)
       this.player = response.player
     })
   }
