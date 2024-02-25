@@ -23,7 +23,6 @@ export class PagesComponent {
   constructor(private router: Router){
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        console.log(this.router.url)
         if (this.currentUrl === '' || this.router.url !== this.currentUrl) {
           this.currentUrl = this.router.url
           switch(this.currentUrl.split('(')[0]){
