@@ -23,7 +23,12 @@
                     </progress>
                 </article>
             </div>
-            <div class="card" *ngIf="expeditions.length > 1">
+            
+            <div class="is-hidden-mobile" *ngIf="expeditions.length > 1">
+                <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon" [expedition]="expeditionList[pigeon.lvl - 1]">
+                </app-expedition-cooldown>
+            </div>
+            <div class="card is-hidden-tablet" *ngIf="expeditions.length > 1">
                 <p (click)="growDiv('grow-current-expedition')">
                     Current Expedition(s)
                 </p>
