@@ -59,6 +59,10 @@ $lightgreen:#23ce7938;
 }
 
 body.dark, body.dark > * {
+    .panel-tabs a.is-active {
+        border-bottom-color: hsl(0, 0%, 87%);
+        color: white !important;
+    }
     .title{
         color: white!important;
     }

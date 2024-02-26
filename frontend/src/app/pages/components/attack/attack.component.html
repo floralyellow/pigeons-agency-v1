@@ -12,7 +12,7 @@
             <tr *ngFor="let user of users; let index = index" [ngClass]="{
                 'has-background-success-light': user.id === currentUser.id,
                 'has-background-danger-light': user.player.lvl > currentUser.player.lvl,
-                'has-background-warning-light': user.player.lvl < currentUser.player.lvl,
+                'has-background-info-light': user.player.lvl < currentUser.player.lvl,
                 'has-background-primary-light': user.player.lvl === currentUser.player.lvl,
             }">
                 <td>{{user.username}}</td>

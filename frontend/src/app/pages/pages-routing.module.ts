@@ -10,8 +10,11 @@ import {
   AttackComponent,
   AttackTutorialComponent,
   GlobalTutorialComponent,
-  ExpeditionAviaryTutorialComponent,
-  MessagesComponent
+  ExpeditionTutorialComponent,
+  MessagesComponent,
+  UpgradeTutorialComponent,
+  AviaryTutorialComponent,
+  AdventureTutorialComponent
 } from './components';
 import { PagesComponent } from './pages.component';
 import { IsAuth } from '../core/guards/';
@@ -70,8 +73,11 @@ const routes: Routes = [
             pathMatch: 'full'
           },
           { path: 'global-tutorial', component: GlobalTutorialComponent, outlet: 'tutorial' },
-          { path: 'expedition-aviary-tutorial', component: ExpeditionAviaryTutorialComponent, outlet: 'tutorial' },
+          { path: 'expedition-tutorial', component: ExpeditionTutorialComponent, outlet: 'tutorial' },
           { path: 'attack-tutorial', component: AttackTutorialComponent, outlet: 'tutorial' },
+          { path: 'upgrade-tutorial', component: UpgradeTutorialComponent, outlet: 'tutorial' },
+          { path: 'aviary-tutorial', component: AviaryTutorialComponent, outlet: 'tutorial' },
+          { path: 'adventure-tutorial', component: AdventureTutorialComponent, outlet: 'tutorial' },
           {
             path: '',
             redirectTo: '/global-tutorial',
