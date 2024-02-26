@@ -10,7 +10,7 @@ Make sure you have [docker](https://docs.docker.com/install/) and [docker-compos
 docker-compose up
 ```
 
-And go to http://localhost:81/
+And go to http://localhost/
 
 ## Required
 
