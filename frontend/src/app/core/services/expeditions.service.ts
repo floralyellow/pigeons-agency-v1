@@ -44,8 +44,8 @@ export class ExpeditionsService {
   postSellPigeon(pigeonId: number): Promise<{user :User, pigeon :Pigeon}> {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiBaseUrl + '/pigeons/sell', `p_id=${pigeonId}`)
-        .subscribe((res: {user : User,pigeon: Pigeon }) => {
-          resolve(res)
+        .subscribe((res: {'message' : {user : User,pigeon: Pigeon } }) => {
+          resolve(res.message)
         }, err => {
           reject(err);
         });

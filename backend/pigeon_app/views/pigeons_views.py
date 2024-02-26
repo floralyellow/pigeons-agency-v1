@@ -118,4 +118,4 @@ class PigeonSellView(APIView):
 
         sold_pigeon = pigeon_service.sell_pigeon(request.user, pigeon_id)
 
-        return JsonResponse({"user": UserSerializer(request.user).data, "sold_pigeon": sold_pigeon})
+        return JsonResponse({"message": {"user": UserSerializer(request.user).data, "sold_pigeon": sold_pigeon}})
