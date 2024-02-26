@@ -4,13 +4,20 @@ import { environment } from 'src/environments/environment';
 import { Attack } from '../models/attack';
 import { User } from '../models/user';
 import { Pigeon } from '../models';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesService {
+  public nbMessage = new BehaviorSubject<number>(0);
+  value$ = this.nbMessage.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  updateMessageNumber(newValue: number): void {
+    this.nbMessage.next(newValue);
+  }
 
   getHistory(): Promise<{ attacks: Attack[], user: User, users: User[] }> {
     return new Promise((resolve, reject) => {

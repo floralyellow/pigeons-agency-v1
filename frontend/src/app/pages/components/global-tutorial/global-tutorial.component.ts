@@ -9,7 +9,7 @@ export class GlobalTutorialComponent {
   test=[
     {
       src: "assets/pigeons/bombird_green.png",
-      description:"test 1"
+      description:"<h1>Test 1</h1>"
     },
     {
       src: "assets/pigeons/bombird_black.png",

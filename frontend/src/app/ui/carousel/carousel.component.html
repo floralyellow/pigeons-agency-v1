@@ -4,7 +4,7 @@
         <figure>
             <img [src]="listItem[currentIndex].src">
         </figure>
-        <p>{{listItem[currentIndex].description}}</p>
+        <p [innerHTML]="listItem[currentIndex].description"></p>
         <fa-icon class="next" [icon]="faArrowAltCircleRight" (click)="next()"></fa-icon>
     </div>
 </section>

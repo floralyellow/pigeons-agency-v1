@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { UiModule } from '../ui/ui.module';
 import { AuthInterceptor } from '../core/interceptors/auth-interceptor'
+import { NotificationInterceptor } from '../core/interceptors/notification-interceptor'
 import { PipesModule } from '../pipes/pipes.module';
 import {
   ExpeditionsComponent,
@@ -64,7 +65,8 @@ import { MessagesComponent } from './components/messages/messages.component';
     AdventureService,
     AttackService,
     MessagesService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: NotificationInterceptor, multi: true },
   ],
   bootstrap: []
 })

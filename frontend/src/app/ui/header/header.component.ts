@@ -15,7 +15,7 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-import { AuthService, PlayerService } from 'src/app/core/services';
+import { AuthService, MessagesService, PlayerService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +23,7 @@ import { AuthService, PlayerService } from 'src/app/core/services';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit{
+  nbNotification = 0
   darkMode = false;
   faCrow = faCrow;
   faSignOutAlt = faSignOutAlt;
@@ -35,9 +36,12 @@ export class HeaderComponent implements OnInit{
   faArrowAltCircleUp = faArrowAltCircleUp;
   faEllipsisH = faEllipsisH;
   faUserAlt = faUserAlt;
-  constructor(private authService: AuthService, public router: Router, private playerService : PlayerService) { }
+  constructor(private authService: AuthService, public router: Router, private playerService : PlayerService, private messagesService : MessagesService) { }
 
   async ngOnInit() {
+    this.messagesService.value$.subscribe(value => {
+      this.nbNotification = value;
+    });
     const isDarkMode = (await this.playerService.getPlayerInfo()).user.player.is_dark_mode
     if (isDarkMode === true){
       (document.querySelector('#dark-mode') as HTMLInputElement).checked = true;
