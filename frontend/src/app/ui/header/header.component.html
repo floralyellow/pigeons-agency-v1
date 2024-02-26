@@ -16,6 +16,9 @@
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
+    <span class="notif has-background-danger is-hidden-desktop" *ngIf="nbNotification > 0">
+      {{nbNotification}}
+    </span>
   </div>
   <div class="navbar-menu" id="navMenu">
     <div class="navbar-start">
@@ -32,7 +35,10 @@
         <span><fa-icon [icon]="faArrowAltCircleUp"></fa-icon> Upgrade</span>
       </a>
       <a class="navbar-item has-dropdown is-hoverable">
-        <span class="navbar-link">others</span>
+        <span class="navbar-link">Others
+          <span class="notif has-background-danger is-hidden-mobile" *ngIf="nbNotification > 0">
+            {{nbNotification}}
+          </span></span>
         <div class="navbar-dropdown">
           <!-- <a class="navbar-item" (click)="toggle()">
             Event&nbsp;<fa-icon [icon]="faCalendarDay"></fa-icon>
@@ -49,6 +55,9 @@
           </a>
           <a [routerLink]="['history']" class="navbar-item" (click)="toggle()">
             History&nbsp;<fa-icon [icon]="faScroll"></fa-icon>
+              <span class="notif has-background-danger" *ngIf="nbNotification > 0">
+                {{nbNotification}}
+              </span>
           </a>
         </div>
       </a>

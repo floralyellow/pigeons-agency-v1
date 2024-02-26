@@ -77,8 +77,8 @@ export class ExpeditionsComponent implements OnInit, OnDestroy {
       }
     })
   }
-  growDiv() {
-    let growDiv = document.getElementById('grow');
+  growDiv(id: string) {
+    let growDiv = document.getElementById(id);
     if (growDiv.clientHeight) {
       growDiv.style.height = '0';
     } else {

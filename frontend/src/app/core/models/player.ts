@@ -10,5 +10,6 @@ export interface Player {
   protected_until: Date
   is_dark_mode :boolean
   is_tutorial_done : boolean
+  nb_notifs :number
 }
 

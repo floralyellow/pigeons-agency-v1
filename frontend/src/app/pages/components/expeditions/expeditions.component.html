@@ -23,15 +23,23 @@
                     </progress>
                 </article>
             </div>
-            <p>Current Expedition(s) :</p>
-            <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon" [expedition]="expeditionList[pigeon.lvl - 1]">
-            </app-expedition-cooldown>
+            <div class="card" *ngIf="expeditions.length > 1">
+                <p (click)="growDiv('grow-current-expedition')">
+                    Current Expedition(s)
+                </p>
+                <div id="grow-current-expedition">
+                    <div class='measuringWrapper'>
+                        <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon" [expedition]="expeditionList[pigeon.lvl - 1]">
+                        </app-expedition-cooldown>
+                    </div>
+                </div>
+            </div>
         </div>
         <!--  expedition list  -->
         <div class="column">
 
             <div class="card" *ngIf="player.lvl > 1">
-                <p (click)="growDiv()" id="more-button">
+                <p (click)="growDiv('grow')">
                     Previous expeditions
                 </p>
                 <div id="grow">
@@ -65,7 +73,7 @@
                             [class.is-danger]="player.lvl < (expedition.lvl)" [disabled]="player.lvl < (expedition.lvl) ||
                                 seeds < expedition.seeds ||
                                 (expeditions.length + info.nb_pigeons) === level.max_pigeons">
-                            Launch <fa-icon [icon]="type"></fa-icon><br>{{expedition.seeds}} <fa-icon
+                            <span class="is-hidden-mobile">Launch </span><fa-icon [icon]="type" class="is-size-3-mobile"></fa-icon><br>{{expedition.seeds}} <fa-icon
                                 [icon]="faSeedling"></fa-icon>
                         </button>
                     </div>
