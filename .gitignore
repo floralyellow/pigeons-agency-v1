@@ -12,3 +12,4 @@ Pipfile.lock
 backend/manage.py
 frontend/src/assets/pigeons
 frontend/src/assets/tutorial
+nginx/nginx-proxy.conf
