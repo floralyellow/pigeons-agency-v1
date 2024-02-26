@@ -9,11 +9,12 @@
         [value]="player.feathers"
         [max]="level.max_feathers"
       ></progress>
-      Team A : 
+      Number of pigeons : {{pigeons.length}}/{{level.max_pigeons}}<br>
+      Team A : {{nbInTeamA}}/5 <br/>
         {{sumTeamAAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
         {{sumTeamAMagic}} <fa-icon [icon]="faHatWizard"></fa-icon> 
         {{sumTeamAShield}} <fa-icon [icon]="faShieldAlt"></fa-icon> <br>
-      Team B : 
+      Team B : {{nbInTeamB}}/5 <br/>
       {{sumTeamBAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
       {{sumTeamBMagic}} <fa-icon [icon]="faHatWizard"></fa-icon> 
       {{sumTeamBShield}} <fa-icon [icon]="faShieldAlt"></fa-icon>

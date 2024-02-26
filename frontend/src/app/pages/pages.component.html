@@ -11,10 +11,46 @@
 [headerBackground]="'has-background-info'">
 <nav class="panel">
     <p class="panel-tabs">
-      <a [routerLink]="['',{ outlets: { tutorial: ['global-tutorial'] } }]" [ngClass]="{'is-active' : currentPanel === 'global-tutorial'}">Global</a>
-      <a [routerLink]="['',{ outlets: { tutorial: ['expedition-aviary-tutorial'] } }]" [ngClass]="{'is-active' : currentPanel === 'expedition-aviary-tutorial'}">Expedition</a>
-      <a [routerLink]="['',{ outlets: { tutorial: ['attack-tutorial'] } }]" [ngClass]="{'is-active' : currentPanel === 'attack-tutorial'}">Attack</a>
-      <a [routerLink]="['',{ outlets: { tutorial: ['expedition-aviary-tutorial'] } }]">Adventure</a>
+      <a 
+        [routerLink]="['',{ outlets: { tutorial: ['global-tutorial'] } }]" 
+        [ngClass]="{'is-active' : currentPanel === 'global-tutorial'}"
+        (click)="changePanel('global-tutorial')"
+      >
+        Pigeons Agency
+      </a>
+      <a
+        [routerLink]="['',{ outlets: { tutorial: ['expedition-tutorial'] } }]"
+        [ngClass]="{'is-active' : currentPanel === 'expedition-tutorial'}"
+        (click)="changePanel('expedition-tutorial')"
+      >Expedition</a>
+      <a
+        [routerLink]="['',{ outlets: { tutorial: ['upgrade-tutorial'] } }]"
+        [ngClass]="{'is-active' : currentPanel === 'upgrade-tutorial'}"
+        (click)="changePanel('upgrade-tutorial')"
+      >
+        Upgrade
+      </a>
+      <a
+        [routerLink]="['',{ outlets: { tutorial: ['aviary-tutorial'] } }]"
+        [ngClass]="{'is-active' : currentPanel === 'aviary-tutorial'}"
+        (click)="changePanel('aviary-tutorial')"
+      >
+        Aviary
+      </a>
+      <a
+        [routerLink]="['',{ outlets: { tutorial: ['attack-tutorial'] } }]" 
+        [ngClass]="{'is-active' : currentPanel === 'attack-tutorial'}"
+        (click)="changePanel('attack-tutorial')"
+      >
+        Attacks
+      </a>
+      <a 
+      [routerLink]="['',{ outlets: { tutorial: ['adventure-tutorial'] } }]" 
+      [ngClass]="{'is-active' : currentPanel === 'adventure-tutorial'}"
+      (click)="changePanel('adventure-tutorial')"
+      >
+        Adventure
+      </a>
     </p>
     <router-outlet name="tutorial"></router-outlet>
   </nav>

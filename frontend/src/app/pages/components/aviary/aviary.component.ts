@@ -15,7 +15,7 @@ import { SortEnum } from 'src/app/core/models/sort-enum';
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
 
 @Component({
-  selector: 'app-aviary',
+  selector: 'app',
   templateUrl: './aviary.component.html',
   styleUrls: ['./aviary.component.scss']
 })

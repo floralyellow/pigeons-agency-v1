@@ -16,7 +16,7 @@ export class NotificationInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap(event => {
-        if (event instanceof HttpResponse && event.status === 200) {
+        if (event instanceof HttpResponse && event.status === 200 && event.body.message.user !== undefined) {
           this.messagesService.updateMessageNumber(event.body.message.user.player.nb_notifs);
         }
       })

@@ -17,8 +17,11 @@ import {
   AdventureComponent,
   AttackComponent,
   GlobalTutorialComponent,
-  ExpeditionAviaryTutorialComponent,
-  AttackTutorialComponent
+  AttackTutorialComponent,
+  MessagesComponent,
+  AviaryTutorialComponent,
+  UpgradeTutorialComponent,
+  AdventureTutorialComponent
 } from './components/';
 import {
   ExpeditionsService,
@@ -31,7 +34,6 @@ import {
   MessagesService,
 
 } from '../core/services';
-import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +46,11 @@ import { MessagesComponent } from './components/messages/messages.component';
     UpgradeComponent,
     AttackComponent,
     GlobalTutorialComponent,
-    ExpeditionAviaryTutorialComponent,
     AttackTutorialComponent,
-    MessagesComponent
+    MessagesComponent,
+    AviaryTutorialComponent,
+    UpgradeTutorialComponent,
+    AdventureTutorialComponent
   ],
   imports: [
     CommonModule,

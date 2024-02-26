@@ -23,18 +23,30 @@ export class PagesComponent {
   constructor(private router: Router){
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (this.currentUrl === '' || this.router.url !== this.currentUrl) {
+        const urlShortOld = this.currentUrl.split('(')[0]
+        const urlShortNew = this.router.url.split('(')[0]
+        if (this.currentUrl === '' || (this.router.url !== this.currentUrl && urlShortOld !== urlShortNew)) {
           this.currentUrl = this.router.url
           switch(this.currentUrl.split('(')[0]){
             case '/index':
               this.currentPanel = 'global-tutorial'
               break;
             case '/expeditions':
+              this.currentPanel = 'expedition-tutorial'
             case '/aviary':
-              this.currentPanel = 'expedition-aviary-tutorial'
+              this.currentPanel = 'aviary-tutorial'
               break;
             case '/attack':
               this.currentPanel = 'attack-tutorial'
+              break;
+            case '/upgrade':
+              this.currentPanel = 'upgrade-tutorial'
+              break;
+            case '/adventure':
+              this.currentPanel = 'adventure-tutorial'
+              break;
+            default:
+              this.currentPanel = 'global-tutorial'
               break;
           }
         }
@@ -43,5 +55,9 @@ export class PagesComponent {
   }
   openTutorial(){
     this.modal.toggleModal();
+  }
+  changePanel(panel:string){
+    this.currentPanel = panel
+    console.log(this.currentPanel)
   }
 }

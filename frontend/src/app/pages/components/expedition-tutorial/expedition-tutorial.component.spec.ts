@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExpeditionAviaryTutorialComponent } from './expedition-aviary-tutorial.component';
+import { ExpeditionAviaryTutorialComponent } from './expedition-tutorial.component';
 
 describe('ExpeditionAviaryTutorialComponent', () => {
   let component: ExpeditionAviaryTutorialComponent;

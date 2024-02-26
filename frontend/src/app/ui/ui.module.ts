@@ -14,7 +14,6 @@ import { PipesModule } from '../pipes/pipes.module';
 import { PigeonCardHeaderComponent } from './pigeon-card-header/pigeon-card-header.component';
 import { ModalComponent } from './modal/modal.component';
 import { AttackPigeonComponent } from './attack-pigeon/attack-pigeon.component';
-import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { CarouselComponent } from './carousel/carousel.component';
     PigeonCardHeaderComponent,
     ModalComponent,
     AttackPigeonComponent,
-    CarouselComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +45,6 @@ import { CarouselComponent } from './carousel/carousel.component';
     PigeonCardHeaderComponent,
     ModalComponent,
     AttackPigeonComponent,
-    CarouselComponent
   ],
 })
 export class UiModule { }
