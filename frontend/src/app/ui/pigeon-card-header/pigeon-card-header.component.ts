@@ -43,6 +43,4 @@ export class PigeonCardHeaderComponent implements OnInit {
     this.pigeonType = this.pigeonTypes[this.pigeonsService.getPigeonType(this.pigeon)];
     this.luckStar = this.pigeonsService.getStars(this.pigeon);
   }
-
-
 }

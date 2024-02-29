@@ -43,11 +43,12 @@
       [title]="modalTitle"
       [headerBackground]="modalHeaderBackground">
       <div class="columns is-multiline is-mobile has-text-centered" *ngIf="modal && attackResult">
+        <div class="column is-full p-0 is-size-5">{{attackResultDescription}}</div>
         <div class="column is-two-fifths pigeons">
           You <br>
           <app-attack-pigeon class="my-1" *ngFor="let attackPigeon of attackPigeons" [pigeon]="attackPigeon"></app-attack-pigeon>
         </div>
-        <div class="column is-size-4 is-one-fifths vs">
+        <div class="column is-size-4 is-one-fifth vs">
           {{attackResult.atk_tot_score}} VS {{attackResult.def_tot_score}}
         </div>
         <div class="column is-two-fifths pigeons">

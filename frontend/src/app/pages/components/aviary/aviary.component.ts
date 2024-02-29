@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Level, Player } from 'src/app/core/models';
-import { Aviary } from 'src/app/core/models/aviary';
 import { Pigeon } from 'src/app/core/models/pigeon';
 import { ExpeditionsService } from 'src/app/core/services';
 import { 
@@ -84,7 +83,7 @@ export class AviaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pigeonService.getAviary().then((value: Aviary) => {
+    this.pigeonService.getAviary().then((value) => {
       this.pigeons = value.pigeons.sort((a, b) => b.id - a.id);
       this.player = value.user.player;
       this.level = this.levelList[this.player.lvl - 1]
@@ -125,9 +124,9 @@ export class AviaryComponent implements OnInit {
   }
 
   openCard(pigeon: Pigeon) {
-    this.pigeonService.postOpenCard(pigeon.id).then((value: Pigeon) => {
+    this.pigeonService.postOpenCard(pigeon.id).then((value) => {
       const index = this.pigeons.indexOf(pigeon);
-      this.pigeons[index] = value
+      this.pigeons[index] = value.pigeon
     })
   }
 
@@ -138,9 +137,9 @@ export class AviaryComponent implements OnInit {
   toggleTeam(pigeon: Pigeon, team: 'A' | 'B') {
     const index = this.pigeons.indexOf(pigeon);
     if (team === 'A') {
-      this.pigeonService.toggleTeam(pigeon.id, 'A').then((value: Pigeon) => {
-        this.pigeons[index] = value;
-        if (value.is_in_team_A) {
+      this.pigeonService.toggleTeam(pigeon.id, 'A').then((value) => {
+        this.pigeons[index] = value.pigeon;
+        if (value.pigeon.is_in_team_A) {
           this.nbInTeamA++;
         } else {
           this.nbInTeamA--;
@@ -152,9 +151,9 @@ export class AviaryComponent implements OnInit {
       })
     }
     else {
-      this.pigeonService.toggleTeam(pigeon.id, 'B').then((value: Pigeon) => {
-        this.pigeons[index] = value;
-        if (value.is_in_team_B) {
+      this.pigeonService.toggleTeam(pigeon.id, 'B').then((value) => {
+        this.pigeons[index] = value.pigeon;
+        if (value.pigeon.is_in_team_B) {
           this.nbInTeamB++;
         } else {
           this.nbInTeamB--;

@@ -61,20 +61,20 @@ export class ExpeditionsService {
         });
     });
   }
-  postOpenCard(pigeonId: number): Promise<Pigeon> {
+  postOpenCard(pigeonId: number): Promise<{ pigeon :Pigeon, user : User}> {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiBaseUrl + '/pigeons/activate', `p_id=${pigeonId}`)
-        .subscribe((res: { 'message': Pigeon }) => {
+        .subscribe((res: { 'message': { pigeon :Pigeon, user : User} } ) => {
           resolve(res.message)
         }, err => {
           reject(err);
         });
     });
   }
-  toggleTeam(pigeonId: number, team: 'A' | 'B'): Promise<any> {
+  toggleTeam(pigeonId: number, team: 'A' | 'B'): Promise<{ pigeon :Pigeon, user : User}> {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiBaseUrl + '/pigeons/team' + team.toLocaleLowerCase(), `p_id=${pigeonId}`)
-        .subscribe((res: { 'message': Pigeon }) => {
+        .subscribe((res: { 'message':  { pigeon :Pigeon, user : User} }) => {
           resolve(res.message)
         }, err => {
           reject(err);

@@ -1,6 +1,7 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
 <fa-icon
+  class="has-text-info"
   [icon]="faInfoCircle" (click)="openTutorial()"
   [routerLink]="['',{ outlets: { tutorial: [currentPanel] } }]">
 </fa-icon>

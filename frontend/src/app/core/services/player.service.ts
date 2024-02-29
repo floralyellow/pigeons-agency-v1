@@ -28,11 +28,11 @@ export class PlayerService {
         });
     });
   }
-  isTutorialDone(): Promise<GlobalInfo> {
+  tutorialDone(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiBaseUrl + '/player/dotutorial', ``)
         .subscribe((res: { 'message': GlobalInfo }) => {
-          resolve(res.message)
+          resolve(res.message.user.player.is_tutorial_done)
         }, err => {
           reject(err);
         });

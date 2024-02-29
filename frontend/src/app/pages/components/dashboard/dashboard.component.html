@@ -1,7 +1,7 @@
 <div class="container d-flex" *ngIf="level && globalInfo">
   <nav class="columns is-multiline m-auto percent90">
     <div class="column is-full">
-      <p class="has-text-centered">Level {{globalInfo.user.player.lvl}}</p>
+      <p class="has-text-centered is-size-3">{{globalInfo.user.username}} (Level {{globalInfo.user.player.lvl}})</p>
     </div>
     <app-dashboard-card class="column has-text-centered" [actuelNumber]="globalInfo.nb_pigeons"
       [maxNumber]="level.max_pigeons" [title]="'Pigeon'">
@@ -15,5 +15,14 @@
     <app-dashboard-card class="column has-text-centered" [actuelNumber]="droppings" [maxNumber]="level.max_droppings"
       [title]="'Dropping'">
     </app-dashboard-card>
+    <p class="column is-full has-text-centered">
+      <span class="mail">
+        pigeonsagency.game@gmail.com
+      </span>
+      &nbsp;
+      <a href="https://discord.gg/E9WNdCBd" target="_blank">
+        <fa-icon [icon]="faDiscord"></fa-icon>
+      </a>
+    </p>
   </nav>
 </div>

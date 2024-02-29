@@ -16,9 +16,9 @@
             Detail
         </div>
         <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
-            <div class="columns m-auto">
+            <div class="columns m-auto is-align-items-center">
                 <div class="column is-2">
-                  <fa-icon [icon]="faShieldAlt" class="has-size-2"></fa-icon>
+                  <fa-icon [icon]="faShieldAlt" class="is-size-2"></fa-icon>
                 </div>
                 <div class="column is-2">
                     {{getUser(message.attacker)}}

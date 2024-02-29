@@ -1,11 +1,27 @@
-.m-auto{ 
+.sub-container{ 
     width: 50%;
-     text-align: center;
+    text-align: center;
 }
 .card{
     margin: 15px;
 }
+h1{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    width: fit-content;
+    img{
+        width: 50px;
+        margin: auto 0;
+    }
+}
 .notification{
     position: absolute;
     width: calc(100% - 30px);
+}
+
+@media (max-width : 500px) {
+    .sub-container{ 
+        width: 90%;
+    }
 }

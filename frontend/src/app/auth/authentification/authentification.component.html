@@ -1,7 +1,7 @@
 <div ngClass="auth container d-flex">
-    <div class="m-auto">
-        <h1>Pigeon agency</h1>
-        <div class="columns">
+    <div class="m-auto sub-container">
+        <h1><img src="assets/pigeons/firegeon.png" alt="logo">Pigeons agency</h1>
+        <div class="columns is-multiline">
             <app-card 
                 class="column" 
                 [header]="['card-header','has-background-primary','has-text-white-ter']"
@@ -70,6 +70,7 @@
                     </button>
                 </form>
             </app-card>
+            <p class="column is-full">pigeonsagency.game@gmail.com</p>
         </div>
     </div>
     <div class="notification is-danger" *ngIf="errorMessage">

@@ -1,10 +1,11 @@
-import { Component, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 
 import {
   faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from '../ui';
 import { NavigationEnd, Router } from '@angular/router';
+import { PlayerService } from '../core/services';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.scss']
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit {
   @ViewChild(ModalComponent) modal;
   faInfoCircle = faInfoCircle
   modalTitle: string;
@@ -20,7 +21,7 @@ export class PagesComponent {
   modalHeaderBackground: string;
   currentUrl=''
   currentPanel=''
-  constructor(private router: Router){
+  constructor(private router: Router,  private playerService : PlayerService){
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const urlShortOld = this.currentUrl.split('(')[0]
@@ -52,6 +53,12 @@ export class PagesComponent {
         }
       }
     })
+  }
+  async ngOnInit() {
+    if((await this.playerService.getPlayerInfo()).user.player.is_tutorial_done === false){
+      this.openTutorial()
+      this.playerService.tutorialDone()
+    }
   }
   openTutorial(){
     this.modal.toggleModal();

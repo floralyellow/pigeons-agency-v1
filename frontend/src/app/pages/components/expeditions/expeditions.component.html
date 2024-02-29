@@ -24,16 +24,16 @@
                 </article>
             </div>
             
-            <div class="is-hidden-mobile" *ngIf="expeditions.length > 1">
+            <div class="is-hidden-mobile" *ngIf="expeditions.length > 0">
                 <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon" [expedition]="expeditionList[pigeon.lvl - 1]">
                 </app-expedition-cooldown>
             </div>
-            <div class="card is-hidden-tablet" *ngIf="expeditions.length > 1">
+            <div class="card is-hidden-tablet" *ngIf="expeditions.length > 0">
                 <p (click)="growDiv('grow-current-expedition')">
-                    Current Expedition(s)
+                    Ongoing Expedition(s)
                 </p>
                 <div id="grow-current-expedition">
-                    <div class='measuringWrapper'>
+                    <div class='measuringWrapper-grow-current-expedition'>
                         <app-expedition-cooldown *ngFor="let pigeon of expeditions" [pigeon]="pigeon" [expedition]="expeditionList[pigeon.lvl - 1]">
                         </app-expedition-cooldown>
                     </div>
@@ -48,7 +48,7 @@
                     Previous expeditions
                 </p>
                 <div id="grow">
-                    <div class='measuringWrapper'>
+                    <div class='measuringWrapper-grow'>
                         <app-expedition-card *ngFor="let expedition of listBelowPlayerLevel;" [info]="expedition">
                             <div class="column">
                                 <div class="columns is-mobile">
