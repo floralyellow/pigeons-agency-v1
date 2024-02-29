@@ -9,7 +9,7 @@
       [max]="levelList[(user.player.lvl - 1)].max_droppings"
     ></progress>
   </div>
-  <div class="is-multiline columns">
+  <div class="is-multiline adventure-card columns">
     <app-adventure-card
       class="column is-full-mobile is-one-fifth-tablet"
       *ngFor="let pigeon of adventurePigeons"
@@ -43,7 +43,7 @@
       {{adventureAttack.atk_tot_score}} VS {{adventureAttack.def_tot_score}}
     </p>
   </div>
-  <div class="columns is-multiline has-text-centered" *ngIf="modal && adventureAttack">
+  <div class="columns is-multiline is-mobile has-text-centered" *ngIf="modal && adventureAttack">
     <div class="column is-half">
       You
     </div>

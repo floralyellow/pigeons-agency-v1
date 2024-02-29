@@ -4,13 +4,13 @@ import { environment } from 'src/environments/environment';
 import { Attack } from '../models/attack';
 import { User } from '../models/user';
 import { Pigeon } from '../models';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesService {
-  public nbMessage = new BehaviorSubject<number>(0);
+  public nbMessage = new Subject<number>();
   value$ = this.nbMessage.asObservable();
 
   constructor(private http: HttpClient) { }

@@ -3,6 +3,9 @@ import {PlayerService} from 'src/app/core/services/player.service'
 import {Level} from 'src/app/core/models/level'
 import * as lvlInfo from 'src/assets/jsons/tr_lvl_info.json';
 import { GlobalInfo } from 'src/app/core/models/global-info';
+import {
+  faDiscord,
+} from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,6 +18,7 @@ export class DashboardComponent implements  OnDestroy {
   timeout;
   seeds : number;
   droppings : number;
+  faDiscord = faDiscord
   constructor(playerService : PlayerService ) {
     playerService.getPlayerInfo().then((value : GlobalInfo) => {
       this.globalInfo = value;

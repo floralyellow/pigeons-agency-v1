@@ -20,6 +20,7 @@ export class AttackComponent implements OnInit , OnDestroy{
   faShieldAlt = faShieldAlt;
   modalTitle: string;
   modalContent: string;
+  attackResultDescription: string;
   modalHeaderBackground: string;
   users : User[]
   currentUser : User
@@ -53,9 +54,12 @@ export class AttackComponent implements OnInit , OnDestroy{
       this.attackPigeons = res.attack_pigeons
       this.defendPigeons = res.defend_pigeons
       this.modal.toggleModal();
+      this.attackResultDescription = (res.attack.winner_id === this.currentUser.id)? 
+        `You won ${res.attack.stolen_droppings} droppings and ${res.attack.atk_new_military_score - res.attack.atk_old_military_score} military points !`
+        : ` You lost ${res.attack.stolen_droppings} droppings and ${res.attack.atk_old_military_score - res.attack.atk_new_military_score} military points !`
       this.modalTitle = (res.attack.winner_id === this.currentUser.id)? 
-        `Victory ! You won ${res.attack.stolen_droppings} droppings !` : 
-        `Defeat ! You lost ${res.attack.stolen_droppings} droppings !`
+        `Victory !` : 
+        `Defeat !`
       this.modalHeaderBackground = (res.attack.winner_id === this.currentUser.id)? 
         'has-background-success' : 'has-background-danger';
     })

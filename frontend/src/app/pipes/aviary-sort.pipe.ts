@@ -13,14 +13,11 @@ export class AviarySortPipe implements PipeTransform {
     const orderedByList: Pigeon[] = pigeonList
       .filter((pigeon) => pigeon.is_open)
       .sort((a, b) => {
-        const bIsInTeam = (b.is_in_team_A || b.is_in_team_B) ? 1 : 0
-        const aIsInTeam = (a.is_in_team_A || a.is_in_team_B) ? 1 : 0
         const levelDiff = b.lvl - a.lvl;
         const attackDiff = b.phys_atk - a.phys_atk;
         const magicDiff = b.magic_atk - a.magic_atk;
         const luckDiff = b.luck - a.luck;
         const droppingDiff = a.droppings_minute - b.droppings_minute;
-        const teamDiff = bIsInTeam - aIsInTeam;
         const featherDiff = b.feathers - a.feathers;
         const shieldFiff = b.shield - a.shield;
         switch (sortBy) {
@@ -43,13 +40,13 @@ export class AviarySortPipe implements PipeTransform {
             }
             return (magicDiff)
           case SortEnum.team_a:
-            const b_is_team_a = (b.is_in_team_A) ? 1 : 0
-            const a_is_team_a = (a.is_in_team_A) ? 1 : 0
-            return (b_is_team_a - a_is_team_a)
+              const b_is_team_a = (b.is_in_team_A) ? 1 : 0
+              const a_is_team_a = (a.is_in_team_A) ? 1 : 0
+              return (b_is_team_a - a_is_team_a) + levelDiff/30 + (luckDiff/10000)
           case SortEnum.team_b:
-            const b_is_team_b = (b.is_in_team_B) ? 1 : 0
-            const a_is_team_b = (a.is_in_team_B) ? 1 : 0
-            return (b_is_team_b - a_is_team_b)
+              const b_is_team_b = (b.is_in_team_B) ? 1 : 0
+              const a_is_team_b = (a.is_in_team_B) ? 1 : 0
+              return (b_is_team_b - a_is_team_b) + levelDiff/30 + (luckDiff/10000)
         }
       })
     return (sortBy === SortEnum.default || sortBy === undefined) ?

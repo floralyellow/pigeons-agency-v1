@@ -76,6 +76,7 @@ export class AdventureComponent implements OnInit , OnDestroy{
       this.user = result.user
       this.currentDroppingsMinute = result.droppings_minute
       this.currentDroppings = this.user.player.droppings
+      clearTimeout(this.timeout)
       this.getCurrentDroppings()
     })
   }

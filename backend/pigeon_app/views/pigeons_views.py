@@ -71,7 +71,10 @@ class PigeonTeamAView(APIView):
 
         message = pigeon_service.set_in_team_A(request.user, pigeon_id)
 
-        return JsonResponse({"message": message})
+        return JsonResponse({"message":{
+            "user": UserSerializer(request.user).data,
+            "pigeon": message
+        }})
 
 
 class PigeonTeamBView(APIView):
@@ -87,7 +90,10 @@ class PigeonTeamBView(APIView):
 
         message = pigeon_service.set_in_team_B(request.user, pigeon_id)
 
-        return JsonResponse({"message": message})
+        return JsonResponse({"message":{
+            "user": UserSerializer(request.user).data,
+            "pigeon": message
+        }})
 
 
 class PigeonActivateView(APIView):
@@ -102,8 +108,10 @@ class PigeonActivateView(APIView):
         InputValidator.validate_is_int(pigeon_id)
 
         message = pigeon_service.activate_pigeon(request.user, pigeon_id)
-        return JsonResponse({"message": message})
-
+        return JsonResponse({"message":{
+            "user": UserSerializer(request.user).data,
+            "pigeon": message
+        }})
 
 class PigeonSellView(APIView):
 
