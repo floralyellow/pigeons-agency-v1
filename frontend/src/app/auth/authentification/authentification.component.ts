@@ -27,6 +27,8 @@ export class AuthentificationComponent implements OnInit {
       ({
         username : this.register.username,
         password : this.register.password
+      }).catch(e =>{
+        this.errorMessage = e.error.username[0]
       })
     }else{
       await this.authService.login
