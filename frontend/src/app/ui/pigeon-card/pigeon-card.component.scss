@@ -86,4 +86,10 @@ h1{
     .m-0-mobile{
         margin: 0 !important;
     }
+    .flip-card-front{
+        .image{
+            padding-top: 15%;
+            padding-bottom: 15%;
+        }
+    }
 }

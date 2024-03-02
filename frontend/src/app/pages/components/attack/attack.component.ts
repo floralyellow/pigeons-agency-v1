@@ -55,8 +55,8 @@ export class AttackComponent implements OnInit , OnDestroy{
       this.defendPigeons = res.defend_pigeons
       this.modal.toggleModal();
       this.attackResultDescription = (res.attack.winner_id === this.currentUser.id)? 
-        `You won ${res.attack.stolen_droppings} droppings and ${res.attack.atk_new_military_score - res.attack.atk_old_military_score} military points !`
-        : ` You lost ${res.attack.stolen_droppings} droppings and ${res.attack.atk_old_military_score - res.attack.atk_new_military_score} military points !`
+        `You won ${Math.abs(res.attack.stolen_droppings)} droppings and ${res.attack.atk_new_military_score - res.attack.atk_old_military_score} military points !`
+        : ` You lost ${Math.abs(res.attack.stolen_droppings)} droppings and ${res.attack.atk_old_military_score - res.attack.atk_new_military_score} military points !`
       this.modalTitle = (res.attack.winner_id === this.currentUser.id)? 
         `Victory !` : 
         `Defeat !`
