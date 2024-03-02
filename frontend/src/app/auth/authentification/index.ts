@@ -1,1 +1,1 @@
-export * from './authentification.component'
+export {AuthentificationComponent} from './authentification.component'
