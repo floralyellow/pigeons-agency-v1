@@ -80,10 +80,11 @@ export class AuthService {
   }
 
   logout() {
-    console.log('coucou 2')
     localStorage.removeItem('token');
     this.user = null;
-    this.router.navigate(['/authentification']);
+    this.router.navigate([
+      { outlets: { primary: ['authentification'], tutorial: null } },
+    ]);
     this.updateUser();
     this.emitChange();
   }

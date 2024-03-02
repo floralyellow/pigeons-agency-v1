@@ -56,6 +56,9 @@ export class PagesComponent implements OnInit {
   }
   async ngOnInit() {
     if((await this.playerService.getPlayerInfo()).user.player.is_tutorial_done === false){
+      this.router.navigate([
+        { outlets: { tutorial: [this.currentPanel] }},
+      ]);
       this.openTutorial()
       this.playerService.tutorialDone()
     }
@@ -65,6 +68,5 @@ export class PagesComponent implements OnInit {
   }
   changePanel(panel:string){
     this.currentPanel = panel
-    console.log(this.currentPanel)
   }
 }
