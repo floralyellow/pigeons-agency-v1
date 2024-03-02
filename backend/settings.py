@@ -24,7 +24,7 @@ print(BASE_DIR)
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DEBUG'))
+DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = '*'
 CORS_ORIGIN_ALLOW_ALL = True
