@@ -82,3 +82,8 @@ h1{
 .pigeon-name{
     font-family: 'Preahvihear';
 }
+@media (max-width : 768px) {
+    .m-0-mobile{
+        margin: 0 !important;
+    }
+}

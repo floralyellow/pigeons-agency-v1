@@ -29,7 +29,7 @@
 <!-- PIGEON-->
 
 <div
-  class="card pigeon-card-default is-hidden-mobile" [ngClass]="classToApply"
+  class="card pigeon-card-default is-mobile" [ngClass]="classToApply"
   *ngIf="pigeon.is_sold === false && pigeon.is_open"
 >
   <div class="card-header px-3 py-2">
@@ -42,12 +42,12 @@
       Sell {{ pigeon.feathers }} <fa-icon [icon]="faFeatherAlt"></fa-icon>
     </button>
   </div>
-  <div class="card-image">
+  <div class="card-image is-hidden-mobile">
     <figure class="image is-square">
       <img [src]="'assets/pigeons/' + pigeon.src" alt="Placeholder image" />
     </figure>
   </div>
-  <div class="card-content py-0">
+  <div class="card-content py-0 is-hidden-mobile">
     <h1>
       <span class="pigeon-name"
         >{{ pigeon.name }} ({{ pigeon.droppings_minute }}&nbsp;<fa-icon
@@ -76,26 +76,7 @@
       </div>
     </div>
   </div>
-  <footer class="card-footer">
-    <ng-content></ng-content>
-  </footer>
-</div>
-
-<div
-  class="card pigeon-card-default is-mobile  is-hidden-tablet" [ngClass]="classToApply"
-  *ngIf="pigeon.is_sold === false && pigeon.is_open"
->
-  <div class="px-3 py-2">
-    <div class="elem-n-rarety d-flex">
-      <div class="mv-auto d-flex mx-1">
-        <app-pigeon-card-header [pigeon]="pigeon"></app-pigeon-card-header>
-      </div>
-    </div>
-    <button class="absolute button is-danger p-2"[disabled]="pigeon.is_in_team_A || pigeon.is_in_team_B" (click)="sellPigeon()">
-      Sell {{ pigeon.feathers }} <fa-icon [icon]="faFeatherAlt"></fa-icon>
-    </button>
-  </div>
-  <div class="columns is-multiline is-mobile my-3">
+  <div class="columns is-multiline is-mobile is-hidden-tablet my-3">
     <div class="column p-0">
       <figure class="image is-square">
         <img [src]="'assets/pigeons/' + pigeon.src" alt="Placeholder image" />
@@ -124,7 +105,7 @@
       {{ pigeon.name }} ({{ pigeon.droppings_minute }}<fa-icon [icon]="faPoop"></fa-icon>/m)
     </p>
   </div>
-  <footer class="card-footer m-0">
+  <footer class="card-footer m-0-mobile">
     <ng-content></ng-content>
   </footer>
 </div>
