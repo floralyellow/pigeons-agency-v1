@@ -25,6 +25,7 @@ import { AuthService, MessagesService, PlayerService } from 'src/app/core/servic
 export class HeaderComponent implements OnInit{
   nbNotification = 0
   darkMode = false;
+  name :string;
   faCrow = faCrow;
   faSignOutAlt = faSignOutAlt;
   faTrophy = faTrophy;
@@ -42,11 +43,14 @@ export class HeaderComponent implements OnInit{
     this.messagesService.value$.subscribe(value => {
       this.nbNotification = value;
     });
-    const isDarkMode = (await this.playerService.getPlayerInfo()).user.player.is_dark_mode
-    if (isDarkMode === true){
-      (document.querySelector('#dark-mode') as HTMLInputElement).checked = true;
-      this.darkModeStyle()
-    }
+    this.playerService.getPlayerInfo().then(data => {
+      this.darkMode = data.user.player.is_dark_mode
+      if (this.darkMode === true){
+        (document.querySelector('#dark-mode') as HTMLInputElement).checked = true;
+        this.darkModeStyle()
+      }
+      this.name = data.user.username
+    })
   }
 
   changeStyleMode(isDarkMode: boolean) {
