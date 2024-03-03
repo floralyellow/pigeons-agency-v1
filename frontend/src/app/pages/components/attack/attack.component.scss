@@ -33,3 +33,16 @@
     justify-content: center;
     display: grid;
 }
+.is-height-auto{
+    height: auto;
+}
+
+:host{
+    ::ng-deep{
+        @media (max-width : 500px) {
+            .modal-card-body{
+                padding: 5px !important;
+            }
+        }
+    }
+}
