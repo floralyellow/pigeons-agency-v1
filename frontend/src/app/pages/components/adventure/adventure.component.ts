@@ -41,7 +41,6 @@ export class AdventureComponent implements OnInit , OnDestroy{
   ngOnInit(): void {
     this.adventureService.getCurrentAdventure().then(result => {
       this.currentAdventure = result.adventure
-      console.log(this.currentAdventure)
       this.adventurePigeons = result.adventure_pigeons
       this.user = result.user
       this.level = this.levelList[(this.user.player.lvl - 1)]
