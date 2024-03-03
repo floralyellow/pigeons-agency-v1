@@ -26,12 +26,13 @@ def _calculate_stolen_droppings(
     def_max_droppings: int,
     def_current_droppings: int,
     attacker_is_winner: bool,
+    attacker_won_score: int,
     defender_won_score: int,
 ) -> int:
     if attacker_is_winner:
         stolen_droppings = int(
             min(
-                (def_max_droppings + def_current_droppings) / 2 * 0.25 * 1 / 7 * (abs(defender_won_score) + 1), def_current_droppings,
+                (def_max_droppings + def_current_droppings) / 2 * 0.25 * 1 / 8 * (abs(attacker_won_score) + 1), def_current_droppings,
             )
         )
     else:
@@ -175,6 +176,7 @@ def attack_player(user, target_id, attack_team):
             def_max_droppings=def_max_droppings,
             def_current_droppings=defender.droppings,
             attacker_is_winner=attacker_is_winner,
+            attacker_won_score=attacker_won_score,
             defender_won_score=defender_won_score,
         )
 
