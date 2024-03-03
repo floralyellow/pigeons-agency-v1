@@ -16,7 +16,6 @@ from ..utils.pve_pigeons import pve_pigeons_list
 
 
 def get_adventure(user):
-
     with transaction.atomic():
         last_adventure = (
             Adventure.objects.filter(player_id=user.id, lvl=user.player.lvl)

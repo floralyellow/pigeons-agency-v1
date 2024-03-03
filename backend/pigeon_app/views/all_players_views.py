@@ -7,10 +7,8 @@ from ..services import attack_service, update_service
 
 
 class AllPlayersView(APIView):
-
     # get user info
     def get(self, request):
-
         update_service.update_user_values(request.user)
 
         users = UserSerializer(
@@ -23,7 +21,6 @@ class AllPlayersView(APIView):
 
 
 class AllPlayersForAttackView(APIView):
-
     # get user info
     def get(self, request):
         """

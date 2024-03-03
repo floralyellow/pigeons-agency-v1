@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .views.adventure_views import AdventureView
 from .views.all_players_views import AllPlayersForAttackView, AllPlayersView
-from .views.attack_views import AttackView, AttackMessagesView, AttackMessageDetailsView
+from .views.attack_views import AttackMessageDetailsView, AttackMessagesView, AttackView
 from .views.pigeons_views import (
     ExpeditionView,
     PigeonActivateView,

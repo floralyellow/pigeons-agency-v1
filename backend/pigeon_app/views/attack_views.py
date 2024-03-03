@@ -1,16 +1,13 @@
-from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.http import JsonResponse
 from rest_framework.views import APIView
 
-from ..models.player import UserSerializer, User
+from ..exceptions.custom_exceptions import ServiceException
 from ..models.attack import Attack, AttackSerializer
 from ..models.pigeon import Pigeon, PigeonSerializer
-
-
-from ..services import attack_service, update_service, notification_service
+from ..models.player import User, UserSerializer
+from ..services import attack_service, notification_service, update_service
 from ..utils.validators import InputValidator
-from ..exceptions.custom_exceptions import ServiceException
 
 
 class AttackView(APIView):
@@ -39,7 +36,7 @@ class AttackView(APIView):
         }
 
         return JsonResponse({"message": message})
-    
+
 
 class AttackMessagesView(APIView):
     """
@@ -63,7 +60,7 @@ class AttackMessagesView(APIView):
         message = {
             "user": UserSerializer(request.user).data,
             "users": users,
-            "attacks": AttackSerializer(ordered_attacks, many=True).data
+            "attacks": AttackSerializer(ordered_attacks, many=True).data,
         }
 
         return JsonResponse({"message": message})

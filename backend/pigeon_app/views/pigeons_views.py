@@ -10,7 +10,6 @@ from ..utils.validators import InputValidator
 class PigeonView(APIView):
     # Get all pigeons of user
     def get(self, request):
-
         update_service.update_user_values(request.user)
         user_id = request.user.id
         pigeons = list(Pigeon.objects.filter(player_id=user_id, is_sold=False).values())
@@ -20,7 +19,6 @@ class PigeonView(APIView):
 
     # create pigeon
     def post(self, request):
-
         update_service.update_user_values(request.user)
 
         expedition_lvl = InputValidator.get_key(request, "exp_lvl")
@@ -37,10 +35,8 @@ class PigeonView(APIView):
 
 
 class ExpeditionView(APIView):
-
     # get expeditions
     def get(self, request):
-
         update_service.update_user_values(request.user)
         user_id = request.user.id
         expeditions = list(Pigeon.objects.filter(player_id=user_id, is_open=False).values())
@@ -59,10 +55,8 @@ class ExpeditionView(APIView):
 
 
 class PigeonTeamAView(APIView):
-
     # set/unset in team
     def post(self, request):
-
         update_service.update_user_values(request.user)
 
         pigeon_id = InputValidator.get_key(request, "p_id")
@@ -71,17 +65,14 @@ class PigeonTeamAView(APIView):
 
         message = pigeon_service.set_in_team_A(request.user, pigeon_id)
 
-        return JsonResponse({"message":{
-            "user": UserSerializer(request.user).data,
-            "pigeon": message
-        }})
+        return JsonResponse(
+            {"message": {"user": UserSerializer(request.user).data, "pigeon": message}}
+        )
 
 
 class PigeonTeamBView(APIView):
-
     # set/unset in team
     def post(self, request):
-
         update_service.update_user_values(request.user)
 
         pigeon_id = InputValidator.get_key(request, "p_id")
@@ -90,17 +81,14 @@ class PigeonTeamBView(APIView):
 
         message = pigeon_service.set_in_team_B(request.user, pigeon_id)
 
-        return JsonResponse({"message":{
-            "user": UserSerializer(request.user).data,
-            "pigeon": message
-        }})
+        return JsonResponse(
+            {"message": {"user": UserSerializer(request.user).data, "pigeon": message}}
+        )
 
 
 class PigeonActivateView(APIView):
-
     # activatePigeon
     def post(self, request):
-
         update_service.update_user_values(request.user)
 
         pigeon_id = InputValidator.get_key(request, "p_id")
@@ -108,16 +96,14 @@ class PigeonActivateView(APIView):
         InputValidator.validate_is_int(pigeon_id)
 
         message = pigeon_service.activate_pigeon(request.user, pigeon_id)
-        return JsonResponse({"message":{
-            "user": UserSerializer(request.user).data,
-            "pigeon": message
-        }})
+        return JsonResponse(
+            {"message": {"user": UserSerializer(request.user).data, "pigeon": message}}
+        )
+
 
 class PigeonSellView(APIView):
-
     # sellPigeon
     def post(self, request):
-
         update_service.update_user_values(request.user)
 
         pigeon_id = InputValidator.get_key(request, "p_id")
@@ -126,4 +112,6 @@ class PigeonSellView(APIView):
 
         sold_pigeon = pigeon_service.sell_pigeon(request.user, pigeon_id)
 
-        return JsonResponse({"message": {"user": UserSerializer(request.user).data, "sold_pigeon": sold_pigeon}})
+        return JsonResponse(
+            {"message": {"user": UserSerializer(request.user).data, "sold_pigeon": sold_pigeon}}
+        )

@@ -18,13 +18,11 @@ class Command(BaseCommand):
         LUCK_VALUES_RANGE = [20, 40, 60, 80, 90, 95]
 
         if PvePigeon.objects.count() == 0 or kwargs["force_recreate"] == "TRUE":
-
             PvePigeon.objects.all().delete()
 
             for lvl in LVL_RANGE:
                 for pigeon_type in PIGEON_TYPES_RANGE:
                     for luck_value in LUCK_VALUES_RANGE:
-
                         expedition = TR_Expedition.objects.filter(lvl=lvl)[0]
 
                         p = TR_Pigeon.objects.filter(

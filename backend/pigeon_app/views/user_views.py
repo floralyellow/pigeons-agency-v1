@@ -16,7 +16,6 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.none()
 
     def get_queryset(self):
-
         """queryset = all for GET and queryset = request.user.id for other action
         player can get all Users infos but not modify"""
         queryset = self.queryset

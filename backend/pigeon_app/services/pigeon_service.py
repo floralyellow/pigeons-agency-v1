@@ -81,7 +81,6 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
 
     # Small chance to get a custom skin for high luck pigeons
     if expedition.lvl >= 5 and luck_value >= 98:  # high legendary
-
         if luck_value == 98:
             pigeon_name = "Pandgeon"
             pigeon_src = "pandgeon.png"
@@ -117,7 +116,6 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
 
 
 def set_in_team_A(user, pigeon_id):
-
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(
             player_id=user.id, is_sold=False, is_open=True
@@ -141,7 +139,6 @@ def set_in_team_A(user, pigeon_id):
 
 
 def set_in_team_B(user, pigeon_id):
-
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(
             player_id=user.id, is_sold=False, is_open=True

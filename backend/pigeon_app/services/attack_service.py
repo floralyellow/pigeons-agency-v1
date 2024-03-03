@@ -20,6 +20,29 @@ from ..utils.commons import (
 )
 
 
+def _calculate_stolen_droppings(
+    atk_max_droppings: int,
+    atk_current_droppings: int,
+    def_max_droppings: int,
+    def_current_droppings: int,
+    attacker_is_winner: bool,
+    defender_won_score: int,
+) -> int:
+    if attacker_is_winner:
+        stolen_droppings = int(
+            min(
+                (def_max_droppings + def_current_droppings) / 2 * 0.25 * 1 / 7 * (abs(defender_won_score) + 1), def_current_droppings,
+            )
+        )
+    else:
+        stolen_droppings = int(
+            -min(
+                (atk_max_droppings + atk_current_droppings) / 2 * 0.25 * 1 / 7 * (abs(defender_won_score) + 1), atk_current_droppings,
+            )
+        )
+    return stolen_droppings
+
+
 def _calculate_won_military_score(difference_scores: int, max_value: int, soft_coef: int) -> int:
     return max(min(max_value - round(difference_scores / soft_coef), max_value), 0)
 
@@ -80,7 +103,6 @@ def _handle_attack_logic(
 
 
 def attack_player(user, target_id, attack_team):
-
     with transaction.atomic():
         user_target = User.objects.filter(id=target_id)
 
@@ -147,14 +169,14 @@ def attack_player(user, target_id, attack_team):
         current_attack.atk_old_military_score = user.player.military_score
         current_attack.def_old_military_score = defender.military_score
 
-        if attacker_is_winner:
-            stolen_droppings = int(
-                min((def_max_droppings + defender.droppings) / 2 * 0.2, defender.droppings)
-            )
-        else:
-            stolen_droppings = int(
-                -min((atk_max_droppings + user.player.droppings) / 2 * 0.2, user.player.droppings)
-            )
+        stolen_droppings = _calculate_stolen_droppings(
+            atk_max_droppings=atk_max_droppings,
+            atk_current_droppings=user.player.droppings,
+            def_max_droppings=def_max_droppings,
+            def_current_droppings=defender.droppings,
+            attacker_is_winner=attacker_is_winner,
+            defender_won_score=defender_won_score,
+        )
 
         # update values for both players
 
