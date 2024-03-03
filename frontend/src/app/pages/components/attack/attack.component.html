@@ -5,7 +5,7 @@
                 <td>Username</td>
                 <td>Level</td>
                 <td>Military score</td>
-                <td>Attack with</td>
+                <td>Attack<br class="is-hidden-tablet"> with</td>
             </tr>
         </thead>
         <tbody>
@@ -20,18 +20,18 @@
                 <td>{{user.player.military_score}}</td>
                 <td [class.attack-buttons]="user.id !== currentUser.id">
                     <button 
-                      class="button is-danger" 
+                      class="button is-danger py-1 is-height-auto" 
                       *ngIf="user && user.id !== currentUser.id" 
                       (click)="attackButtonAction('A',user.id)"
                       [disabled]="currentUser.player.last_attacked === user.id || isDefendTeamProtected(user.player.protected_until) || isNextAttackPossible(currentUser.player.time_last_attack)">
-                        Team A
+                        Team<br class="is-hidden-tablet"> A
                     </button>
                     <button 
-                      class="button is-danger" 
+                      class="button is-danger py-1 is-height-auto" 
                       *ngIf="user && user.id !== currentUser.id" 
                       (click)="attackButtonAction('B',user.id)"
                       [disabled]="currentUser.player.last_attacked === user.id  || isDefendTeamProtected(user.player.protected_until) || isNextAttackPossible(currentUser.player.time_last_attack)">
-                        Team B
+                        Team<br class="is-hidden-tablet"> B
                     </button>
                 </td>
             </tr>

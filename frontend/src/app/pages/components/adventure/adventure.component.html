@@ -1,4 +1,4 @@
-<div class="container" *ngIf="user">
+<div class="container" *ngIf="user && currentAdventure">
   <div class="show-droppings">
     <p>Level {{currentAdventure.lvl}} part {{currentAdventure.encounter}}</p>
     Droppings : {{currentDroppings}}/{{levelList[(user.player.lvl - 1)].max_droppings}}
@@ -9,7 +9,7 @@
       [max]="levelList[(user.player.lvl - 1)].max_droppings"
     ></progress>
   </div>
-  <div class="is-multiline adventure-card columns">
+  <div class="is-multiline adventure-card columns" *ngIf="currentAdventure.encounter !== 15 || (currentAdventure.encounter === 15 && !currentAdventure.is_success); else successMessage">
     <app-adventure-card
       class="column is-full-mobile is-one-fifth-tablet"
       *ngFor="let pigeon of adventurePigeons"
@@ -25,9 +25,14 @@
       </div>
     </div>
   </div>
+  <ng-template #successMessage>
+    <p class="has-text-centered">
+      You have completed your current level adventure. See you in the next level !
+    </p>
+  </ng-template>
 </div>
 
-<div class="buttons-mobile columns">
+<div class="buttons-mobile columns"  *ngIf=" currentAdventure && (currentAdventure.encounter !== 15 || (currentAdventure.encounter === 15 && !currentAdventure.is_success))">
   <div class="column is-full">
     <button class="button is-danger column is-full break-spaces" (click)="attackWithTeam('A')">Fight with team A</button>
   </div>

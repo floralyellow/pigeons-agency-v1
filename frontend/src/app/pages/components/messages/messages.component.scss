@@ -33,3 +33,13 @@
     justify-content: center;
     display: grid;
 }
+
+:host{
+    ::ng-deep{
+        @media (max-width : 500px) {
+            .modal-card-body{
+                padding: 5px !important;
+            }
+        }
+    }
+}
