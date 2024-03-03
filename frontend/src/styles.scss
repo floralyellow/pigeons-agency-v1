@@ -59,6 +59,21 @@ $lightgreen:#23ce7938;
 }
 
 body.dark, body.dark > * {
+    .has-background-primary-light{
+        background-color: hsl(171, 100%, 29%) !important
+    }
+    .has-background-success-light{
+        background-color: hsl(141, 53%, 31%) !important
+    }
+    .has-background-warning-light{
+        background-color: hsl(48, 100%, 29%) !important
+    }
+    .has-background-danger-light{
+        background-color: hsl(348, 86%, 43%) !important
+    }
+    .has-background-info-light{
+        background-color: hsl(204, 71%, 39%) !important
+    }
     .panel-tabs a.is-active {
         border-bottom-color: hsl(0, 0%, 87%);
         color: white !important;
@@ -73,6 +88,17 @@ body.dark, body.dark > * {
     }
     .card{
         box-shadow: 0 1em 2em -0.125em rgba(255, 255, 255, 0.33) 0 0px 0 1px rgba(255, 255, 255, 0.14);
+        img{
+            -webkit-filter: drop-shadow(5px 5px 5px rgb(199, 190, 199));
+            filter: drop-shadow(5px 5px 5px rgb(199, 190, 199));
+        }
+    }
+    .box, .card, table{
+        background-color: #808080;
+        color: white;
+        strong, thead td{
+            color: white;
+        }
     }
     .navbar-menu, .navbar-menu > *{
         background: inherit;
