@@ -35,6 +35,7 @@ export class AdventureComponent implements OnInit , OnDestroy{
   currentDroppings = 0
   level : Level
   playerInfo : GlobalInfo;
+  maxLevel = 15
   
   constructor(private adventureService : AdventureService) { }
 

@@ -28,6 +28,8 @@ export class MessagesComponent implements OnInit {
   faFistRaised = faFistRaised;
   faShieldAlt = faShieldAlt;
   attackResultDescription: string;
+  attackerBlocked = 0
+  defenderBlocked = 0
   
   @ViewChild(ModalComponent) modal;
   modalTitle: string;
@@ -50,6 +52,14 @@ export class MessagesComponent implements OnInit {
 
   async openModal(id: number){
     this.messagesService.getHistoryDetail(id).then( res => {
+      this.attackerBlocked = Math.min(
+        (res.attack.atk_shield_value * res.attack.atk_shield_blocs),
+        res.attack.def_tot_phys
+      )
+      this.defenderBlocked = Math.min(
+        (res.attack.def_shield_value * res.attack.def_shield_blocs),
+        res.attack.atk_tot_phys 
+      )
       this.attackResult = res.attack;
       this.attackPigeons = res.attack_pigeons;
       this.defensePigeons = res.defend_pigeons;

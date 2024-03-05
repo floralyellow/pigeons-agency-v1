@@ -1,5 +1,5 @@
 <figure class="image is-48x48">
     <img [src]="'assets/pigeons/' + pigeon.src">
 </figure>
-<app-pigeon-card-header [pigeon]="pigeon" class="is-hidden-tablet is-block-mobile" [size]="'small'"></app-pigeon-card-header>
-<app-pigeon-card-header [pigeon]="pigeon" class="is-hidden-mobile is-block-tablet"></app-pigeon-card-header>
+<app-pigeon-card-header [pigeon]="pigeon" [ngClass]="classToApply" class="is-hidden-tablet is-block-mobile is-shadowless" [size]="'small'"></app-pigeon-card-header>
+<app-pigeon-card-header [pigeon]="pigeon" [ngClass]="classToApply" class="is-hidden-mobile is-block-tablet is-shadowless"></app-pigeon-card-header>

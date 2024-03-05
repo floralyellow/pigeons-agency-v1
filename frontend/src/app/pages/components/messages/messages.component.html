@@ -78,7 +78,7 @@
           Attacker ({{getUser(attackResult.attacker)}}) <br>
           <app-attack-pigeon class="my-1" *ngFor="let attackPigeon of attackPigeons" [pigeon]="attackPigeon"></app-attack-pigeon>
         </div>
-        <div class="column is-size-4 is-one-fifths vs">
+        <div class="column is-size-4 is-one-fifth vs">
           {{attackResult.atk_tot_score}} VS {{attackResult.def_tot_score}}
         </div>
         <div class="column is-two-fifths pigeons">
@@ -93,7 +93,7 @@
           <fa-icon [icon]="faHatWizard"></fa-icon>
           {{attackResult.atk_tot_magic}}<br>
           <fa-icon [icon]="faShieldAlt"></fa-icon>
-          ({{attackResult.atk_shield_blocs}} block<span *ngIf="attackResult.atk_shield_blocs > 1">s</span>)
+          {{attackerBlocked}} ({{attackResult.atk_shield_blocs}} block<span *ngIf="attackResult.atk_shield_blocs > 1">s</span>)
         </div>
         <div class="column is-half">
           Oponent<br>
@@ -102,7 +102,7 @@
           <fa-icon [icon]="faHatWizard"></fa-icon>
           {{attackResult.def_tot_magic}}<br>
           <fa-icon [icon]="faShieldAlt"></fa-icon>
-          ({{attackResult.def_shield_blocs}} block<span *ngIf="attackResult.def_shield_blocs > 1">s</span>)
+          {{defenderBlocked}} ({{attackResult.def_shield_blocs}} block<span *ngIf="attackResult.def_shield_blocs > 1">s</span>)
         </div>
       </div>
     </app-modal>

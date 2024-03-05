@@ -41,7 +41,7 @@
             </div>
         </div>
         <!--  expedition list  -->
-        <div class="column">
+        <div class="column pt-0-mobile">
 
             <div class="card" *ngIf="player.lvl > 1">
                 <p (click)="growDiv('grow')">
@@ -68,22 +68,39 @@
                 </div>
             </div>
 
-
-            <app-expedition-card *ngFor="let expedition of listHigherThanPlayerLevel" [info]="expedition">
+            <app-expedition-card [info]="listHigherThanPlayerLevel[0]">
                 <div class="column">
                     <div class="columns is-mobile">
                         <button *ngFor="let type of pigeonType; let indexType = index"
-                            (click)="buyPigeon(expedition.lvl, indexType + 1)" class="column is-one-quarter
-                                m-auto button " [class.is-primary]="player.lvl >= expedition.lvl"
-                            [class.is-danger]="player.lvl < (expedition.lvl)" [disabled]="player.lvl < (expedition.lvl) ||
-                                seeds < expedition.seeds ||
+                            (click)="buyPigeon(listHigherThanPlayerLevel[0].lvl, indexType + 1)" class="column is-one-quarter
+                                m-auto button is-primary"
+                            [disabled]="player.lvl < (listHigherThanPlayerLevel[0].lvl) ||
+                                seeds < listHigherThanPlayerLevel[0].seeds ||
                                 (expeditions.length + info.nb_pigeons) === level.max_pigeons">
-                            <span class="is-hidden-mobile">Launch </span><fa-icon [icon]="type" class="is-size-3-mobile"></fa-icon><br>{{expedition.seeds}} <fa-icon
+                            <span class="is-hidden-mobile">Launch </span><fa-icon [icon]="type" class="is-size-3-mobile"></fa-icon><br>{{listHigherThanPlayerLevel[0].seeds}} <fa-icon
                                 [icon]="faSeedling"></fa-icon>
                         </button>
                     </div>
                 </div>
             </app-expedition-card>
+            Next levels expeditions : 
+            <ng-container *ngFor="let expedition of listHigherThanPlayerLevel" >
+                <app-expedition-card *ngIf="expedition.lvl > player.lvl" [info]="expedition">
+                    <div class="column">
+                        <div class="columns is-mobile">
+                            <button *ngFor="let type of pigeonType; let indexType = index"
+                                (click)="buyPigeon(expedition.lvl, indexType + 2)" class="column is-one-quarter
+                                    m-auto button " [class.is-primary]="player.lvl >= expedition.lvl"
+                                [class.is-danger]="player.lvl < (expedition.lvl)" [disabled]="player.lvl < (expedition.lvl) ||
+                                    seeds < expedition.seeds ||
+                                    (expeditions.length + info.nb_pigeons) === level.max_pigeons">
+                                <span class="is-hidden-mobile">Launch </span><fa-icon [icon]="type" class="is-size-3-mobile"></fa-icon><br>{{expedition.seeds}} <fa-icon
+                                    [icon]="faSeedling"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </app-expedition-card>
+            </ng-container>
         </div>
     </div>
 </div>

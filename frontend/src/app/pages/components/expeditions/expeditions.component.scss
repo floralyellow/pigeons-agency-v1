@@ -48,3 +48,9 @@
         padding: 0px 10px;
     }
 }
+
+@media (max-width : 500px) {
+    .pt-0-mobile{
+        padding-top: 0;
+    }
+}

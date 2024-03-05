@@ -29,6 +29,8 @@ export class AttackComponent implements OnInit , OnDestroy{
   defendPigeons : Pigeon[]
   DELAY_SECONDS_BETWEEN_ATTACKS = 120
   interval = null
+  attackerBlocked = 0
+  defenderBlocked = 0
 
   @ViewChild(ModalComponent) modal;
   constructor( private attackService : AttackService){
@@ -48,6 +50,14 @@ export class AttackComponent implements OnInit , OnDestroy{
 
   attackButtonAction(team: 'A'|'B', targetId:number) {
     this.attackService.postAttack(team,targetId).then(res=>{
+      this.attackerBlocked = Math.min(
+        (res.attack.atk_shield_value * res.attack.atk_shield_blocs),
+        res.attack.def_tot_phys
+      )
+      this.defenderBlocked = Math.min(
+        (res.attack.def_shield_value * res.attack.def_shield_blocs),
+        res.attack.atk_tot_phys 
+      )
       this.users = res.users
       this.attackResult = res.attack
       this.currentUser = res.user
