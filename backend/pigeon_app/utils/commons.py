@@ -12,7 +12,7 @@ NEEDED_DROPPINGS_TO_USE_BUCKET_RATIO = 0.26
 # Ratio of droppings won in an adventure (compared to max droppings)
 ADVENTURE_RATIO_REWARDS = 0.14
 
-MAX_ADVENTURE_ENCOUNTER = 15
+MAX_ADVENTURE_ENCOUNTER = 19
 
 
 def get_total_score(

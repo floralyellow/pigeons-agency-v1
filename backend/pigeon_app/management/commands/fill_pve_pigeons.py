@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         LVL_RANGE = range(1, 30 + 1)
         PIGEON_TYPES_RANGE = range(1, 3 + 1)
-        LUCK_VALUES_RANGE = [20, 40, 60, 80, 90, 95]
+        LUCK_VALUES_RANGE = [20, 40, 60, 80, 90, 95, 100]
 
         if PvePigeon.objects.count() == 0 or kwargs["force_recreate"] == "TRUE":
             PvePigeon.objects.all().delete()
