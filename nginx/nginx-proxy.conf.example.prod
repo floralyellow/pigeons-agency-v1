@@ -1,0 +1,30 @@
+server {
+    listen 8080;
+    server_name pigeons.agency;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 8081 ssl;
+    server_name pigeons.agency;
+
+    ssl_certificate /etc/letsencrypt/live/pigeons.agency/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/pigeons.agency/privkey.pem;
+
+    location /api/ {
+        proxy_pass http://backend:8000/api/;
+    }
+
+    # ignore cache frontend
+    location ~* (service-worker\.js)$ {    
+        add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';    
+        expires off;    
+        proxy_no_cache 1;
+    }
+    
+    location / {
+      root /var/www/frontend/frontend;
+      try_files $uri $uri/ /index.html;
+    }
+
+}
