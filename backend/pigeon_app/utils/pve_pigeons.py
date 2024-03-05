@@ -104,4 +104,32 @@ pve_pigeons_list = {
         {"pigeon_type": 3, "luck": 95},
         {"pigeon_type": 3, "luck": 95},
     ],
+    16: [
+        {"pigeon_type": 2, "luck": 100},
+        {"pigeon_type": 2, "luck": 100},
+        {"pigeon_type": 2, "luck": 100},
+        {"pigeon_type": 2, "luck": 100},
+        {"pigeon_type": 2, "luck": 100},
+    ],
+    17: [
+        {"pigeon_type": 1, "luck": 100},
+        {"pigeon_type": 1, "luck": 100},
+        {"pigeon_type": 1, "luck": 100},
+        {"pigeon_type": 1, "luck": 100},
+        {"pigeon_type": 1, "luck": 100},
+    ],
+    18: [
+        {"pigeon_type": 3, "luck": 100},
+        {"pigeon_type": 3, "luck": 100},
+        {"pigeon_type": 3, "luck": 100},
+        {"pigeon_type": 3, "luck": 100},
+        {"pigeon_type": 3, "luck": 100},
+    ],
+    19: [
+        {"pigeon_type": 1, "luck": 100},
+        {"pigeon_type": 1, "luck": 100},
+        {"pigeon_type": 2, "luck": 100},
+        {"pigeon_type": 2, "luck": 100},
+        {"pigeon_type": 3, "luck": 100},
+    ],
 }
