@@ -44,7 +44,7 @@
                     </button>
                 </div>
             </div>
-            <div class="column d-flex">
+            <div class="column d-flex" *ngIf="playerInfo.user.player.lvl !== 30">
                 <div class="m-auto text-center">
                     <p>Upgrade to level {{playerInfo.user.player.lvl + 1}} :</p>
                     <button 

@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ExpeditionCardComponent  {
   @Input() info: {
+    lvl: number,
     name: string,
     duration: number,
     seeds: number

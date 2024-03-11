@@ -16,6 +16,7 @@ import { GlobalInfo } from 'src/app/core/models/global-info';
   styleUrls: ['./adventure.component.scss']
 })
 export class AdventureComponent implements OnInit , OnDestroy{
+  maxLevel = 19;
   faHatWizard = faHatWizard;
   faFistRaised = faFistRaised;
   faShieldAlt = faShieldAlt;
@@ -35,7 +36,6 @@ export class AdventureComponent implements OnInit , OnDestroy{
   currentDroppings = 0
   level : Level
   playerInfo : GlobalInfo;
-  maxLevel = 15
   
   constructor(private adventureService : AdventureService) { }
 
