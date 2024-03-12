@@ -9,7 +9,7 @@
       [max]="levelList[(user.player.lvl - 1)].max_droppings"
     ></progress>
   </div>
-  <div class="is-multiline adventure-card columns" *ngIf="currentAdventure.encounter !== maxLevel || (currentAdventure.encounter === maxLevel && !currentAdventure.is_success); else successMessage">
+  <div class="is-multiline adventure-card columns" *ngIf="currentAdventure.encounter !== maxLevel || !currentAdventure.is_success; else successMessage">
     <app-adventure-card
       class="column is-full-mobile is-one-fifth-tablet"
       *ngFor="let pigeon of adventurePigeons"

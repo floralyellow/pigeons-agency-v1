@@ -21,6 +21,16 @@
                         [ngClass]="info.nb_pigeons + expeditions.length <  level.max_pigeons ? 'is-primary': 'is-danger'"
                         [value]="(info.nb_pigeons + expeditions.length)" [max]="level.max_pigeons">
                     </progress>
+                    <p>Droppings : {{droppings}}/{{level.max_droppings}}</p>
+                    <progress class="progress is-primary" [value]="droppings" [max]="level.max_droppings">
+                    </progress>
+                    Re-fill seeds with droppings :<br>
+                    <button 
+                        (click)="exchangeDroppingsWithSeeds()"
+                        class="button is-primary" 
+                        [disabled]="droppings < droppings_needed_to_buy_bucket">
+                        Exchange {{droppings_needed_to_buy_bucket}}&nbsp;<fa-icon [icon]="faPoop"></fa-icon>
+                    </button>
                 </article>
             </div>
             
@@ -83,7 +93,7 @@
                     </div>
                 </div>
             </app-expedition-card>
-            Next levels expeditions : 
+            <p *ngIf="player.lvl !== 30">Next levels expeditions : </p>
             <ng-container *ngFor="let expedition of listHigherThanPlayerLevel" >
                 <app-expedition-card *ngIf="expedition.lvl > player.lvl" [info]="expedition">
                     <div class="column">

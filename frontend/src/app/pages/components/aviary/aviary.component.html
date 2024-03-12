@@ -2,22 +2,21 @@
   <div class="columns">
     <div class="column">
       Current <fa-icon [icon]="faFeatherAlt"></fa-icon> : 
-      {{player.feathers}}/{{level.max_feathers}}<br>
+      {{player.feathers}}<span *ngIf="player.lvl !== 30">/{{level.max_feathers}}</span><br>
       <progress
+        *ngIf="player.lvl !== 30"
         [ngClass]="player.feathers <  level.max_feathers ? 'is-primary': 'is-danger'"
         class="progress"
         [value]="player.feathers"
         [max]="level.max_feathers"
       ></progress>
       Number of pigeons : {{pigeons.length}}/{{level.max_pigeons}}<br>
-      Team A : {{nbInTeamA}}/5 <br/>
-        {{sumTeamAAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
+      Team A : {{nbInTeamA}}/5 ({{sumTeamAAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
         {{sumTeamAMagic}} <fa-icon [icon]="faHatWizard"></fa-icon> 
-        {{sumTeamAShield}} <fa-icon [icon]="faShieldAlt"></fa-icon> <br>
-      Team B : {{nbInTeamB}}/5 <br/>
-      {{sumTeamBAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
+        {{sumTeamAShield}} <fa-icon [icon]="faShieldAlt"></fa-icon>) <br>
+      Team B : {{nbInTeamB}}/5  ({{sumTeamBAttack}} <fa-icon [icon]="faFistRaised"></fa-icon> 
       {{sumTeamBMagic}} <fa-icon [icon]="faHatWizard"></fa-icon> 
-      {{sumTeamBShield}} <fa-icon [icon]="faShieldAlt"></fa-icon>
+      {{sumTeamBShield}} <fa-icon [icon]="faShieldAlt"></fa-icon>)
     </div>
     <div class="column">
       <div class="select">
