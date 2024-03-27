@@ -15,7 +15,7 @@
         <div class="column is-1">
             Detail
         </div>
-        <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
+        <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.player.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
             <div class="columns m-auto is-align-items-center">
                 <div class="column is-2">
                   <fa-icon [icon]="faShieldAlt" class="is-size-2"></fa-icon>
@@ -27,7 +27,7 @@
                     {{getUser(message.defender)}}
                 </div>
                 <div class="column is-5">
-                    {{message.winner_id === user.id? 'Victory':'Defeat'}}
+                    {{message.winner_id === user.player.id? 'Victory':'Defeat'}}
                 </div>
                 <div class="column is-1">
                     <fa-icon class="is-size-4	is-clickable" [icon]="faEye" (click)="openModal(message.id)"></fa-icon>
@@ -39,10 +39,10 @@
         </div>
     </div>
     <div class="columns is-hidden-tablet is-mobile is-multiline">
-      <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
+      <div class="column is-full card mb-3 has-text-white" [ngClass]="message.winner_id === user.player.id? 'has-background-success' : 'has-background-danger'" *ngFor="let message of messages">
         <div class="columns is-multiline is-mobile m-auto">
           <div class="column d-flex is-one-quarter">
-            <fa-icon *ngIf="message.attacker === user.id;else playerWasAttaked" [icon]="faFistRaised" class="is-size-1 m-auto"></fa-icon>
+            <fa-icon *ngIf="message.attacker === user.player.id;else playerWasAttaked" [icon]="faFistRaised" class="is-size-1 m-auto"></fa-icon>
             <ng-template #playerWasAttaked>
               <fa-icon [icon]="faShieldAlt" class="is-size-1 m-auto"></fa-icon>
             </ng-template>
@@ -59,7 +59,7 @@
               </span><br>{{getUser(message.defender)}}
             </div>
             <div class="column is-full is-size-3 has-text-centered">
-              {{message.winner_id === user.id? 'Victory':'Defeat'}}
+              {{message.winner_id === user.player.id? 'Victory':'Defeat'}}
             </div>
           </div>
           <button class="column button is-white mb-2 is-full" (click)="openModal(message.id)"> See details</button>
