@@ -1,4 +1,5 @@
 export interface Player {
+  id: number
   lvl: number
   seeds: number
   droppings: number

@@ -47,7 +47,7 @@ export class MessagesComponent implements OnInit {
   }
 
   getUser(id: number){
-    return id === this.user.id ? 'You' : this.userList.filter(user=>user.id === id)[0].username
+    return id === this.user.player.id ? 'You' : this.userList.filter(user=>user.player.id === id)[0].username
   }
 
   async openModal(id: number){
@@ -63,14 +63,14 @@ export class MessagesComponent implements OnInit {
       this.attackResult = res.attack;
       this.attackPigeons = res.attack_pigeons;
       this.defensePigeons = res.defend_pigeons;
-      this.modalTitle = (res.attack.winner_id === this.user.id)? 
+      this.modalTitle = (res.attack.winner_id === this.user.player.id)? 
       `Victory !` : 
       `Defeat !`
-      const militaryMovements = (this.user.id === res.attack.attacker) ? res.attack.atk_new_military_score - res.attack.atk_old_military_score: res.attack.def_new_military_score - res.attack.def_old_military_score
-      this.attackResultDescription = (res.attack.winner_id === this.user.id)? 
+      const militaryMovements = (this.user.player.id === res.attack.attacker) ? res.attack.atk_new_military_score - res.attack.atk_old_military_score: res.attack.def_new_military_score - res.attack.def_old_military_score
+      this.attackResultDescription = (res.attack.winner_id === this.user.player.id)? 
         `You won ${Math.abs(res.attack.stolen_droppings)} droppings and ${militaryMovements} military points !`
         : ` You lost ${Math.abs(res.attack.stolen_droppings)} droppings and ${militaryMovements} military points !`
-    this.modalHeaderBackground = (res.attack.winner_id === this.user.id)? 
+    this.modalHeaderBackground = (res.attack.winner_id === this.user.player.id)? 
       'has-background-success' : 'has-background-danger';
       this.modal.toggleModal();
     })
