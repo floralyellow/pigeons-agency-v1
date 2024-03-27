@@ -18,7 +18,7 @@ from ..utils.pve_pigeons import pve_pigeons_list
 def get_adventure(user):
     with transaction.atomic():
         last_adventure = (
-            Adventure.objects.filter(player_id=user.id, lvl=user.player.lvl)
+            Adventure.objects.filter(player_id=user.player.id, lvl=user.player.lvl)
             .order_by("-encounter")
             .first()
         )
@@ -40,7 +40,7 @@ def _create_adventure(user, last_adventure):
     lvl_info = TR_Lvl_info.objects.get(lvl=user.player.lvl)
 
     new_adventure = Adventure(
-        player_id=user.id,
+        player_id=user.player.id,
         lvl=user.player.lvl,
         encounter=last_adventure.encounter + 1 if last_adventure else 1,
         nb_tries=0,
@@ -90,7 +90,7 @@ def _handle_adventure_attack_logic(pigeons: Any) -> Tuple[int, int, int]:
 
 def try_adventure(user, attack_team: str):
     with transaction.atomic():
-        attacking_pigeons = get_pigeon_team(user.id, attack_team)
+        attacking_pigeons = get_pigeon_team(user.player.id, attack_team)
 
         current_adventure = get_adventure(user)
 

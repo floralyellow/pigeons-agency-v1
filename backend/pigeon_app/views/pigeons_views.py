@@ -11,8 +11,8 @@ class PigeonView(APIView):
     # Get all pigeons of user
     def get(self, request):
         update_service.update_user_values(request.user)
-        user_id = request.user.id
-        pigeons = list(Pigeon.objects.filter(player_id=user_id, is_sold=False).values())
+        player_id = request.user.player.id
+        pigeons = list(Pigeon.objects.filter(player_id=player_id, is_sold=False).values())
         return JsonResponse(
             {"message": {"user": UserSerializer(request.user).data, "pigeons": pigeons}}
         )
@@ -38,7 +38,7 @@ class ExpeditionView(APIView):
     # get expeditions
     def get(self, request):
         update_service.update_user_values(request.user)
-        user_id = request.user.id
+        user_id = request.user.player.id
         expeditions = list(Pigeon.objects.filter(player_id=user_id, is_open=False).values())
         nb_pigeons, droppings_minute = pigeon_service.get_global_pigeon_info(request.user)
 

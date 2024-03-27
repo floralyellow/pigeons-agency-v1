@@ -11,7 +11,7 @@ from ..models.pigeon import PigeonSerializer
 
 def get_global_pigeon_info(user):
     query = "select 1 as id, coalesce(sum(droppings_minute),0) as droppings_minute ,count(*) as nb_pigeons from pigeon_app_pigeon pap where player_id = %s and is_open = true and is_sold = false;"
-    res = Pigeon.objects.raw(query, [user.id])[0]
+    res = Pigeon.objects.raw(query, [user.player.id])[0]
     return res.nb_pigeons, res.droppings_minute
 
 
@@ -38,7 +38,7 @@ def create_pigeon(user, expedition_lvl, expedition_type):
         expedition = TR_Expedition.objects.filter(lvl=expedition_lvl)[0]
 
         lvl_info = TR_Lvl_info.objects.filter(lvl=player.lvl)[0]
-        nb_pigeons = Pigeon.objects.filter(player_id=user.id, is_sold=False).count()
+        nb_pigeons = Pigeon.objects.filter(player_id=user.player.id, is_sold=False).count()
 
         if nb_pigeons >= lvl_info.max_pigeons:
             raise ServiceException("Error: too many pigeons !")
@@ -50,9 +50,9 @@ def create_pigeon(user, expedition_lvl, expedition_type):
 
         luck_value = random.randint(1, 100)
 
-        add_pigeon(user.id, expedition, pigeon_type, luck_value)
+        add_pigeon(user.player.id, expedition, pigeon_type, luck_value)
 
-        expeditions = Pigeon.objects.filter(player_id=user.id, is_open=False)
+        expeditions = Pigeon.objects.filter(player_id=user.player.id, is_open=False)
 
     return list(expeditions.values())
 
@@ -118,7 +118,7 @@ def add_pigeon(user_id, expedition, pigeon_type, luck_value):
 def set_in_team_A(user, pigeon_id):
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(
-            player_id=user.id, is_sold=False, is_open=True
+            player_id=user.player.id, is_sold=False, is_open=True
         )
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
@@ -141,7 +141,7 @@ def set_in_team_A(user, pigeon_id):
 def set_in_team_B(user, pigeon_id):
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(
-            player_id=user.id, is_sold=False, is_open=True
+            player_id=user.player.id, is_sold=False, is_open=True
         )
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
@@ -164,7 +164,7 @@ def set_in_team_B(user, pigeon_id):
 def activate_pigeon(user, pigeon_id):
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(
-            player_id=user.id, is_sold=False, is_open=False
+            player_id=user.player.id, is_sold=False, is_open=False
         )
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):
@@ -184,7 +184,7 @@ def activate_pigeon(user, pigeon_id):
 def sell_pigeon(user, pigeon_id):
     with transaction.atomic():
         pigeons = Pigeon.objects.select_for_update().filter(
-            player_id=user.id, is_sold=False, is_open=True
+            player_id=user.player.id, is_sold=False, is_open=True
         )
 
         if int(pigeon_id) not in pigeons.values_list("id", flat=True):

@@ -107,7 +107,7 @@ def attack_player(user, target_id, attack_team):
     with transaction.atomic():
         user_target = User.objects.filter(id=target_id)
 
-        if len(user_target) != 1 or target_id == user.id:
+        if len(user_target) != 1 or target_id == user.player.id:
             raise ServiceException("Error: Invalid id")
 
         if target_id == user.player.last_attacked:
@@ -126,7 +126,7 @@ def attack_player(user, target_id, attack_team):
         if defender.protected_until > attack_datetime:
             raise ServiceException("Error: Cant attack this user yet !")
 
-        attacking_pigeons = get_pigeon_team(user.id, attack_team)
+        attacking_pigeons = get_pigeon_team(user.player.id, attack_team)
 
         defend_team = defender.defense_team
         defending_pigeons = get_pigeon_team(target_id, defend_team)
@@ -155,8 +155,8 @@ def attack_player(user, target_id, attack_team):
             total_phys_def, total_magic_def, sum_shield_value_atk, total_blocs_atk
         )
 
-        winner_id = user.id if total_attacker > total_defender else target_id
-        attacker_is_winner = winner_id == user.id
+        winner_id = user.player.id if total_attacker > total_defender else target_id
+        attacker_is_winner = winner_id == user.player.id
 
         attacker_won_score, defender_won_score = _get_won_military_scores(
             attacker_is_winner, user.player.military_score, defender.military_score
