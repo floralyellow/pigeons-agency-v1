@@ -88,9 +88,9 @@ class AttackMessageDetailsView(APIView):
             raise ServiceException("Error: Invalid id !")
 
         if selected_attack.attacker_id == player.id:
-            defender = User.objects.get(id=selected_attack.defender_id)
+            defender = User.objects.get(player__id=selected_attack.defender_id)
         else:
-            defender = User.objects.get(id=selected_attack.attacker_id)
+            defender = User.objects.get(player__id=selected_attack.attacker_id)
 
         attack_pigeons = Pigeon.objects.filter(
             attackpigeon__attack_id=selected_attack.id, attackpigeon__is_attacker=True

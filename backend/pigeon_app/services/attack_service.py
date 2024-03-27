@@ -105,7 +105,7 @@ def _handle_attack_logic(
 
 def attack_player(user, target_id, attack_team):
     with transaction.atomic():
-        user_target = User.objects.filter(id=target_id)
+        user_target = User.objects.filter(player__id=target_id)
 
         if len(user_target) != 1 or target_id == user.player.id:
             raise ServiceException("Error: Invalid id")
